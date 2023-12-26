@@ -46,6 +46,7 @@ Repository = "https://github.com/deohayer/argapp.git"
 [tool.hatch.build.targets.wheel]
 ignore-vcs = true
 include = [
+  "argapp/*.py",
   "argapp/LICENSE",
   "argapp/README.md",
 ]
