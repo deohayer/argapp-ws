@@ -1,0 +1,3 @@
+[submodule "argapp"]
+	path = argapp
+	url = git@github.com:deohayer/argapp.git
