@@ -3,10 +3,19 @@
 !.gitignore
 !.gitmodules
 !README.md
-!LICENSE
-!.vscode
-!.vscode/**
+!.sh
+!.uniws
+!.uniws/**
+!bin
+!bin/**
+!etc
+!etc/**
+!lib
+!lib/**
+!tmp
+!tmp/**
 
+!LICENSE
 !argapp
 !release.sh
 !pyproject.toml
