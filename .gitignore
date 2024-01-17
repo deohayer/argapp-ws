@@ -1,5 +1,6 @@
 *
 
+!.gitattributes
 !.gitignore
 !.gitmodules
 !README.md
@@ -19,3 +20,5 @@
 !argapp
 !release.sh
 !pyproject.toml
+!*.adoc
+!*.html

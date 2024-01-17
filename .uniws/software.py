@@ -24,6 +24,7 @@ class Workspace(Software):
         super().__init__(name='argapp',
                          help='Work with argapp.')
         self.fetch = Fetch()
+        self.build = Build()
         self.install = Install()
         self.test = Test()
         self.release = Release()
@@ -42,6 +43,16 @@ class Fetch(App):
            f' && git -C {DIR_UWS} submodule update --init'
            f' && git -C {DIR_TMP}/argapp checkout develop'
            f';')
+
+
+class Build(App):
+    def __call__(
+        self,
+        args: 'dict[Arg]' = None,
+        apps: 'list[App]' = None,
+    ) -> 'None':
+        super().__call__(args, apps)
+        sh(f'asciidoctor -o {DIR_UWS}/index.html {DIR_UWS}/index.adoc')
 
 
 class Install(App):

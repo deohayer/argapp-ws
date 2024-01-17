@@ -1,0 +1,1132 @@
+= argapp - a Python package for CLI application development
+:toc: right
+:toclevels: 3
+:docinfo: shared
+:nofooter:
+:source-highlighter: pygments
+
+== API
+
+'''
+
+[#argapp]
+=== `argapp`
+
+The package is a module. It exports the following identifiers:
+
+* <<argapp-arg,`Arg`>> - a class that represents a command line argument.
+* <<argapp-app,`App`>> - a class that represents a command.
+* <<argapp-callerror,`CallError`>> - an exception to raise when <<app---call--,`+App.__call__+`>> fails.
+* <<argapp-main,`main()`>> - the main function, parses the arguments and executes the commands.
+
+'''
+
+[#argapp-main]
+==== `argapp.main(App, list[str])`
+
+[source,python]
+----
+def main(
+    app: App,
+    argv: list[str] = sys.argv,
+) -> None:
+    ...
+----
+
+This function serves as the main function of the script. It does the following:
+
+. Parses `argv`, and generates parameters `args` and `apps` for <<app---call--,`+App.__call__+`>>.
+. For each `app` in `apps` calls <<app---call--,`app(args, apps)`>>, catching any exception as `error`:
+** If `type(error)` is <<argapp-callerror,`CallError`>>, it is a user-friendly error: <<callerror-message,`error.message`>> is printed to `sys.stderr`.
+`sys.exit(<<callerror-code,error.code>>)` is called in this case.
+** If `type(error)` is not <<argapp-callerror,`CallError`>>, it is a developer-friendly error: the full stack trace is printed to `sys.stderr`.
+`sys.exit(1)` is called in this case.
+. `sys.exit(0)` is called in case of successful execution.
+
+===== Parameters
+
+* `app` - <<argapp-app,`App`>> instance to use as the main command.
+The parsing will be done on behalf of this <<argapp-app,`App`>>, even if it is actually a subcommand.
+* `argv` - the command line to parse, as a list of individual tokens: `['git', 'push', '-f', 'origin', 'HEAD:main']`.
+Defaults to `sys.argv`. Note that `os.path.basename(argv[0])` is used as the command name in case if `app.name` is `None`
+
+===== Exceptions
+
+* `TypeError`, if `type(app)` is not <<argapp-app,`App`>>.
+* `TypeError`, if `type(argv)` is not `list`.
+* `TypeError`, if `type(x)` is not `str` for `x` in `argv`.
+* `ValueError`, if `argv` is `[]`.
+* `SystemExit`, always raised by the call to `sys.exit()` on success or failure.
+
+'''
+
+[#argapp-arg]
+=== `argapp.Arg`
+
+A class which represents an optional or a positional argument:
+
+* A positional argument has a unique value name and no other identifiers.
+** The values are consumed from the command line in a strict order.
+** The argument is always required, though it can be semi-optional by allowing 0 values.
+* An optional argument has a short name or a long name, and may have a not necessarily unique value name.
+** The values may be provided at any point, but placing optional arguments before the positional ones is recommended.
+** The argument may be omitted completely, though it can be marked as "required".
+
+The fields are checked upon setting. `None` is always a valid value which means that the field has to use its defaults.
+
+Note that many fields depend on each other and on <<argapp-app,`App`>> instances the <<argapp-arg,`Arg`>> is added.
+It is better to rely on auto-deduction rather than be explicit.
+
+'''
+
+[#arg-name]
+==== `Arg.name`
+
+[source,python]
+----
+class Arg:
+    ...
+    name: str | None = ...
+----
+
+A name for the argument's value, if any: `LEVEL` in `-l, --level LEVEL`.
+Uniquely identifies a positional argument among the others in `<<app-args,App.args>>`.
+
+===== Exceptions
+
+* `TypeError`, if `type(<<arg-name,name>>)` is not `str` or `NoneType`.
+* `ValueError`, if <<arg-name,`name`>> is `''`.
+* `ValueError`, if the instance should be present in <<app-args,`App.args`>> and <<arg-name,`name`>> is `None`.
+* `ValueError`, if the instance should be present in <<app-args,`App.args`>> and another positional <<argapp-arg,`Arg`>> has the same <<arg-name,`name`>>.
+
+===== Defaults
+
+* `upper(<<arg-lopt,self.lopt>>)` if <<arg-lopt,`self.lopt`>> is not `None`.
+* `upper(<<arg-sopt,self.sopt>>)` if <<arg-sopt,`self.sopt`>> is not `None`.
+* `None`.
+
+'''
+
+[#arg-sopt]
+==== `Arg.sopt`
+
+[source,python]
+----
+class Arg:
+    ...
+    sopt: str | None = ...
+----
+
+A name for the argument's short option, if any: `l` in `-l, --level LEVEL`.
+Uniquely identifies an optional argument among the others in `<<app-args,App.args>>`.
+
+===== Exceptions
+
+* `TypeError`, if `type(<<arg-sopt,sopt>>)` is not `str` or `NoneType`.
+* `ValueError`, if `len(<<arg-sopt,sopt>>)` is not 1.
+* `ValueError`, if the instance should be present in `<<app-args,App.args>>` and `<<arg-sopt,sopt>>` is `None`.
+* `ValueError`, if the instance should be present in `<<app-args,App.args>>` and another optional `<<argapp-arg,Arg>>` has the same `<<arg-sopt,sopt>>`.
+
+===== Defaults
+
+* `None`.
+
+'''
+
+[#arg-lopt]
+==== `Arg.lopt`
+
+[source,python]
+----
+class Arg:
+    ...
+    lopt: str | None = ...
+----
+
+A name for the argument's long option, if any: `level` in `-l, --level LEVEL`.
+Uniquely identifies an optional argument among the others in `<<app-args,App.args>>`.
+
+===== Exceptions
+
+* `TypeError`, if `type(<<arg-lopt,lopt>>)` is not `str` or `NoneType`.
+* `ValueError`, if `<<arg-lopt,lopt>>` is `''`.
+* `ValueError`, if the instance should be present in `<<app-args,App.args>>` and `<<arg-lopt,lopt>>` is `None`.
+* `ValueError`, if the instance should be present in `<<app-args,App.args>>` and another optional `<<argapp-arg,Arg>>` has the same `<<arg-lopt,lopt>>`.
+
+===== Defaults
+
+* `None`.
+
+'''
+
+[#arg-help]
+==== `Arg.help`
+
+[source,python]
+----
+class Arg:
+    ...
+    help: str | None = ...
+----
+
+A description of the argument.
+
+===== Exceptions
+
+* `TypeError`, if `type(<<arg-help,help>>)` is not `str` or `NoneType`.
+
+===== Defaults
+
+* `None`.
+
+'''
+
+[#arg-count]
+==== `Arg.count`
+
+[source,python]
+----
+class Arg:
+    ...
+    count: int | str = ...
+----
+
+A number of values consumed from the command line by the argument. Can be one of:
+
+* 0 (optional only).
+* A positive integer value.
+* `'?'`, 0 or 1 values.
+* `'*'`, 0 or more values.
+* `'+'`, 1 or more values.
+* `'~'`, the rest of the command line (positional only).
+
+===== Exceptions
+
+* `TypeError`, if `type(<<arg-count,count>>)` is not `int`, `str` or `NoneType`.
+* `ValueError`, if <<arg-count,`count`>> is less than 0.
+* `ValueError`, if <<arg-count,`count`>> is 0 and <<arg-positional,`self.positional`>> is `True`.
+* `ValueError`, if `type(<<arg-count,count>>)` is `str`, but the value is not one of: `'?'`, `'*'`, `'+'`, `'~'`.
+* `ValueError`, if <<arg-count,`count`>> is `'~'` and <<arg-optional,`self.optional`>> is `True`.
+* `ValueError`, if <<arg-count,`count`>> is `'~'`, the <<argapp-arg,`Arg`>> is added to a certain <<argapp-app,`App`>>, and one of the following is true:
+** The <<argapp-arg,`Arg`>> it is not the last positional argument in the <<app-args,`App.args`>>.
+** The <<argapp-app,`App`>> has non-empty <<app-apps,`App.apps`>>.
+
+===== Defaults
+
+* `'*'`, if `type(<<arg-default,self.default>>)` is `list`.
+* 1.
+
+'''
+
+[#arg-type]
+==== `Arg.type`
+
+[source,python]
+----
+class Arg:
+    ...
+    type: type = ...
+----
+
+A type of an individual value of the argument. Must be constructible from `str` (this is not checked).
+
+===== Exceptions
+
+* `TypeError`, if `type(<<arg-type,type>>)` is not `type`, or `NoneType`.
+
+===== Defaults
+
+* `type(<<arg-default,self.default>>[0])`, if `type(<<arg-default,self.default>>)` is `list`.
+* `type(<<arg-default,self.default>>)`, if `<<arg-default,self.default>>` is not `None`.
+* `type(<<arg-choices,self.choices>>[0])`, if `<<arg-choices,self.choices>>` is not `None`.
+* `str`.
+
+'''
+
+[#arg-default]
+==== `Arg.default`
+
+[source,python]
+----
+class Arg:
+    ...
+    default: object | list | None = ...
+----
+
+A default value to be used if the actual value was not provided. It is applied in the following cases:
+ * If `<<arg-count,self.count>>` is `'?'` or `'*'`, and 0 values provided.
+ * If `<<arg-suppress,self.suppress>>` is `False`, and the argument is not mentioned in the command line.
+
+===== Exceptions
+
+If <<arg-flag,`self.flag`>> is `True`:
+
+* `TypeError`, if `type(<<arg-default,default>>)` is not `bool` or `NoneType`.
+
+If <<arg-single,`self.single`>> is `True`:
+
+* `TypeError`, if `type(<<arg-default,default>>)` is not <<arg-type,`self.type`>> or `NoneType`.
+* `ValueError`, if <<arg-default,`default`>> is not in <<arg-choices,`self.choices`>>.
+
+If <<arg-multiple,`self.multiple`>> is `True`:
+
+* `TypeError`, if `type(<<arg-default,default>>)` is not `list` or `NoneType`.
+* `TypeError`, if `type(x)` is not <<arg-type,`self.type`>> for `x` in <<arg-default,`default`>>.
+* `ValueError`, if <<arg-precise,`self.precise`>> is `True` and `len(<<arg-default,default>>)` is not <<arg-count,`self.count`>>.
+* `ValueError`, if <<arg-count,`self.count`>> is `'+'` and `len(<<arg-default,default>>)` is 0.
+* `ValueError`, if `x` is not in <<arg-choices,`self.choices`>> for `x` in <<arg-default,`default`>>.
+
+===== Defaults
+
+* `False`, if <<arg-flag,`self.flag`>> is `True`.
+* `[]`, if <<arg-count,`self.count`>> is `'*'`.
+* `None`.
+
+'''
+
+[#arg-choices]
+==== `Arg.choices`
+
+[source,python]
+----
+class Arg:
+    ...
+    choices: dict | None = ...
+----
+
+A set of possible individual values for the argument. The dictionary keys are the possible values,
+and the dictionary values, if not `None` or `''` are used as their descriptions in the help text.
+
+Any `Iterable` can be used to initialize the value, it will be converted to `dict`, setting the dictionary values to `None`.
+
+===== Exceptions
+
+* `TypeError`, if `type(<<arg-choices,choices>>)` is not `Iterable` or `NoneType`.
+* `TypeError`, if `type(x)` is not `<<arg-type,self.type>>` for `x` in `<<arg-choices,choices>>`.
+* `ValueError`, if `<<arg-choices,choices>>` is empty.
+
+===== Defaults
+
+* `None`.
+
+'''
+
+[#arg-repeat]
+==== `Arg.repeat`
+
+[source,python]
+----
+class Arg:
+    ...
+    repeat: bool = ...
+----
+
+Whether the argument can be repeated multiple times:
+
+* If set to `True`, all values will be accumulated into a `list`.
+* Ignored if `<<arg-positional,self.positional>>` is `True`.
+
+===== Exceptions
+
+* `TypeError`, if `type(<<arg-repeat,repeat>>)` is not `bool` or `NoneType`.
+
+===== Defaults
+
+* `False`.
+
+'''
+
+[#arg-required]
+==== `Arg.required`
+
+[source,python]
+----
+class Arg:
+    ...
+    required: bool = ...
+----
+
+Whether the argument must be set:
+
+* If set to `True`, the optional argument must be mentioned in the command line.
+* Ignored if `<<arg-positional,self.positional>>` is `True`.
+
+===== Exceptions
+
+* `TypeError`, if `type(<<arg-required,required>>)` is not `bool` or `NoneType`.
+
+===== Defaults
+
+* `False`.
+
+'''
+
+[#arg-restrict]
+==== `Arg.restrict`
+
+[source,python]
+----
+class Arg:
+    ...
+    restrict: bool = ...
+----
+
+Whether the argument values are restricted to `<<arg-choices,self.choices>>`.
+
+===== Exceptions
+
+* `TypeError`, if `type(<<arg-restrict,restrict>>)` is not `bool` or `NoneType`.
+
+===== Defaults
+
+* `True`.
+
+'''
+
+[#arg-suppress]
+==== `Arg.suppress`
+
+[source,python]
+----
+class Arg:
+    ...
+    suppress: bool = ...
+----
+
+Whether the argument must be set to <<arg-default,`self.default`>> if it is not mentioned in the command line.
+
+* If set to `True`, the argument will not be set at all in `args` parameter of <<app---call--,`+App.__call__()+`>> if it is not mentioned in the command line.
+* Ignored if <<arg-positional,`self.positional`>> is `True` (the value is always set).
+
+===== Exceptions
+
+* `TypeError`, if `type(<<arg-suppress,suppress>>)` is not `bool` or `NoneType`.
+
+===== Defaults
+
+* `False`.
+
+'''
+
+[#arg-optional]
+==== `Arg.optional`
+
+[source,python]
+----
+class Arg:
+    ...
+    @property
+    def optional(self) -> bool:
+        ...
+----
+
+Whether the argument is optional:
+
+* Opposite to <<arg-positional,`self.positional`>>.
+* Cannot be set.
+
+===== Defaults
+
+* `True`, if <<arg-sopt,`self.sopt`>> or <<arg-lopt,`self.lopt`>> is not `None`.
+* `False`.
+
+'''
+
+[#arg-positional]
+==== `Arg.positional`
+
+[source,python]
+----
+class Arg:
+    ...
+    @property
+    def positional(self) -> bool:
+        ...
+----
+
+Whether the argument is positional:
+
+* Opposite to <<arg-optional,`self.optional`>>.
+* Cannot be set.
+
+===== Defaults
+
+* `True`, if <<arg-sopt,`self.sopt`>> and <<arg-lopt,`self.lopt`>> are `None`.
+* `False`.
+
+'''
+
+[#arg-precise]
+==== `Arg.precise`
+
+[source,python]
+----
+class Arg:
+    ...
+    @property
+    def precise(self) -> bool:
+        ...
+----
+
+Whether the argument consumes an exact number of values:
+
+* Opposite to <<arg-variadic,`self.variadic`>>.
+* Cannot be set.
+
+===== Defaults
+
+* `True`, if `type(<<arg-count,self.count>>)` is `int`.
+* `False`.
+
+'''
+
+[#arg-variadic]
+==== `Arg.variadic`
+
+[source,python]
+----
+class Arg:
+    ...
+    @property
+    def variadic(self) -> bool:
+        ...
+----
+
+Whether the argument consumes a variable number of values:
+
+* Opposite to <<arg-precise,`self.precise`>>.
+* Cannot be set.
+
+===== Defaults
+
+* `True`, if `type(<<arg-count,self.count>>)` is `str`.
+* `False`.
+
+'''
+
+[#arg-flag]
+==== `Arg.flag`
+
+[source,python]
+----
+class Arg:
+    ...
+    @property
+    def flag(self) -> bool:
+        ...
+----
+
+Whether the argument consumes no values:
+
+* Can be `True` only if <<arg-single,`self.single`>> and <<arg-multiple,`self.multiple`>> are `False`.
+* Cannot be set.
+
+===== Defaults
+
+* `True`, if <<arg-count,`self.count`>> is 0.
+* `False`.
+
+'''
+
+[#arg-single]
+==== `Arg.single`
+
+[source,python]
+----
+class Arg:
+    ...
+    @property
+    def single(self) -> bool:
+        ...
+----
+
+Whether the argument can consume a single value:
+
+* Can be `True` only if <<arg-flag,`self.flag`>> and <<arg-multiple,`self.multiple`>> are `False`.
+* Cannot be set.
+
+===== Defaults
+
+* `True`, if <<arg-count,`self.count`>> is `'?'` or 1.
+* `False`.
+
+'''
+
+[#arg-multiple]
+==== `Arg.multiple`
+
+[source,python]
+----
+class Arg:
+    ...
+    @property
+    def multiple(self) -> bool:
+        ...
+----
+
+Whether the argument can consume multiple values:
+
+* Can be `True` only if <<arg-flag,`self.flag`>> and <<arg-single,`self.single`>> are `False`.
+* Cannot be set.
+
+===== Defaults
+
+* `True`, if <<arg-count,`self.count`>> is `'*'`, `'+'` or greater than 1.
+* `False`.
+
+'''
+
+[#arg---init--]
+==== `+Arg.__init__(**)+`
+
+[source,python]
+----
+class Arg:
+    ...
+    def __init__(
+        self,
+        name: str | None = ...,
+        sopt: str | None = ...,
+        lopt: str | None = ...,
+        help: str | None = ...,
+        count: int | str | None = ...,
+        type: type | None = ...,
+        default: object | Iterable | None = ...,
+        choices: Iterable | None = ...,
+        repeat: bool | None = ...,
+        required: bool | None = ...,
+        restrict: bool | None = ...,
+        suppress: bool | None = ...,
+    ) -> None:
+        ...
+----
+
+Construct an instance.
+
+===== Parameters
+
+* `name` - corresponds to <<arg-name,`Arg.name`>>.
+* `sopt` - corresponds to <<arg-sopt,`Arg.sopt`>>.
+* `lopt` - corresponds to <<arg-lopt,`Arg.lopt`>>.
+* `help` - corresponds to <<arg-help,`Arg.help`>>.
+* `count` - corresponds to <<arg-count,`Arg.count`>>.
+* `type` - corresponds to <<arg-type,`Arg.type`>>.
+* `default` - corresponds to <<arg-default,`Arg.default`>>.
+* `choices` - corresponds to <<arg-choices,`Arg.choices`>>.
+* `repeat` - corresponds to <<arg-repeat,`Arg.repeat`>>.
+* `required` - corresponds to <<arg-required,`Arg.required`>>.
+* `restrict` - corresponds to <<arg-restrict,`Arg.restrict`>>.
+* `suppress` - corresponds to <<arg-suppress,`Arg.suppress`>>.
+
+===== Exceptions
+
+* Propagates any exceptions caused by invalid parameters.
+
+'''
+
+[#arg---call--1]
+==== `+Arg.__call__(bool)+`
+
+[source,python]
+----
+class Arg:
+    ...
+    def __call__(v: bool) -> bool:
+        ...
+----
+
+Return if the optional argument is mentioned or not. This overload is called if <<arg-flag,`self.flag`>> is `True`.
+Note that only the result of this function depends on <<arg-default,`self.default`>>, not the parameter.
+
+===== Parameters
+
+* `v` - `True`, if the argument is mentioned, `False` otherwise.
+
+===== Returns
+
+* <<arg-default,`self.default`>>, if `v` is `False`.
+* `not <<arg-default,self.default>>`, if `v` is `True`.
+
+'''
+
+[#arg---call--2]
+==== `+Arg.__call__(str | None)+`
+
+[source,python]
+----
+class Arg:
+    ...
+    def __call__(v: str | None) -> object | None:
+        ...
+----
+
+This overload is called if <<arg-single,`self.single`>> is `True` and <<arg-repeat,`self.repeat`>> is `False`.
+
+===== Parameters
+
+* `v` - `str` value, if provided in the command line. `None` otherwise.
+
+===== Returns
+
+* <<arg-default,`self.default`>>, if `v` is `None`.
+* `<<arg-type,self.type>>(v)`.
+
+'''
+
+[#arg---call--3]
+==== `+Arg.__call__(list[str] | None)+`
+
+[source,python]
+----
+class Arg:
+    ...
+    def __call__(v: list[str] | None) -> list[object]:
+        ...
+----
+
+This overload is called if <<arg-multiple,`self.multiple`>> is `True` and <<arg-repeat,`self.repeat`>> is `False`.
+
+===== Parameters
+
+* `v` - `list[str]` value, if provided in the command line. `None` otherwise.
+
+===== Returns
+
+* <<arg-default,`self.default`>>, if `v` is `None`.
+* `list[<<arg-type,self.type>>]` constructed by converting each element of `v` to <<arg-type,`self.type`>>.
+
+'''
+
+[#arg---call--4]
+==== `+Arg.__call__(list[str | None])+`
+
+[source,python]
+----
+class Arg:
+    ...
+    def __call__(v: list[str | None]) -> list[object | None]:
+        ...
+----
+
+This overload is called if <<arg-single,`self.single`>> is `True` and <<arg-repeat,`self.repeat`>> is `True`.
+
+===== Parameters
+
+* `v` - a `list` containing all values of the argument provided in the command line.
+        Empty, if the argument was not mentioned.
+        An element `None` is possible if <<arg-count,`self.count`>> is `'?'`.
+
+===== Returns
+
+* `list` with a single element <<arg-default,`self.default`>>, if `v` is empty and <<arg-default,`self.default`>> is not `None`.
+* `list[<<arg-type,self.type>> | None]` constructed by:
+** Converting each not `None` element of `v` to <<arg-type,`self.type`>>.
+** Setting each `None` element of `v` to <<arg-default,`self.default`>>.
+
+'''
+
+[#arg---call--5]
+==== `+Arg.__call__(list[list[str] | None]])+`
+
+[source,python]
+----
+class Arg:
+    ...
+    def __call__(v: list[list[str] | None]) -> list[list[object]]:
+        ...
+----
+
+This overload is called if <<arg-multiple,`self.multiple`>> is `True` and <<arg-repeat,`self.repeat`>> is `True`.
+
+===== Parameters
+
+* `v` - a `list` containing all lists of values of the argument provided in the command line.
+        Empty, if the argument was not mentioned.
+        An element `None` is possible if <<arg-repeat,`self.count`>> is `'*'`.
+
+===== Returns
+
+* `list` with a single element <<arg-default,`self.default`>>, if `v` is empty and <<arg-default,`self.default`>> is not `[]`.
+* `list[list[<<arg-type,self.type>>] | None]` constructed by:
+** Converting each element of each not `None` element of `v` to <<arg-type,`self.type`>>.
+** Setting each `None` element of `v` to <<arg-default,`self.default`>>.
+
+'''
+
+[#argapp-app]
+=== `argapp.App`
+
+A class that represents a command or a subcommand. It is not useful as is, and is supposed to be subclassed
+to handle the parsed command line in <<app---call--,`+App.__call__()+`>>.
+
+The fields are checked upon setting. `None` is always a valid value which means that the field has to use its defaults.
+
+'''
+
+[#app-name]
+==== `App.name`
+
+[source,python]
+----
+class App:
+    ...
+    name: str | None = ...
+----
+
+A name of the command. Uniquely identifies a command among the others in <<app-apps,`App.apps`>>.
+
+===== Exceptions
+
+* `TypeError`, if `type(<<app-name,name>>)` is not `str` or `NoneType`.
+* `ValueError`, if <<app-name,`name`>> is `''`.
+* `ValueError`, if the instance should be present in <<app-apps,`App.apps`>> and <<app-name,`name`>> is `None`.
+* `ValueError`, if the instance should be present in <<app-apps,`App.apps`>> and another <<argapp-app,`App`>> has the same <<app-name,`name`>>.
+
+===== Defaults
+
+* `None`.
+
+'''
+
+[#app-help]
+==== `App.help`
+
+[source,python]
+----
+class App:
+    ...
+    help: str | None = ...
+----
+
+A short description of the command, appears in the parent's help text.
+
+===== Exceptions
+
+* `TypeError`, if `type(<<app-help,help>>)` is not `str` or `NoneType`.
+
+===== Defaults
+
+* `None`.
+
+'''
+
+[#app-prolog]
+==== `App.prolog`
+
+[source,python]
+----
+class App:
+    ...
+    prolog: str | None = ...
+----
+
+A detailed description of the command, appears before the arguments list.
+
+===== Exceptions
+
+* `TypeError`, if `type(<<app-prolog,prolog>>)` is not `str` or `NoneType`.
+
+===== Defaults
+
+* <<app-help,`self.help`>>.
+
+'''
+
+[#app-epilog]
+==== `App.epilog`
+
+[source,python]
+----
+class App:
+    ...
+    epilog: str | None = ...
+----
+
+A detailed description of the command, appears after the arguments list.
+
+===== Exceptions
+
+* `TypeError`, if `type(<<app-epilog,epilog>>)` is not `str` or `NoneType`.
+
+===== Defaults
+
+* `None`.
+
+'''
+
+[#app-arg-help]
+==== `App.arg_help`
+
+[source,python]
+----
+class App:
+    ...
+    arg_help: Arg = ...
+----
+
+The argument for the help text:
+
+* It is not added to <<app-args,`self.args`>>, not used as is, and serves only as a data provider.
+* Only the <<arg-sopt,`sopt`>>, <<arg-lopt,`lopt`>> and <<arg-help,`help`>> are used, the rest is ignored.
+* If <<arg-sopt,`sopt`>> and <<arg-lopt,`lopt`>> are `None`, the help text option is disabled.
+
+===== Exceptions
+
+* `TypeError`, if `type(<<app-arg-help,arg_help>>)` is not `Arg` or `NoneType`.
+
+===== Defaults
+
+* `Arg(sopt='h', lopt='help', help='Show the help text and exit.')`.
+
+'''
+
+[#app-arg-cmd]
+==== `App.arg_cmd`
+
+[source,python]
+----
+class App:
+    ...
+    arg_cmd: Arg = ...
+----
+
+The argument for the subcommand:
+
+* It is not added to <<app-args,`self.args`>>, not used as is, and serves only as a data provider.
+* Only the <<arg-name,`name`>> and <<arg-help,`help`>> are used, the rest is ignored.
+* If <<arg-name,`name`>> is `None`, the help text option is disabled.
+
+===== Exceptions
+
+* `TypeError`, if `type(<<app-arg-cmd,arg_cmd>>)` is not `Arg` or `NoneType`.
+
+===== Defaults
+
+* `Arg(name='CMD', help='A subcommand to run.')`.
+
+'''
+
+[#app-args]
+==== `App.args`
+
+[source,python]
+----
+class App:
+    ...
+    @property
+    def args(self) -> list[Arg]:
+        ...
+----
+
+A list of arguments of the command. Cannot be set, but can be modified.
+
+===== Exceptions
+
+* `TypeError`, when adding or removing elements that are not <<argapp-arg,`Arg`>>.
+* `ValueError`, when adding a positional <<argapp-arg,`Arg`>> but <<arg-name,`name`>> is `None`.
+* `ValueError`, when adding a positional <<argapp-arg,`Arg`>> but another <<argapp-arg,`Arg`>> with the same <<arg-name,`name`>> exists.
+* `ValueError`, when adding an optional <<argapp-arg,`Arg`>> but another <<argapp-arg,`Arg`>> with the same <<arg-sopt,`sopt`>> exists.
+* `ValueError`, when adding an optional <<argapp-arg,`Arg`>> but another <<argapp-arg,`Arg`>> with the same <<arg-lopt,`lopt`>> exists.
+
+===== Defaults
+
+* `[]`.
+
+'''
+
+[#app-apps]
+==== `App.apps`
+
+[source,python]
+----
+class App:
+    ...
+    @property
+    def apps(self) -> list[App]:
+        ...
+----
+
+A list of subcommands of the command. Cannot be set, but can be modified.
+
+===== Exceptions
+
+* `TypeError`, when adding or removing elements that are not <<argapp-app,`App`>>.
+* `ValueError`, when adding an <<argapp-app,`App`>> but <<app-name,`name`>> is `None`.
+* `ValueError`, when adding an <<argapp-app,`App`>> but another <<argapp-app,`App`>> with the same <<app-name,`name`>> exists.
+* `ValueError`, when adding an <<argapp-app,`App`>> forms a cycle.
+
+===== Defaults
+
+* `[]`.
+
+'''
+
+[#app---init--]
+==== `+App.__init__(**)+`
+
+[source,python]
+----
+class App:
+    ...
+    def __init__(
+        self,
+        name: str | None = None,
+        help: str | None = None,
+        prolog: str | None = None,
+        epilog: str | None = None,
+        arg_help: Arg | None = None,
+        arg_cmd: Arg | None = None,
+    ) -> None:
+        ...
+----
+
+Construct an instance.
+
+===== Parameters
+
+* `name` - corresponds to <<app-name,`App.name`>>.
+* `help` - corresponds to <<app-help,`App.help`>>.
+* `prolog` - corresponds to <<app-prolog,`App.prolog`>>.
+* `epilog` - corresponds to <<app-epilog,`App.epilog`>>.
+* `arg_help` - corresponds to <<app-arg-help,`App.arg_help`>>.
+* `arg_cmd` - corresponds to <<app-arg-cmd,`App.arg_cmd`>>.
+
+===== Exceptions
+
+* Propagates any exceptions caused by invalid parameters.
+
+'''
+
+[#app---call--]
+==== `+App.__call__(dict[Arg, Any], list[App])+`
+
+[source,python]
+----
+class App:
+    ...
+    def __call__(
+        self,
+        args: dict[Arg, Any],
+        apps: list[App],
+    ) -> None:
+        ...
+----
+
+This method is supposed to be overridden by in a subclass:
+
+* The default implementation does nothing, no need to call.
+* Use <<argapp-callerror,`CallError`>> to notify about errors, <<argapp-main,`main()`>> catches and prints them.
+
+===== Parameters
+
+* `args` - a dictionary of all parsed arguments and their values.
+* `apps` - a call stack: the command and its subcommands mentioned in the command line.
+
+===== Exceptions
+
+* <<argapp-callerror,`CallError`>>, that is supposed to be raised in an overridden method in case of any errors.
+
+'''
+
+[#argapp-callerror]
+=== `argapp.CallError`
+
+A subclass of `RuntimeError`. These exceptions are supposed to be raised in <<app---call--,`+App.__call__()+`>>
+with custom return code and error message in case of any errors during the execution.
+
+The fields are checked upon setting. `None` is always a valid value which means that the field has to use its defaults.
+
+'''
+
+[#callerror-message]
+==== `CallError.message`
+
+[source,python]
+----
+class CallError(RuntimeError):
+    ...
+    message: str | None = ...
+----
+
+An error message. `None` means that no message is provided, nothing should be printed.
+
+===== Exceptions
+
+* `TypeError`, if `type(<<callerror-message,message>>)` is not `str` or `NoneType`.
+
+===== Defaults
+
+* `None`.
+
+'''
+
+[#callerror-code]
+==== `CallError.code`
+
+[source,python]
+----
+class CallError(RuntimeError):
+    ...
+    code: int = ...
+----
+
+A 1-byte integer value associated with the error. 0 denotes success.
+
+===== Exceptions
+
+* `TypeError`, if `type(<<callerror-code,code>>)` is not `int` or `NoneType`.
+* `ValueError`, if `<<callerror-code,code>>` is not in range [0, 255].
+
+===== Defaults
+
+* 1.
+
+'''
+
+[#callerror---init--]
+==== `+CallError.__init__(**)+`
+
+[source,python]
+----
+class CallError(RuntimeError):
+    ...
+    def __init__(
+        self,
+        message: str | None = None,
+        code: int | None = None,
+    ) -> None:
+        ...
+----
+
+Construct an instance.
+
+===== Parameters
+
+* `message` - corresponds to <<callerror-message,`CallError.message`>>.
+* `code` - corresponds to <<callerror-code,`CallError.code`>>.
+
+===== Exceptions
+
+* Propagates any exceptions caused by invalid parameters.
+
+'''
+
+[#callerror---str--]
+==== `+CallError.__str__()+`
+
+[source,python]
+----
+class CallError(RuntimeError):
+    ...
+    def __str__(self) -> str:
+        ...
+----
+
+Provide a string representation.
+
+===== Returns
+
+* `''`, if <<callerror-message,`self.message`>> is `None`.
+* <<callerror-message,`self.message`>>.
+
+'''
