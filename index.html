@@ -639,8 +639,8 @@ a > code {
 <li><a href="#arg-choices"><code>Arg.choices</code></a></li>
 <li><a href="#arg-repeat"><code>Arg.repeat</code></a></li>
 <li><a href="#arg-required"><code>Arg.required</code></a></li>
-<li><a href="#arg-restrict"><code>Arg.restrict</code></a></li>
 <li><a href="#arg-suppress"><code>Arg.suppress</code></a></li>
+<li><a href="#arg-restrict"><code>Arg.restrict</code></a></li>
 <li><a href="#arg-optional"><code>Arg.optional</code></a></li>
 <li><a href="#arg-positional"><code>Arg.positional</code></a></li>
 <li><a href="#arg-precise"><code>Arg.precise</code></a></li>
@@ -667,7 +667,7 @@ a > code {
 <li><a href="#app-args"><code>App.args</code></a></li>
 <li><a href="#app-apps"><code>App.apps</code></a></li>
 <li><a href="#app---init--"><code>App.__init__(**)</code></a></li>
-<li><a href="#app---call--"><code>App.__call__(dict[Arg, Any], list[App])</code></a></li>
+<li><a href="#app---call--"><code>App.__call__(dict[Arg, object], list[App])</code></a></li>
 </ul>
 </li>
 <li><a href="#argapp-callerror"><code>argapp.CallError</code></a>
@@ -687,6 +687,61 @@ a > code {
 <div class="sect1">
 <h2 id="_api">API</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>This chapter describes entities available to the developer and has a specific structure:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Each subchapter represents a scope: packages, modules, classes etc.
+The scope only has a description and an arbitrary number of sections.</p>
+</li>
+<li>
+<p>Each section represents either a variable or a function.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The variable refers to variables, constants, fields, properties, etc.
+It has a description with the declaration, and the following optional subsections:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Examples - usage examples.</p>
+</li>
+<li>
+<p>Exceptions - exceptions when the variable is set to some invalid value.</p>
+</li>
+<li>
+<p>Defaults - evaluation order if the variable is not set explicitly.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>The function refers to functions, methods, decorators, etc.
+It has a description with the declaration, and the following optional subsections:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Examples - usage examples.</p>
+</li>
+<li>
+<p>Parameters - a list of parameters accepted by the function.</p>
+</li>
+<li>
+<p>Exceptions - exceptions when invalid parameter values are provided.</p>
+</li>
+<li>
+<p>Returns - a list of possible return values.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
 <hr>
 <div class="sect2">
 <h3 id="argapp"><code>argapp</code></h3>
@@ -702,10 +757,10 @@ a > code {
 <p><a href="#argapp-app"><code>App</code></a> - a class that represents a command.</p>
 </li>
 <li>
-<p><a href="#argapp-callerror"><code>CallError</code></a> - an exception to raise when <a href="#app---call--"><code>App.__call__</code></a> fails.</p>
+<p><a href="#argapp-callerror"><code>CallError</code></a> - an exception to raise when there is an error in <a href="#app---call--"><code>App.__call__()</code></a>.</p>
 </li>
 <li>
-<p><a href="#argapp-main"><code>main()</code></a> - the main function, parses the arguments and executes the commands.</p>
+<p><a href="#argapp-main"><code>main()</code></a> - the main function: parses the command line and executes the commands.</p>
 </li>
 </ul>
 </div>
@@ -722,30 +777,21 @@ a > code {
 </div>
 </div>
 <div class="paragraph">
-<p>This function serves as the main function of the script. It does the following:</p>
+<p>This is the main function of the script. It does the following:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Parses <code>argv</code>, and generates parameters <code>args</code> and <code>apps</code> for <a href="#app---call--"><code>App.__call__</code></a>.</p>
+<p>Parses <code>argv</code> and generates parameters <code>args</code> and <code>apps</code> for <a href="#app---call--"><code>App.__call__()</code></a>.</p>
 </li>
 <li>
-<p>For each <code>app</code> in <code>apps</code> calls <a href="#app---call--"><code>app(args, apps)</code></a>, catching any exception as <code>error</code>:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>If <code>type(error)</code> is <a href="#argapp-callerror"><code>CallError</code></a>, it is a user-friendly error: <a href="#callerror-message"><code>error.message</code></a> is printed to <code>sys.stderr</code>.
-<code>sys.exit(<a href="#callerror-code">error.code</a>)</code> is called in this case.</p>
+<p>For each <code>app</code> in <code>apps</code> calls <a href="#app---call--"><code>app(args, apps)</code></a>.</p>
 </li>
 <li>
-<p>If <code>type(error)</code> is not <a href="#argapp-callerror"><code>CallError</code></a>, it is a developer-friendly error: the full stack trace is printed to <code>sys.stderr</code>.
-<code>sys.exit(1)</code> is called in this case.</p>
-</li>
-</ul>
-</div>
+<p>Any exception is catched and printed.</p>
 </li>
 <li>
-<p><code>sys.exit(0)</code> is called in case of successful execution.</p>
+<p><code>sys.exit()</code> is called with an appropriate exit code.</p>
 </li>
 </ol>
 </div>
@@ -754,12 +800,20 @@ a > code {
 <div class="ulist">
 <ul>
 <li>
-<p><code>app</code> - <a href="#argapp-app"><code>App</code></a> instance to use as the main command.
-The parsing will be done on behalf of this <a href="#argapp-app"><code>App</code></a>, even if it is actually a subcommand.</p>
+<p><code>app</code> - the <a href="#argapp-app"><code>App</code></a> instance to use as the main command.</p>
 </li>
 <li>
-<p><code>argv</code> - the command line to parse, as a list of individual tokens: <code>['git', 'push', '-f', 'origin', 'HEAD:main']</code>.
-Defaults to <code>sys.argv</code>. Note that <code>os.path.basename(argv[0])</code> is used as the command name in case if <code>app.name</code> is <code>None</code></p>
+<p><code>argv</code> - the command line to parse, as a list of individual tokens: <code>['git', 'push', '--force', 'origin', 'main']</code>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Defaults to <code>sys.argv</code>.</p>
+</li>
+<li>
+<p><code>os.path.basename(argv[0])</code> is used as the command name in the help text in case if <code>app.name</code> is <code>None</code>.</p>
+</li>
+</ul>
+</div>
 </li>
 </ul>
 </div>
@@ -769,19 +823,43 @@ Defaults to <code>sys.argv</code>. Note that <code>os.path.basename(argv[0])</co
 <div class="ulist">
 <ul>
 <li>
-<p><code>TypeError</code>, if <code>type(app)</code> is not <a href="#argapp-app"><code>App</code></a>.</p>
+<p><code>SystemExit</code>, if any <code>error</code> is raised:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>If the type of <code>error</code> is <a href="#argapp-callerror"><code>CallError</code></a>, it is a user-friendly error:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The usage text is printed to <code>sys.stderr</code>, if the error originates from the parsing.</p>
 </li>
 <li>
-<p><code>TypeError</code>, if <code>type(argv)</code> is not <code>list</code>.</p>
+<p><a href="#callerror-message"><code>error.message</code></a> is printed to <code>sys.stderr</code>, if not <code>None</code>.</p>
 </li>
 <li>
-<p><code>TypeError</code>, if <code>type(x)</code> is not <code>str</code> for <code>x</code> in <code>argv</code>.</p>
+<p><code>SystemExit(<a href="#callerror-code">error.code</a>)</code> is raised.</p>
+</li>
+</ul>
+</div>
 </li>
 <li>
-<p><code>ValueError</code>, if <code>argv</code> is <code>[]</code>.</p>
+<p>If the type of <code>error</code> is not <a href="#argapp-callerror"><code>CallError</code></a>, it is a developer-friendly error:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>str(error)</code> with its traceback is printed to <code>sys.stderr</code>.</p>
 </li>
 <li>
-<p><code>SystemExit</code>, always raised by the call to <code>sys.exit()</code> on success or failure.</p>
+<p><code>SystemExit(1)</code> is raised.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>SystemExit(0)</code> is raised.</p>
+</li>
+</ul>
+</div>
 </li>
 </ul>
 </div>
@@ -792,32 +870,38 @@ Defaults to <code>sys.argv</code>. Note that <code>os.path.basename(argv[0])</co
 <div class="sect2">
 <h3 id="argapp-arg"><code>argapp.Arg</code></h3>
 <div class="paragraph">
-<p>A class which represents an optional or a positional argument:</p>
+<p>A class which represents an optional or a positional argument.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>A positional argument has a unique value name and no other identifiers.</p>
+<p>Positional arguments:</p>
 <div class="ulist">
 <ul>
 <li>
-<p>The values are consumed from the command line in a strict order.</p>
+<p>Have unique value names within the same <a href="#argapp-app"><code>App</code></a>.</p>
 </li>
 <li>
-<p>The argument is always required, though it can be semi-optional by allowing 0 values.</p>
+<p>Always required. Setting <a href="#arg-count"><code>count</code></a> to <code>'*'</code> and <code>'?'</code> mimics the optional behavior.</p>
+</li>
+<li>
+<p>Appear in the command line in a strict order.</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>An optional argument has a short name or a long name, and may have a not necessarily unique value name.</p>
+<p>Optional arguments:</p>
 <div class="ulist">
 <ul>
 <li>
-<p>The values may be provided at any point, but placing optional arguments before the positional ones is recommended.</p>
+<p>Have unique short and long option names within the same <a href="#argapp-app"><code>App</code></a>. The value name is not necessarily unique.</p>
 </li>
 <li>
-<p>The argument may be omitted completely, though it can be marked as "required".</p>
+<p>Can be omitted completely unless marked as <a href="#arg-required"><code>required</code></a>.</p>
+</li>
+<li>
+<p>Can appear in the command line in any order and be mixed with the positional. Providing optional arguments before positional is encouraged.</p>
 </li>
 </ul>
 </div>
@@ -825,11 +909,23 @@ Defaults to <code>sys.argv</code>. Note that <code>os.path.basename(argv[0])</co
 </ul>
 </div>
 <div class="paragraph">
-<p>The fields are checked upon setting. <code>None</code> is always a valid value which means that the field has to use its defaults.</p>
+<p>Important concepts:</p>
 </div>
-<div class="paragraph">
-<p>Note that many fields depend on each other and on <a href="#argapp-app"><code>App</code></a> instances the <a href="#argapp-arg"><code>Arg</code></a> is added.
-It is better to rely on auto-deduction rather than be explicit.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The same <a href="#argapp-arg"><code>Arg</code></a> can be associated with multiple <a href="#argapp-app"><code>App</code></a>.</p>
+</li>
+<li>
+<p>The value of <a href="#argapp-arg"><code>Arg</code></a> is retrieved using the instance itself. It is usually necessary to store the constructed <a href="#argapp-arg"><code>Arg</code></a>.</p>
+</li>
+<li>
+<p>All fields are properties. Note that "get" and "set" types do not match.</p>
+</li>
+<li>
+<p>Setting the field to <code>None</code> means that it will be implicitly re-evaluated according to "Defaults".</p>
+</li>
+</ul>
 </div>
 <hr>
 <div class="sect3">
@@ -838,41 +934,28 @@ It is better to rely on auto-deduction rather than be explicit.</p>
 <div class="content">
 <pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">class</span> <span class="tok-nc">Arg</span><span class="tok-p">:</span>
     <span class="tok-o">...</span>
-    <span class="tok-n">name</span><span class="tok-p">:</span> <span class="tok-nb">str</span> <span class="tok-o">|</span> <span class="tok-kc">None</span> <span class="tok-o">=</span> <span class="tok-o">...</span></code></pre>
+    <span class="tok-nd">@property</span>
+    <span class="tok-k">def</span> <span class="tok-nf">name</span><span class="tok-p">(</span><span class="tok-bp">self</span><span class="tok-p">)</span> <span class="tok-o">-&gt;</span> <span class="tok-nb">str</span><span class="tok-p">:</span>
+        <span class="tok-o">...</span>
+
+    <span class="tok-nd">@name</span><span class="tok-o">.</span><span class="tok-n">setter</span>
+    <span class="tok-k">def</span> <span class="tok-nf">name</span><span class="tok-p">(</span><span class="tok-bp">self</span><span class="tok-p">,</span> <span class="tok-n">v</span><span class="tok-p">:</span> <span class="tok-nb">str</span> <span class="tok-o">|</span> <span class="tok-kc">None</span><span class="tok-p">)</span> <span class="tok-o">-&gt;</span> <span class="tok-kc">None</span><span class="tok-p">:</span>
+        <span class="tok-o">...</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>A name for the argument&#8217;s value, if any: <code>LEVEL</code> in <code>-l, --level LEVEL</code>.
-Uniquely identifies a positional argument among the others in <code><a href="#app-args">App.args</a></code>.</p>
-</div>
-<div class="sect4">
-<h5 id="_exceptions_2">Exceptions</h5>
-<div class="ulist">
-<ul>
-<li>
-<p><code>TypeError</code>, if <code>type(<a href="#arg-name">name</a>)</code> is not <code>str</code> or <code>NoneType</code>.</p>
-</li>
-<li>
-<p><code>ValueError</code>, if <a href="#arg-name"><code>name</code></a> is <code>''</code>.</p>
-</li>
-<li>
-<p><code>ValueError</code>, if the instance should be present in <a href="#app-args"><code>App.args</code></a> and <a href="#arg-name"><code>name</code></a> is <code>None</code>.</p>
-</li>
-<li>
-<p><code>ValueError</code>, if the instance should be present in <a href="#app-args"><code>App.args</code></a> and another positional <a href="#argapp-arg"><code>Arg</code></a> has the same <a href="#arg-name"><code>name</code></a>.</p>
-</li>
-</ul>
-</div>
+<p>A name for the argument&#8217;s value, if any: <code>LEVEL</code> in <code>-l, --level LEVEL</code>.<br>
+Uniquely identifies a positional argument among the others in <a href="#app-args"><code>App.args</code></a>.</p>
 </div>
 <div class="sect4">
 <h5 id="_defaults">Defaults</h5>
 <div class="ulist">
 <ul>
 <li>
-<p><code>upper(<a href="#arg-lopt">self.lopt</a>)</code> if <a href="#arg-lopt"><code>self.lopt</code></a> is not <code>None</code>.</p>
+<p>Uppercase <a href="#arg-lopt"><code>self.lopt</code></a>, if it is not <code>None</code>.</p>
 </li>
 <li>
-<p><code>upper(<a href="#arg-sopt">self.sopt</a>)</code> if <a href="#arg-sopt"><code>self.sopt</code></a> is not <code>None</code>.</p>
+<p>Uppercase <a href="#arg-sopt"><code>self.sopt</code></a>, if it is not <code>None</code>.</p>
 </li>
 <li>
 <p><code>None</code>.</p>
@@ -892,27 +975,8 @@ Uniquely identifies a positional argument among the others in <code><a href="#ap
 </div>
 </div>
 <div class="paragraph">
-<p>A name for the argument&#8217;s short option, if any: <code>l</code> in <code>-l, --level LEVEL</code>.
-Uniquely identifies an optional argument among the others in <code><a href="#app-args">App.args</a></code>.</p>
-</div>
-<div class="sect4">
-<h5 id="_exceptions_3">Exceptions</h5>
-<div class="ulist">
-<ul>
-<li>
-<p><code>TypeError</code>, if <code>type(<a href="#arg-sopt">sopt</a>)</code> is not <code>str</code> or <code>NoneType</code>.</p>
-</li>
-<li>
-<p><code>ValueError</code>, if <code>len(<a href="#arg-sopt">sopt</a>)</code> is not 1.</p>
-</li>
-<li>
-<p><code>ValueError</code>, if the instance should be present in <code><a href="#app-args">App.args</a></code> and <code><a href="#arg-sopt">sopt</a></code> is <code>None</code>.</p>
-</li>
-<li>
-<p><code>ValueError</code>, if the instance should be present in <code><a href="#app-args">App.args</a></code> and another optional <code><a href="#argapp-arg">Arg</a></code> has the same <code><a href="#arg-sopt">sopt</a></code>.</p>
-</li>
-</ul>
-</div>
+<p>A name for the argument&#8217;s short option, if any: <code>l</code> in <code>-l, --level LEVEL</code>.<br>
+Uniquely identifies an optional argument among the others in <a href="#app-args"><code>App.args</code></a>.</p>
 </div>
 <div class="sect4">
 <h5 id="_defaults_2">Defaults</h5>
@@ -936,27 +1000,8 @@ Uniquely identifies an optional argument among the others in <code><a href="#app
 </div>
 </div>
 <div class="paragraph">
-<p>A name for the argument&#8217;s long option, if any: <code>level</code> in <code>-l, --level LEVEL</code>.
-Uniquely identifies an optional argument among the others in <code><a href="#app-args">App.args</a></code>.</p>
-</div>
-<div class="sect4">
-<h5 id="_exceptions_4">Exceptions</h5>
-<div class="ulist">
-<ul>
-<li>
-<p><code>TypeError</code>, if <code>type(<a href="#arg-lopt">lopt</a>)</code> is not <code>str</code> or <code>NoneType</code>.</p>
-</li>
-<li>
-<p><code>ValueError</code>, if <code><a href="#arg-lopt">lopt</a></code> is <code>''</code>.</p>
-</li>
-<li>
-<p><code>ValueError</code>, if the instance should be present in <code><a href="#app-args">App.args</a></code> and <code><a href="#arg-lopt">lopt</a></code> is <code>None</code>.</p>
-</li>
-<li>
-<p><code>ValueError</code>, if the instance should be present in <code><a href="#app-args">App.args</a></code> and another optional <code><a href="#argapp-arg">Arg</a></code> has the same <code><a href="#arg-lopt">lopt</a></code>.</p>
-</li>
-</ul>
-</div>
+<p>A name for the argument&#8217;s long option, if any: <code>level</code> in <code>-l, --level LEVEL</code>.<br>
+Uniquely identifies an optional argument among the others in <a href="#app-args"><code>App.args</code></a>.</p>
 </div>
 <div class="sect4">
 <h5 id="_defaults_3">Defaults</h5>
@@ -980,17 +1025,17 @@ Uniquely identifies an optional argument among the others in <code><a href="#app
 </div>
 </div>
 <div class="paragraph">
-<p>A description of the argument.</p>
+<p>A description of the argument:</p>
 </div>
-<div class="sect4">
-<h5 id="_exceptions_5">Exceptions</h5>
 <div class="ulist">
 <ul>
 <li>
-<p><code>TypeError</code>, if <code>type(<a href="#arg-help">help</a>)</code> is not <code>str</code> or <code>NoneType</code>.</p>
+<p>Appears next to the argument in the help text, if not <code>None</code>.</p>
+</li>
+<li>
+<p>All the newlines and spaces are retained.</p>
 </li>
 </ul>
-</div>
 </div>
 <div class="sect4">
 <h5 id="_defaults_4">Defaults</h5>
@@ -1019,7 +1064,7 @@ Uniquely identifies an optional argument among the others in <code><a href="#app
 <div class="ulist">
 <ul>
 <li>
-<p>0 (optional only).</p>
+<p>0 (only if <a href="#arg-optional"><code>self.optional</code></a> is <code>True</code>).</p>
 </li>
 <li>
 <p>A positive integer value.</p>
@@ -1034,51 +1079,16 @@ Uniquely identifies an optional argument among the others in <code><a href="#app
 <p><code>'+'</code>, 1 or more values.</p>
 </li>
 <li>
-<p><code>'~'</code>, the rest of the command line (positional only).</p>
+<p><code>'~'</code>, the rest of the command line (only if <a href="#arg-positional"><code>self.positional</code></a> is <code>True</code>).</p>
 </li>
 </ul>
-</div>
-<div class="sect4">
-<h5 id="_exceptions_6">Exceptions</h5>
-<div class="ulist">
-<ul>
-<li>
-<p><code>TypeError</code>, if <code>type(<a href="#arg-count">count</a>)</code> is not <code>int</code>, <code>str</code> or <code>NoneType</code>.</p>
-</li>
-<li>
-<p><code>ValueError</code>, if <a href="#arg-count"><code>count</code></a> is less than 0.</p>
-</li>
-<li>
-<p><code>ValueError</code>, if <a href="#arg-count"><code>count</code></a> is 0 and <a href="#arg-positional"><code>self.positional</code></a> is <code>True</code>.</p>
-</li>
-<li>
-<p><code>ValueError</code>, if <code>type(<a href="#arg-count">count</a>)</code> is <code>str</code>, but the value is not one of: <code>'?'</code>, <code>'*'</code>, <code>'+'</code>, <code>'~'</code>.</p>
-</li>
-<li>
-<p><code>ValueError</code>, if <a href="#arg-count"><code>count</code></a> is <code>'~'</code> and <a href="#arg-optional"><code>self.optional</code></a> is <code>True</code>.</p>
-</li>
-<li>
-<p><code>ValueError</code>, if <a href="#arg-count"><code>count</code></a> is <code>'~'</code>, the <a href="#argapp-arg"><code>Arg</code></a> is added to a certain <a href="#argapp-app"><code>App</code></a>, and one of the following is true:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>The <a href="#argapp-arg"><code>Arg</code></a> it is not the last positional argument in the <a href="#app-args"><code>App.args</code></a>.</p>
-</li>
-<li>
-<p>The <a href="#argapp-app"><code>App</code></a> has non-empty <a href="#app-apps"><code>App.apps</code></a>.</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
 </div>
 <div class="sect4">
 <h5 id="_defaults_5">Defaults</h5>
 <div class="ulist">
 <ul>
 <li>
-<p><code>'*'</code>, if <code>type(<a href="#arg-default">self.default</a>)</code> is <code>list</code>.</p>
+<p><code>'*'</code>, if the type of <a href="#arg-default"><code>self.default</code></a>) is <code>list</code>.</p>
 </li>
 <li>
 <p>1.</p>
@@ -1098,30 +1108,20 @@ Uniquely identifies an optional argument among the others in <code><a href="#app
 </div>
 </div>
 <div class="paragraph">
-<p>A type of an individual value of the argument. Must be constructible from <code>str</code> (this is not checked).</p>
-</div>
-<div class="sect4">
-<h5 id="_exceptions_7">Exceptions</h5>
-<div class="ulist">
-<ul>
-<li>
-<p><code>TypeError</code>, if <code>type(<a href="#arg-type">type</a>)</code> is not <code>type</code>, or <code>NoneType</code>.</p>
-</li>
-</ul>
-</div>
+<p>A type of an individual value of the argument. Must be constructible from <code>str</code> (this requirement is not checked).</p>
 </div>
 <div class="sect4">
 <h5 id="_defaults_6">Defaults</h5>
 <div class="ulist">
 <ul>
 <li>
-<p><code>type(<a href="#arg-default">self.default</a>[0])</code>, if <code>type(<a href="#arg-default">self.default</a>)</code> is <code>list</code>.</p>
+<p>The type of the items in <a href="#arg-choices"><code>self.choices</code></a>, if <a href="#arg-choices"><code>self.choices</code></a> is not <code>None</code>.</p>
 </li>
 <li>
-<p><code>type(<a href="#arg-default">self.default</a>)</code>, if <code><a href="#arg-default">self.default</a></code> is not <code>None</code>.</p>
+<p>The type of the items in <a href="#arg-default"><code>self.default</code></a>, if <a href="#arg-multiple"><code>self.multiple</code></a> is <code>True</code>.</p>
 </li>
 <li>
-<p><code>type(<a href="#arg-choices">self.choices</a>[0])</code>, if <code><a href="#arg-choices">self.choices</a></code> is not <code>None</code>.</p>
+<p>The type of <a href="#arg-default"><code>self.default</code></a>, if <a href="#arg-default"><code>self.default</code></a> is not <code>None</code>.</p>
 </li>
 <li>
 <p><code>str</code>.</p>
@@ -1141,57 +1141,17 @@ Uniquely identifies an optional argument among the others in <code><a href="#app
 </div>
 </div>
 <div class="paragraph">
-<p>A default value to be used if the actual value was not provided. It is applied in the following cases:
- * If <code><a href="#arg-count">self.count</a></code> is <code>'?'</code> or <code>'*'</code>, and 0 values provided.
- * If <code><a href="#arg-suppress">self.suppress</a></code> is <code>False</code>, and the argument is not mentioned in the command line.</p>
-</div>
-<div class="sect4">
-<h5 id="_exceptions_8">Exceptions</h5>
-<div class="paragraph">
-<p>If <a href="#arg-flag"><code>self.flag</code></a> is <code>True</code>:</p>
+<p>A default value to be used if the actual value was not provided. It is returned by the base implementations of <a href="arg---call&.html#8212;&#8203;1"><code>Arg.__call__()</code></a> in the following cases:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>TypeError</code>, if <code>type(<a href="#arg-default">default</a>)</code> is not <code>bool</code> or <code>NoneType</code>.</p>
+<p>If <a href="#arg-count"><code>self.count</code></a> is <code>'?'</code> or <code>'*'</code>, and zero values are provided in the command line.</p>
+</li>
+<li>
+<p>If <a href="#arg-suppress"><code>self.suppress</code></a> is <code>False</code>, and the argument is not mentioned in the command line.</p>
 </li>
 </ul>
-</div>
-<div class="paragraph">
-<p>If <a href="#arg-single"><code>self.single</code></a> is <code>True</code>:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>TypeError</code>, if <code>type(<a href="#arg-default">default</a>)</code> is not <a href="#arg-type"><code>self.type</code></a> or <code>NoneType</code>.</p>
-</li>
-<li>
-<p><code>ValueError</code>, if <a href="#arg-default"><code>default</code></a> is not in <a href="#arg-choices"><code>self.choices</code></a>.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>If <a href="#arg-multiple"><code>self.multiple</code></a> is <code>True</code>:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>TypeError</code>, if <code>type(<a href="#arg-default">default</a>)</code> is not <code>list</code> or <code>NoneType</code>.</p>
-</li>
-<li>
-<p><code>TypeError</code>, if <code>type(x)</code> is not <a href="#arg-type"><code>self.type</code></a> for <code>x</code> in <a href="#arg-default"><code>default</code></a>.</p>
-</li>
-<li>
-<p><code>ValueError</code>, if <a href="#arg-precise"><code>self.precise</code></a> is <code>True</code> and <code>len(<a href="#arg-default">default</a>)</code> is not <a href="#arg-count"><code>self.count</code></a>.</p>
-</li>
-<li>
-<p><code>ValueError</code>, if <a href="#arg-count"><code>self.count</code></a> is <code>'+'</code> and <code>len(<a href="#arg-default">default</a>)</code> is 0.</p>
-</li>
-<li>
-<p><code>ValueError</code>, if <code>x</code> is not in <a href="#arg-choices"><code>self.choices</code></a> for <code>x</code> in <a href="#arg-default"><code>default</code></a>.</p>
-</li>
-</ul>
-</div>
 </div>
 <div class="sect4">
 <h5 id="_defaults_7">Defaults</h5>
@@ -1228,22 +1188,6 @@ and the dictionary values, if not <code>None</code> or <code>''</code> are used 
 <p>Any <code>Iterable</code> can be used to initialize the value, it will be converted to <code>dict</code>, setting the dictionary values to <code>None</code>.</p>
 </div>
 <div class="sect4">
-<h5 id="_exceptions_9">Exceptions</h5>
-<div class="ulist">
-<ul>
-<li>
-<p><code>TypeError</code>, if <code>type(<a href="#arg-choices">choices</a>)</code> is not <code>Iterable</code> or <code>NoneType</code>.</p>
-</li>
-<li>
-<p><code>TypeError</code>, if <code>type(x)</code> is not <code><a href="#arg-type">self.type</a></code> for <code>x</code> in <code><a href="#arg-choices">choices</a></code>.</p>
-</li>
-<li>
-<p><code>ValueError</code>, if <code><a href="#arg-choices">choices</a></code> is empty.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
 <h5 id="_defaults_8">Defaults</h5>
 <div class="ulist">
 <ul>
@@ -1273,19 +1217,9 @@ and the dictionary values, if not <code>None</code> or <code>''</code> are used 
 <p>If set to <code>True</code>, all values will be accumulated into a <code>list</code>.</p>
 </li>
 <li>
-<p>Ignored if <code><a href="#arg-positional">self.positional</a></code> is <code>True</code>.</p>
+<p>Unused if <a href="#arg-positional"><code>self.positional</code></a> is <code>True</code>.</p>
 </li>
 </ul>
-</div>
-<div class="sect4">
-<h5 id="_exceptions_10">Exceptions</h5>
-<div class="ulist">
-<ul>
-<li>
-<p><code>TypeError</code>, if <code>type(<a href="#arg-repeat">repeat</a>)</code> is not <code>bool</code> or <code>NoneType</code>.</p>
-</li>
-</ul>
-</div>
 </div>
 <div class="sect4">
 <h5 id="_defaults_9">Defaults</h5>
@@ -1317,19 +1251,9 @@ and the dictionary values, if not <code>None</code> or <code>''</code> are used 
 <p>If set to <code>True</code>, the optional argument must be mentioned in the command line.</p>
 </li>
 <li>
-<p>Ignored if <code><a href="#arg-positional">self.positional</a></code> is <code>True</code>.</p>
+<p>Unused if <a href="#arg-positional"><code>self.positional</code></a> is <code>True</code>.</p>
 </li>
 </ul>
-</div>
-<div class="sect4">
-<h5 id="_exceptions_11">Exceptions</h5>
-<div class="ulist">
-<ul>
-<li>
-<p><code>TypeError</code>, if <code>type(<a href="#arg-required">required</a>)</code> is not <code>bool</code> or <code>NoneType</code>.</p>
-</li>
-</ul>
-</div>
 </div>
 <div class="sect4">
 <h5 id="_defaults_10">Defaults</h5>
@@ -1337,40 +1261,6 @@ and the dictionary values, if not <code>None</code> or <code>''</code> are used 
 <ul>
 <li>
 <p><code>False</code>.</p>
-</li>
-</ul>
-</div>
-<hr>
-</div>
-</div>
-<div class="sect3">
-<h4 id="arg-restrict"><code>Arg.restrict</code></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">class</span> <span class="tok-nc">Arg</span><span class="tok-p">:</span>
-    <span class="tok-o">...</span>
-    <span class="tok-n">restrict</span><span class="tok-p">:</span> <span class="tok-nb">bool</span> <span class="tok-o">=</span> <span class="tok-o">...</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Whether the argument values are restricted to <code><a href="#arg-choices">self.choices</a></code>.</p>
-</div>
-<div class="sect4">
-<h5 id="_exceptions_12">Exceptions</h5>
-<div class="ulist">
-<ul>
-<li>
-<p><code>TypeError</code>, if <code>type(<a href="#arg-restrict">restrict</a>)</code> is not <code>bool</code> or <code>NoneType</code>.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_defaults_11">Defaults</h5>
-<div class="ulist">
-<ul>
-<li>
-<p><code>True</code>.</p>
 </li>
 </ul>
 </div>
@@ -1395,26 +1285,40 @@ and the dictionary values, if not <code>None</code> or <code>''</code> are used 
 <p>If set to <code>True</code>, the argument will not be set at all in <code>args</code> parameter of <a href="#app---call--"><code>App.__call__()</code></a> if it is not mentioned in the command line.</p>
 </li>
 <li>
-<p>Ignored if <a href="#arg-positional"><code>self.positional</code></a> is <code>True</code> (the value is always set).</p>
+<p>Unused if <a href="#arg-positional"><code>self.positional</code></a> is <code>True</code>.</p>
 </li>
 </ul>
 </div>
 <div class="sect4">
-<h5 id="_exceptions_13">Exceptions</h5>
+<h5 id="_defaults_11">Defaults</h5>
 <div class="ulist">
 <ul>
 <li>
-<p><code>TypeError</code>, if <code>type(<a href="#arg-suppress">suppress</a>)</code> is not <code>bool</code> or <code>NoneType</code>.</p>
+<p><code>False</code>.</p>
 </li>
 </ul>
 </div>
+<hr>
+</div>
+</div>
+<div class="sect3">
+<h4 id="arg-restrict"><code>Arg.restrict</code></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">class</span> <span class="tok-nc">Arg</span><span class="tok-p">:</span>
+    <span class="tok-o">...</span>
+    <span class="tok-n">restrict</span><span class="tok-p">:</span> <span class="tok-nb">bool</span> <span class="tok-o">=</span> <span class="tok-o">...</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Whether the argument values are restricted to <a href="#arg-choices"><code>self.choices</code></a>.</p>
 </div>
 <div class="sect4">
 <h5 id="_defaults_12">Defaults</h5>
 <div class="ulist">
 <ul>
 <li>
-<p><code>False</code>.</p>
+<p><code>True</code>.</p>
 </li>
 </ul>
 </div>
@@ -1528,7 +1432,7 @@ and the dictionary values, if not <code>None</code> or <code>''</code> are used 
 <div class="ulist">
 <ul>
 <li>
-<p><code>True</code>, if <code>type(<a href="#arg-count">self.count</a>)</code> is <code>int</code>.</p>
+<p><code>True</code>, if the type of <a href="#arg-count"><code>self.count</code></a> is <code>int</code>.</p>
 </li>
 <li>
 <p><code>False</code>.</p>
@@ -1712,8 +1616,8 @@ and the dictionary values, if not <code>None</code> or <code>''</code> are used 
         <span class="tok-n">choices</span><span class="tok-p">:</span> <span class="tok-n">Iterable</span> <span class="tok-o">|</span> <span class="tok-kc">None</span> <span class="tok-o">=</span> <span class="tok-o">...</span><span class="tok-p">,</span>
         <span class="tok-n">repeat</span><span class="tok-p">:</span> <span class="tok-nb">bool</span> <span class="tok-o">|</span> <span class="tok-kc">None</span> <span class="tok-o">=</span> <span class="tok-o">...</span><span class="tok-p">,</span>
         <span class="tok-n">required</span><span class="tok-p">:</span> <span class="tok-nb">bool</span> <span class="tok-o">|</span> <span class="tok-kc">None</span> <span class="tok-o">=</span> <span class="tok-o">...</span><span class="tok-p">,</span>
-        <span class="tok-n">restrict</span><span class="tok-p">:</span> <span class="tok-nb">bool</span> <span class="tok-o">|</span> <span class="tok-kc">None</span> <span class="tok-o">=</span> <span class="tok-o">...</span><span class="tok-p">,</span>
         <span class="tok-n">suppress</span><span class="tok-p">:</span> <span class="tok-nb">bool</span> <span class="tok-o">|</span> <span class="tok-kc">None</span> <span class="tok-o">=</span> <span class="tok-o">...</span><span class="tok-p">,</span>
+        <span class="tok-n">restrict</span><span class="tok-p">:</span> <span class="tok-nb">bool</span> <span class="tok-o">|</span> <span class="tok-kc">None</span> <span class="tok-o">=</span> <span class="tok-o">...</span><span class="tok-p">,</span>
     <span class="tok-p">)</span> <span class="tok-o">-&gt;</span> <span class="tok-kc">None</span><span class="tok-p">:</span>
         <span class="tok-o">...</span></code></pre>
 </div>
@@ -1756,16 +1660,16 @@ and the dictionary values, if not <code>None</code> or <code>''</code> are used 
 <p><code>required</code> - corresponds to <a href="#arg-required"><code>Arg.required</code></a>.</p>
 </li>
 <li>
-<p><code>restrict</code> - corresponds to <a href="#arg-restrict"><code>Arg.restrict</code></a>.</p>
+<p><code>suppress</code> - corresponds to <a href="#arg-suppress"><code>Arg.suppress</code></a>.</p>
 </li>
 <li>
-<p><code>suppress</code> - corresponds to <a href="#arg-suppress"><code>Arg.suppress</code></a>.</p>
+<p><code>restrict</code> - corresponds to <a href="#arg-restrict"><code>Arg.restrict</code></a>.</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_exceptions_14">Exceptions</h5>
+<h5 id="_exceptions_2">Exceptions</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -1787,7 +1691,7 @@ and the dictionary values, if not <code>None</code> or <code>''</code> are used 
 </div>
 </div>
 <div class="paragraph">
-<p>Return if the optional argument is mentioned or not. This overload is called if <a href="#arg-flag"><code>self.flag</code></a> is <code>True</code>.
+<p>Return if the optional argument is mentioned or not. This overload is called if <a href="#arg-flag"><code>self.flag</code></a> is <code>True</code>.<br>
 Note that only the result of this function depends on <a href="#arg-default"><code>self.default</code></a>, not the parameter.</p>
 </div>
 <div class="sect4">
@@ -1808,7 +1712,7 @@ Note that only the result of this function depends on <a href="#arg-default"><co
 <p><a href="#arg-default"><code>self.default</code></a>, if <code>v</code> is <code>False</code>.</p>
 </li>
 <li>
-<p><code>not <a href="#arg-default">self.default</a></code>, if <code>v</code> is <code>True</code>.</p>
+<p>Opposite to <a href="#arg-default"><code>self.default</code></a>, if <code>v</code> is <code>True</code>.</p>
 </li>
 </ul>
 </div>
@@ -1834,6 +1738,26 @@ Note that only the result of this function depends on <a href="#arg-default"><co
 <ul>
 <li>
 <p><code>v</code> - <code>str</code> value, if provided in the command line. <code>None</code> otherwise.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_exceptions_3">Exceptions</h5>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CallError</code>, if the parsed <code>v</code> is not in <a href="#arg-choices"><code>self.choices</code></a> and <a href="#arg-restrict"><code>self.restrict</code></a> is <code>True</code>.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">arg</span> <span class="tok-o">=</span> <span class="tok-n">Arg</span><span class="tok-p">(</span><span class="tok-n">name</span><span class="tok-o">=</span><span class="tok-s1">&#39;arg&#39;</span><span class="tok-p">,</span> <span class="tok-n">choices</span><span class="tok-o">=</span><span class="tok-p">[</span><span class="tok-mi">1</span><span class="tok-p">,</span> <span class="tok-mi">2</span><span class="tok-p">,</span> <span class="tok-mi">3</span><span class="tok-p">])</span>
+<span class="tok-n">arg</span><span class="tok-p">(</span><span class="tok-s1">&#39;2&#39;</span><span class="tok-p">)</span>
+<span class="tok-c1"># Invalid value of a positional argument &quot;arg&quot;: 2. Must be one of:</span>
+<span class="tok-c1">#  * 1</span>
+<span class="tok-c1">#  * 2</span>
+<span class="tok-c1">#  * 3</span></code></pre>
+</div>
+</div>
 </li>
 </ul>
 </div>
@@ -1877,6 +1801,26 @@ Note that only the result of this function depends on <a href="#arg-default"><co
 </div>
 </div>
 <div class="sect4">
+<h5 id="_exceptions_4">Exceptions</h5>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CallError</code>, if any of parsed items of <code>v</code> is not in <a href="#arg-choices"><code>self.choices</code></a> and <a href="#arg-restrict"><code>self.restrict</code></a> is <code>True</code>.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">arg</span> <span class="tok-o">=</span> <span class="tok-n">Arg</span><span class="tok-p">(</span><span class="tok-n">name</span><span class="tok-o">=</span><span class="tok-s1">&#39;arg&#39;</span><span class="tok-p">,</span> <span class="tok-n">count</span><span class="tok-o">=</span><span class="tok-s1">&#39;*&#39;</span><span class="tok-p">,</span> <span class="tok-n">choices</span><span class="tok-o">=</span><span class="tok-p">[</span><span class="tok-mi">1</span><span class="tok-p">,</span> <span class="tok-mi">2</span><span class="tok-p">,</span> <span class="tok-mi">3</span><span class="tok-p">])</span>
+<span class="tok-n">arg</span><span class="tok-p">([</span><span class="tok-s1">&#39;2&#39;</span><span class="tok-p">,</span> <span class="tok-s1">&#39;4&#39;</span><span class="tok-p">])</span>
+<span class="tok-c1"># Invalid value of a positional argument &quot;arg&quot;: 4. Must be one of:</span>
+<span class="tok-c1">#  * 1</span>
+<span class="tok-c1">#  * 2</span>
+<span class="tok-c1">#  * 3</span></code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
 <h5 id="_returns_3">Returns</h5>
 <div class="ulist">
 <ul>
@@ -1912,6 +1856,26 @@ Note that only the result of this function depends on <a href="#arg-default"><co
 <p><code>v</code> - a <code>list</code> containing all values of the argument provided in the command line.
 Empty, if the argument was not mentioned.
 An element <code>None</code> is possible if <a href="#arg-count"><code>self.count</code></a> is <code>'?'</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_exceptions_5">Exceptions</h5>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CallError</code>, if any of parsed items of <code>v</code> is not in <a href="#arg-choices"><code>self.choices</code></a> and <a href="#arg-restrict"><code>self.restrict</code></a> is <code>True</code>.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">arg</span> <span class="tok-o">=</span> <span class="tok-n">Arg</span><span class="tok-p">(</span><span class="tok-n">lopt</span><span class="tok-o">=</span><span class="tok-s1">&#39;arg&#39;</span><span class="tok-p">,</span> <span class="tok-n">repeat</span><span class="tok-o">=</span><span class="tok-kc">True</span><span class="tok-p">,</span> <span class="tok-n">choices</span><span class="tok-o">=</span><span class="tok-p">[</span><span class="tok-mi">1</span><span class="tok-p">,</span> <span class="tok-mi">2</span><span class="tok-p">,</span> <span class="tok-mi">3</span><span class="tok-p">])</span>
+<span class="tok-n">arg</span><span class="tok-p">([</span><span class="tok-s1">&#39;2&#39;</span><span class="tok-p">,</span> <span class="tok-kc">None</span><span class="tok-p">,</span> <span class="tok-s1">&#39;4&#39;</span><span class="tok-p">])</span>
+<span class="tok-c1"># Invalid value of an optional argument &quot;arg&quot;: 4. Must be one of:</span>
+<span class="tok-c1">#  * 1</span>
+<span class="tok-c1">#  * 2</span>
+<span class="tok-c1">#  * 3</span></code></pre>
+</div>
+</div>
 </li>
 </ul>
 </div>
@@ -1967,11 +1931,31 @@ An element <code>None</code> is possible if <a href="#arg-repeat"><code>self.cou
 </div>
 </div>
 <div class="sect4">
+<h5 id="_exceptions_6">Exceptions</h5>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CallError</code>, if any of parsed items of <code>v</code> is not in <a href="#arg-choices"><code>self.choices</code></a> and <a href="#arg-restrict"><code>self.restrict</code></a> is <code>True</code>.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">arg</span> <span class="tok-o">=</span> <span class="tok-n">Arg</span><span class="tok-p">(</span><span class="tok-n">lopt</span><span class="tok-o">=</span><span class="tok-s1">&#39;arg&#39;</span><span class="tok-p">,</span> <span class="tok-n">count</span><span class="tok-o">=</span><span class="tok-s1">&#39;*&#39;</span><span class="tok-p">,</span> <span class="tok-n">repeat</span><span class="tok-o">=</span><span class="tok-kc">True</span><span class="tok-p">,</span> <span class="tok-n">choices</span><span class="tok-o">=</span><span class="tok-p">[</span><span class="tok-mi">1</span><span class="tok-p">,</span> <span class="tok-mi">2</span><span class="tok-p">,</span> <span class="tok-mi">3</span><span class="tok-p">])</span>
+<span class="tok-n">arg</span><span class="tok-p">([[</span><span class="tok-s1">&#39;2&#39;</span><span class="tok-p">],</span> <span class="tok-p">[</span><span class="tok-s1">&#39;1&#39;</span><span class="tok-p">,</span> <span class="tok-s1">&#39;2&#39;</span><span class="tok-p">],</span> <span class="tok-p">[</span><span class="tok-s1">&#39;3&#39;</span><span class="tok-p">,</span> <span class="tok-s1">&#39;4&#39;</span><span class="tok-p">]])</span>
+<span class="tok-c1"># Invalid value of an optional argument &quot;arg&quot;: 4. Must be one of:</span>
+<span class="tok-c1">#  * 1</span>
+<span class="tok-c1">#  * 2</span>
+<span class="tok-c1">#  * 3</span></code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
 <h5 id="_returns_5">Returns</h5>
 <div class="ulist">
 <ul>
 <li>
-<p><code>list</code> with a single element <a href="#arg-default"><code>self.default</code></a>, if <code>v</code> is empty and <a href="#arg-default"><code>self.default</code></a> is not <code>[]</code>.</p>
+<p><code>list</code> with a single element <a href="#arg-default"><code>self.default</code></a>, if <code>v</code> is empty and <a href="#arg-default"><code>self.default</code></a> is not <code>[]</code> or <code>None</code>.</p>
 </li>
 <li>
 <p><code>list[list[<a href="#arg-type">self.type</a>] | None]</code> constructed by:</p>
@@ -1995,11 +1979,33 @@ An element <code>None</code> is possible if <a href="#arg-repeat"><code>self.cou
 <div class="sect2">
 <h3 id="argapp-app"><code>argapp.App</code></h3>
 <div class="paragraph">
-<p>A class that represents a command or a subcommand. It is not useful as is, and is supposed to be subclassed
-to handle the parsed command line in <a href="#app---call--"><code>App.__call__()</code></a>.</p>
+<p>A class that represents a command or a subcommand. It is supposed to be subclassed to handle the parsed command line in <a href="#app---call--"><code>App.__call__()</code></a>.<br></p>
 </div>
 <div class="paragraph">
-<p>The fields are checked upon setting. <code>None</code> is always a valid value which means that the field has to use its defaults.</p>
+<p>Important concepts:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The same <a href="#argapp-arg"><code>App</code></a> can be associated with multiple <a href="#argapp-app"><code>App</code></a>.</p>
+</li>
+<li>
+<p>All fields are internally properties:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>"get" types can be seen in the field`s type hints for all fields.</p>
+</li>
+<li>
+<p>"set" types can be seen in the type hints of <a href="#app---init--"><code>App.__init__(**)</code></a> for the writeable fields.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Setting the field to <code>None</code> means that it will be implicitly re-evaluated according to "Defaults".</p>
+</li>
+</ul>
 </div>
 <hr>
 <div class="sect3">
@@ -2013,25 +2019,6 @@ to handle the parsed command line in <a href="#app---call--"><code>App.__call__(
 </div>
 <div class="paragraph">
 <p>A name of the command. Uniquely identifies a command among the others in <a href="#app-apps"><code>App.apps</code></a>.</p>
-</div>
-<div class="sect4">
-<h5 id="_exceptions_15">Exceptions</h5>
-<div class="ulist">
-<ul>
-<li>
-<p><code>TypeError</code>, if <code>type(<a href="#app-name">name</a>)</code> is not <code>str</code> or <code>NoneType</code>.</p>
-</li>
-<li>
-<p><code>ValueError</code>, if <a href="#app-name"><code>name</code></a> is <code>''</code>.</p>
-</li>
-<li>
-<p><code>ValueError</code>, if the instance should be present in <a href="#app-apps"><code>App.apps</code></a> and <a href="#app-name"><code>name</code></a> is <code>None</code>.</p>
-</li>
-<li>
-<p><code>ValueError</code>, if the instance should be present in <a href="#app-apps"><code>App.apps</code></a> and another <a href="#argapp-app"><code>App</code></a> has the same <a href="#app-name"><code>name</code></a>.</p>
-</li>
-</ul>
-</div>
 </div>
 <div class="sect4">
 <h5 id="_defaults_20">Defaults</h5>
@@ -2058,16 +2045,6 @@ to handle the parsed command line in <a href="#app---call--"><code>App.__call__(
 <p>A short description of the command, appears in the parent&#8217;s help text.</p>
 </div>
 <div class="sect4">
-<h5 id="_exceptions_16">Exceptions</h5>
-<div class="ulist">
-<ul>
-<li>
-<p><code>TypeError</code>, if <code>type(<a href="#app-help">help</a>)</code> is not <code>str</code> or <code>NoneType</code>.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
 <h5 id="_defaults_21">Defaults</h5>
 <div class="ulist">
 <ul>
@@ -2092,16 +2069,6 @@ to handle the parsed command line in <a href="#app---call--"><code>App.__call__(
 <p>A detailed description of the command, appears before the arguments list.</p>
 </div>
 <div class="sect4">
-<h5 id="_exceptions_17">Exceptions</h5>
-<div class="ulist">
-<ul>
-<li>
-<p><code>TypeError</code>, if <code>type(<a href="#app-prolog">prolog</a>)</code> is not <code>str</code> or <code>NoneType</code>.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
 <h5 id="_defaults_22">Defaults</h5>
 <div class="ulist">
 <ul>
@@ -2124,16 +2091,6 @@ to handle the parsed command line in <a href="#app---call--"><code>App.__call__(
 </div>
 <div class="paragraph">
 <p>A detailed description of the command, appears after the arguments list.</p>
-</div>
-<div class="sect4">
-<h5 id="_exceptions_18">Exceptions</h5>
-<div class="ulist">
-<ul>
-<li>
-<p><code>TypeError</code>, if <code>type(<a href="#app-epilog">epilog</a>)</code> is not <code>str</code> or <code>NoneType</code>.</p>
-</li>
-</ul>
-</div>
 </div>
 <div class="sect4">
 <h5 id="_defaults_23">Defaults</h5>
@@ -2173,21 +2130,11 @@ to handle the parsed command line in <a href="#app---call--"><code>App.__call__(
 </ul>
 </div>
 <div class="sect4">
-<h5 id="_exceptions_19">Exceptions</h5>
-<div class="ulist">
-<ul>
-<li>
-<p><code>TypeError</code>, if <code>type(<a href="#app-arg-help">arg_help</a>)</code> is not <code>Arg</code> or <code>NoneType</code>.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
 <h5 id="_defaults_24">Defaults</h5>
 <div class="ulist">
 <ul>
 <li>
-<p><code>Arg(sopt='h', lopt='help', help='Show the help text and exit.')</code>.</p>
+<p><code><a href="#argapp-arg">Arg</a>(sopt='h', lopt='help', help='Show the help text and exit.')</code>.</p>
 </li>
 </ul>
 </div>
@@ -2220,21 +2167,11 @@ to handle the parsed command line in <a href="#app---call--"><code>App.__call__(
 </ul>
 </div>
 <div class="sect4">
-<h5 id="_exceptions_20">Exceptions</h5>
-<div class="ulist">
-<ul>
-<li>
-<p><code>TypeError</code>, if <code>type(<a href="#app-arg-cmd">arg_cmd</a>)</code> is not <code>Arg</code> or <code>NoneType</code>.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
 <h5 id="_defaults_25">Defaults</h5>
 <div class="ulist">
 <ul>
 <li>
-<p><code>Arg(name='CMD', help='A subcommand to run.')</code>.</p>
+<p><code><a href="#argapp-arg">Arg</a>(name='CMD', help='A subcommand to run.')</code>.</p>
 </li>
 </ul>
 </div>
@@ -2254,28 +2191,6 @@ to handle the parsed command line in <a href="#app---call--"><code>App.__call__(
 </div>
 <div class="paragraph">
 <p>A list of arguments of the command. Cannot be set, but can be modified.</p>
-</div>
-<div class="sect4">
-<h5 id="_exceptions_21">Exceptions</h5>
-<div class="ulist">
-<ul>
-<li>
-<p><code>TypeError</code>, when adding or removing elements that are not <a href="#argapp-arg"><code>Arg</code></a>.</p>
-</li>
-<li>
-<p><code>ValueError</code>, when adding a positional <a href="#argapp-arg"><code>Arg</code></a> but <a href="#arg-name"><code>name</code></a> is <code>None</code>.</p>
-</li>
-<li>
-<p><code>ValueError</code>, when adding a positional <a href="#argapp-arg"><code>Arg</code></a> but another <a href="#argapp-arg"><code>Arg</code></a> with the same <a href="#arg-name"><code>name</code></a> exists.</p>
-</li>
-<li>
-<p><code>ValueError</code>, when adding an optional <a href="#argapp-arg"><code>Arg</code></a> but another <a href="#argapp-arg"><code>Arg</code></a> with the same <a href="#arg-sopt"><code>sopt</code></a> exists.</p>
-</li>
-<li>
-<p><code>ValueError</code>, when adding an optional <a href="#argapp-arg"><code>Arg</code></a> but another <a href="#argapp-arg"><code>Arg</code></a> with the same <a href="#arg-lopt"><code>lopt</code></a> exists.</p>
-</li>
-</ul>
-</div>
 </div>
 <div class="sect4">
 <h5 id="_defaults_26">Defaults</h5>
@@ -2302,25 +2217,6 @@ to handle the parsed command line in <a href="#app---call--"><code>App.__call__(
 </div>
 <div class="paragraph">
 <p>A list of subcommands of the command. Cannot be set, but can be modified.</p>
-</div>
-<div class="sect4">
-<h5 id="_exceptions_22">Exceptions</h5>
-<div class="ulist">
-<ul>
-<li>
-<p><code>TypeError</code>, when adding or removing elements that are not <a href="#argapp-app"><code>App</code></a>.</p>
-</li>
-<li>
-<p><code>ValueError</code>, when adding an <a href="#argapp-app"><code>App</code></a> but <a href="#app-name"><code>name</code></a> is <code>None</code>.</p>
-</li>
-<li>
-<p><code>ValueError</code>, when adding an <a href="#argapp-app"><code>App</code></a> but another <a href="#argapp-app"><code>App</code></a> with the same <a href="#app-name"><code>name</code></a> exists.</p>
-</li>
-<li>
-<p><code>ValueError</code>, when adding an <a href="#argapp-app"><code>App</code></a> forms a cycle.</p>
-</li>
-</ul>
-</div>
 </div>
 <div class="sect4">
 <h5 id="_defaults_27">Defaults</h5>
@@ -2381,7 +2277,7 @@ to handle the parsed command line in <a href="#app---call--"><code>App.__call__(
 </div>
 </div>
 <div class="sect4">
-<h5 id="_exceptions_23">Exceptions</h5>
+<h5 id="_exceptions_7">Exceptions</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -2393,14 +2289,14 @@ to handle the parsed command line in <a href="#app---call--"><code>App.__call__(
 </div>
 </div>
 <div class="sect3">
-<h4 id="app---call--"><code>App.__call__(dict[Arg, Any], list[App])</code></h4>
+<h4 id="app---call--"><code>App.__call__(dict[Arg, object], list[App])</code></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">class</span> <span class="tok-nc">App</span><span class="tok-p">:</span>
     <span class="tok-o">...</span>
     <span class="tok-k">def</span> <span class="tok-fm">__call__</span><span class="tok-p">(</span>
         <span class="tok-bp">self</span><span class="tok-p">,</span>
-        <span class="tok-n">args</span><span class="tok-p">:</span> <span class="tok-nb">dict</span><span class="tok-p">[</span><span class="tok-n">Arg</span><span class="tok-p">,</span> <span class="tok-n">Any</span><span class="tok-p">],</span>
+        <span class="tok-n">args</span><span class="tok-p">:</span> <span class="tok-nb">dict</span><span class="tok-p">[</span><span class="tok-n">Arg</span><span class="tok-p">,</span> <span class="tok-nb">object</span><span class="tok-p">],</span>
         <span class="tok-n">apps</span><span class="tok-p">:</span> <span class="tok-nb">list</span><span class="tok-p">[</span><span class="tok-n">App</span><span class="tok-p">],</span>
     <span class="tok-p">)</span> <span class="tok-o">-&gt;</span> <span class="tok-kc">None</span><span class="tok-p">:</span>
         <span class="tok-o">...</span></code></pre>
@@ -2431,16 +2327,6 @@ to handle the parsed command line in <a href="#app---call--"><code>App.__call__(
 </li>
 </ul>
 </div>
-</div>
-<div class="sect4">
-<h5 id="_exceptions_24">Exceptions</h5>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="#argapp-callerror"><code>CallError</code></a>, that is supposed to be raised in an overridden method in case of any errors.</p>
-</li>
-</ul>
-</div>
 <hr>
 </div>
 </div>
@@ -2468,16 +2354,6 @@ with custom return code and error message in case of any errors during the execu
 <p>An error message. <code>None</code> means that no message is provided, nothing should be printed.</p>
 </div>
 <div class="sect4">
-<h5 id="_exceptions_25">Exceptions</h5>
-<div class="ulist">
-<ul>
-<li>
-<p><code>TypeError</code>, if <code>type(<a href="#callerror-message">message</a>)</code> is not <code>str</code> or <code>NoneType</code>.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
 <h5 id="_defaults_28">Defaults</h5>
 <div class="ulist">
 <ul>
@@ -2499,20 +2375,7 @@ with custom return code and error message in case of any errors during the execu
 </div>
 </div>
 <div class="paragraph">
-<p>A 1-byte integer value associated with the error. 0 denotes success.</p>
-</div>
-<div class="sect4">
-<h5 id="_exceptions_26">Exceptions</h5>
-<div class="ulist">
-<ul>
-<li>
-<p><code>TypeError</code>, if <code>type(<a href="#callerror-code">code</a>)</code> is not <code>int</code> or <code>NoneType</code>.</p>
-</li>
-<li>
-<p><code>ValueError</code>, if <code><a href="#callerror-code">code</a></code> is not in range [0, 255].</p>
-</li>
-</ul>
-</div>
+<p>A value from 0 to 255 to inidcate an error (0 means no error).</p>
 </div>
 <div class="sect4">
 <h5 id="_defaults_29">Defaults</h5>
@@ -2557,7 +2420,7 @@ with custom return code and error message in case of any errors during the execu
 </div>
 </div>
 <div class="sect4">
-<h5 id="_exceptions_27">Exceptions</h5>
+<h5 id="_exceptions_8">Exceptions</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -2593,7 +2456,6 @@ with custom return code and error message in case of any errors during the execu
 </li>
 </ul>
 </div>
-<hr>
 </div>
 </div>
 </div>
