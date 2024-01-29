@@ -499,6 +499,26 @@ Whether the argument is optional.
 
 '''
 
+[#v-arg-positional]
+==== `Arg.positional`
+
+[source,python]
+----
+class Arg:
+    @property
+    def positional(self) -> bool:
+        ...
+----
+
+Whether the argument is positional.
+
+===== Defaults
+
+. `True`, if <<v-arg-sopt,`self.sopt`>> and <<v-arg-lopt,`self.lopt`>> are not set.
+. `False`.
+
+'''
+
 [#c-argapp-app]
 === `argapp.App`
 
