@@ -642,6 +642,7 @@ a > code {
 <li><a href="#v-arg-suppress"><code>Arg.suppress</code></a></li>
 <li><a href="#v-arg-required"><code>Arg.required</code></a></li>
 <li><a href="#v-arg-append"><code>Arg.append</code></a></li>
+<li><a href="#v-arg-optional"><code>Arg.optional</code></a></li>
 </ul>
 </li>
 <li><a href="#c-argapp-app"><code>argapp.App</code></a></li>
@@ -1455,6 +1456,34 @@ The usage text and the error message are printed in this case.</p>
 <ol class="arabic">
 <li>
 <p><code>TypeError</code> if the type is not <code>bool</code> or <code>None</code>.</p>
+</li>
+</ol>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect3">
+<h4 id="v-arg-optional"><code>Arg.optional</code></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">class</span> <span class="tok-nc">Arg</span><span class="tok-p">:</span>
+    <span class="tok-nd">@property</span>
+    <span class="tok-k">def</span> <span class="tok-nf">optional</span><span class="tok-p">(</span><span class="tok-bp">self</span><span class="tok-p">)</span> <span class="tok-o">-&gt;</span> <span class="tok-nb">bool</span><span class="tok-p">:</span>
+        <span class="tok-o">...</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Whether the argument is optional.</p>
+</div>
+<div class="sect4">
+<h5 id="_defaults_14">Defaults</h5>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>True</code>, if <a href="#v-arg-sopt"><code>self.sopt</code></a> or <a href="#v-arg-lopt"><code>self.lopt</code></a> is set.</p>
+</li>
+<li>
+<p><code>False</code>.</p>
 </li>
 </ol>
 </div>

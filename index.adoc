@@ -479,6 +479,26 @@ Whether the optional argument is appended on repeat.
 
 '''
 
+[#v-arg-optional]
+==== `Arg.optional`
+
+[source,python]
+----
+class Arg:
+    @property
+    def optional(self) -> bool:
+        ...
+----
+
+Whether the argument is optional.
+
+===== Defaults
+
+. `True`, if <<v-arg-sopt,`self.sopt`>> or <<v-arg-lopt,`self.lopt`>> is set.
+. `False`.
+
+'''
+
 [#c-argapp-app]
 === `argapp.App`
 
