@@ -299,6 +299,42 @@ The number of values consumed by the argument:
 
 '''
 
+[#v-arg-default]
+==== `Arg.default`
+
+[source,python]
+----
+class Arg:
+    @property
+    def default(self) -> object | list | None:
+        ...
+
+    @default.setter
+    def default(self, v: object | list | None) -> None:
+        ...
+----
+
+The default value, applied if:
+
+. <<v-arg-count,`self.count`>> is `'?'`, `'*'` or `'~'` and no values provided.
+. <<v-arg-optional,`self.optional`>> is `True`, <<v-arg-suppress,`self.suppress`>> is `False`, and the argument is not mentioned.
+
+===== Defaults
+
+. `[]` if type of <<v-arg-count,`self.count`>> is `"*"` or `"~"`.
+. `None`.
+
+===== Exceptions
+
+. `TypeError` if the type is not `list` and it is not <<v-arg-type,`self.type`>> or `None`.
+. `TypeError` if the type is `list` and one of the items is not <<v-arg-type,`self.type`>>.
+. `ValueError` if the type is not `list` and the value is not in <<v-arg-choices,`self.choices`>>.
+. `ValueError` if the type is `list` and one of the items is not in <<v-arg-choices,`self.choices`>>.
+. `ValueError` if the type is `list`, and the number of items does not match <<v-arg-count,`self.count`>>.
+. `ValueError` if the value is an empty `list`, and <<v-arg-count,`self.count`>> is `"+"`.
+
+'''
+
 [#c-argapp-app]
 === `argapp.App`
 
