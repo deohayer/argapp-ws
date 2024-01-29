@@ -395,6 +395,34 @@ Whether <<v-arg-choices,`self.choices`>> are restrictive.
 
 '''
 
+[#v-arg-suppress]
+==== `Arg.suppress`
+
+[source,python]
+----
+class Arg:
+    @property
+    def suppress(self) -> bool:
+        ...
+
+    @suppress.setter
+    def suppress(self, v: bool | None) -> None:
+        ...
+----
+
+Whether to not set the optional argument to <<v-arg-default,`self.default`>> if it is not mentioned.
+
+===== Defaults
+
+. Always `False`, if <<v-arg-optional,`self.optional`>> is `False`.
+. `False`.
+
+===== Exceptions
+
+. `TypeError` if the type is not `bool` or `None`.
+
+'''
+
 [#c-argapp-app]
 === `argapp.App`
 
