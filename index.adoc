@@ -451,6 +451,34 @@ Whether the optional argument must be mentioned.
 
 '''
 
+[#v-arg-append]
+==== `Arg.append`
+
+[source,python]
+----
+class Arg:
+    @property
+    def append(self) -> bool:
+        ...
+
+    @append.setter
+    def append(self, v: bool | None) -> None:
+        ...
+----
+
+Whether the optional argument is appended on repeat.
+
+===== Defaults
+
+. Always `False`, if <<v-arg-optional,`self.optional`>> is `False`.
+. `False`.
+
+===== Exceptions
+
+. `TypeError` if the type is not `bool` or `None`.
+
+'''
+
 [#c-argapp-app]
 === `argapp.App`
 
