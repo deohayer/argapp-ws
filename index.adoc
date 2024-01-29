@@ -25,3 +25,91 @@ It has a declaration, a description, and the following optional subsections:
 *** *Examples* - usage and error examples.
 
 '''
+
+[#s-argapp]
+=== `argapp`
+
+The package is a module. It exports the following identifiers:
+
+* <<f-argapp-main,`main()`>> - a function for parsing the command line and running the commands.
+* <<c-argapp-arg,`Arg`>> - a class that represents a command line argument.
+* <<c-argapp-app,`App`>> - a class that represents a command.
+* <<c-argapp-arghelper,`ArgHelper`>> - a class for the argument description generation.
+* <<c-argapp-apphelper,`AppHelper`>> - a class for the command description generation.
+* <<c-argapp-completer,`Completer`>> - a base class for the completion generation.
+* <<c-argapp-completernone,`CompleterNone`>> - a class for completion suppression.
+* <<c-argapp-completerlist,`CompleterList`>> - a class for immediate list-based completion.
+* <<c-argapp-completerpath,`CompleterPath`>> - a class for gradual path-based completion.
+* <<c-argapp-callerror,`CallError`>> - an exception class to raise when there is an error during parsing or execution.
+
+'''
+
+[#f-argapp-main]
+==== `argapp.main()`
+
+Parses the command line and runs the commands.
+
+'''
+
+[#c-argapp-arg]
+=== `argapp.Arg`
+
+Represents a command line argument.
+
+'''
+
+[#c-argapp-app]
+=== `argapp.App`
+
+Represents a command.
+
+'''
+
+[#c-argapp-arghelper]
+=== `argapp.ArgHelper`
+
+An argument description generation.
+
+'''
+
+[#c-argapp-apphelper]
+=== `argapp.AppHelper`
+
+A command description generation.
+
+'''
+
+[#c-argapp-completer]
+=== `argapp.Completer`
+
+A base class for completers.
+
+'''
+
+[#c-argapp-completernone]
+=== `argapp.CompleterNone`
+
+A <<c-argapp-completer, `Completer`>> for completion suppression.
+
+'''
+
+[#c-argapp-completerlist]
+=== `argapp.CompleterList`
+
+A <<c-argapp-completer, `Completer`>> for immediate list-based completion.
+
+'''
+
+[#c-argapp-completerpath]
+=== `argapp.CompleterPath`
+
+A <<c-argapp-completer, `Completer`>> for gradual path-based completion.
+
+'''
+
+[#c-argapp-callerror]
+=== `argapp.CallError`
+
+An exception to raise when there is an error during parsing or execution.
+
+'''

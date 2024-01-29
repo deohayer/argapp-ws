@@ -544,7 +544,24 @@ a > code {
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_api">API</a></li>
+<li><a href="#_api">API</a>
+<ul class="sectlevel2">
+<li><a href="#s-argapp"><code>argapp</code></a>
+<ul class="sectlevel3">
+<li><a href="#f-argapp-main"><code>argapp.main()</code></a></li>
+</ul>
+</li>
+<li><a href="#c-argapp-arg"><code>argapp.Arg</code></a></li>
+<li><a href="#c-argapp-app"><code>argapp.App</code></a></li>
+<li><a href="#c-argapp-arghelper"><code>argapp.ArgHelper</code></a></li>
+<li><a href="#c-argapp-apphelper"><code>argapp.AppHelper</code></a></li>
+<li><a href="#c-argapp-completer"><code>argapp.Completer</code></a></li>
+<li><a href="#c-argapp-completernone"><code>argapp.CompleterNone</code></a></li>
+<li><a href="#c-argapp-completerlist"><code>argapp.CompleterList</code></a></li>
+<li><a href="#c-argapp-completerpath"><code>argapp.CompleterPath</code></a></li>
+<li><a href="#c-argapp-callerror"><code>argapp.CallError</code></a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -608,6 +625,117 @@ It has a declaration, a description, and the following optional subsections:</p>
 </ul>
 </div>
 <hr>
+<div class="sect2">
+<h3 id="s-argapp"><code>argapp</code></h3>
+<div class="paragraph">
+<p>The package is a module. It exports the following identifiers:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#f-argapp-main"><code>main()</code></a> - a function for parsing the command line and running the commands.</p>
+</li>
+<li>
+<p><a href="#c-argapp-arg"><code>Arg</code></a> - a class that represents a command line argument.</p>
+</li>
+<li>
+<p><a href="#c-argapp-app"><code>App</code></a> - a class that represents a command.</p>
+</li>
+<li>
+<p><a href="#c-argapp-arghelper"><code>ArgHelper</code></a> - a class for the argument description generation.</p>
+</li>
+<li>
+<p><a href="#c-argapp-apphelper"><code>AppHelper</code></a> - a class for the command description generation.</p>
+</li>
+<li>
+<p><a href="#c-argapp-completer"><code>Completer</code></a> - a base class for the completion generation.</p>
+</li>
+<li>
+<p><a href="#c-argapp-completernone"><code>CompleterNone</code></a> - a class for completion suppression.</p>
+</li>
+<li>
+<p><a href="#c-argapp-completerlist"><code>CompleterList</code></a> - a class for immediate list-based completion.</p>
+</li>
+<li>
+<p><a href="#c-argapp-completerpath"><code>CompleterPath</code></a> - a class for gradual path-based completion.</p>
+</li>
+<li>
+<p><a href="#c-argapp-callerror"><code>CallError</code></a> - an exception class to raise when there is an error during parsing or execution.</p>
+</li>
+</ul>
+</div>
+<hr>
+<div class="sect3">
+<h4 id="f-argapp-main"><code>argapp.main()</code></h4>
+<div class="paragraph">
+<p>Parses the command line and runs the commands.</p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="c-argapp-arg"><code>argapp.Arg</code></h3>
+<div class="paragraph">
+<p>Represents a command line argument.</p>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="c-argapp-app"><code>argapp.App</code></h3>
+<div class="paragraph">
+<p>Represents a command.</p>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="c-argapp-arghelper"><code>argapp.ArgHelper</code></h3>
+<div class="paragraph">
+<p>An argument description generation.</p>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="c-argapp-apphelper"><code>argapp.AppHelper</code></h3>
+<div class="paragraph">
+<p>A command description generation.</p>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="c-argapp-completer"><code>argapp.Completer</code></h3>
+<div class="paragraph">
+<p>A base class for completers.</p>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="c-argapp-completernone"><code>argapp.CompleterNone</code></h3>
+<div class="paragraph">
+<p>A <a href="#c-argapp-completer"><code>Completer</code></a> for completion suppression.</p>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="c-argapp-completerlist"><code>argapp.CompleterList</code></h3>
+<div class="paragraph">
+<p>A <a href="#c-argapp-completer"><code>Completer</code></a> for immediate list-based completion.</p>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="c-argapp-completerpath"><code>argapp.CompleterPath</code></h3>
+<div class="paragraph">
+<p>A <a href="#c-argapp-completer"><code>Completer</code></a> for gradual path-based completion.</p>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="c-argapp-callerror"><code>argapp.CallError</code></h3>
+<div class="paragraph">
+<p>An exception to raise when there is an error during parsing or execution.</p>
+</div>
+<hr>
+</div>
 </div>
 </div>
 </div>
