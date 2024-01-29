@@ -7,7 +7,7 @@ def software() -> 'list[Software]':
 
 
 DIR_DIST = f'{DIR_TMP}/dist'
-DIR_TEST = f'{DIR_LIB}/test'
+DIR_TEST = f'{DIR_BIN}/test'
 DIR_OUT = f'{DIR_TMP}/test'
 DOCKERS = {
     '3.6': '18.04',
@@ -70,6 +70,14 @@ class Install(App):
 
 
 class Test(App):
+    def __init__(self) -> 'None':
+        super().__init__()
+        self.arg_versions = Arg(name='VERSIONS',
+                                count='*',
+                                choices=[x for x in DOCKERS],
+                                default=[x for x in DOCKERS])
+        self.args.append(self.arg_versions)
+
     def __call__(
         self,
         args: 'dict[Arg]' = None,
@@ -78,9 +86,10 @@ class Test(App):
         super().__call__(args, apps)
         # Build the wheel.
         sh(f'rm -rf {DIR_DIST} && python3 -m build -wn {DIR_TMP}')
+        versions: list[str] = args[self.arg_versions]
         result = True
-        results = {x: True for x in DOCKERS}
-        for x in DOCKERS:
+        results = {x: True for x in versions}
+        for x in versions:
             sep = '-' * 40
             print(sep)
             print(f'Preparing image for {x}.')
@@ -98,12 +107,13 @@ class Test(App):
                       f' && export PIP_CACHE_DIR={out}/.cache'
                       f' && rm -rf ${{PIP_CACHE_DIR}}'
                       f' && python3 -m pip install {DIR_DIST}/* > /dev/null'
-                      f' && for TEST in {DIR_TEST}/*.py; do'
+                      f' && for TEST in {DIR_TEST}/test_*.py; do'
+                      f'        [[ ! -f \${{TEST}} ]] && break;'
                       f'        export TEST_NAME=\$(basename \${{TEST}});'
                       f'        export TEST_LOG={out}/\${{TEST_NAME}}.log;'
                       f'        export TEST_TXT={out}/\${{TEST_NAME}}.txt;'
                       f'        python3 -m pytest -vv \${{TEST}} > \${{TEST_LOG}};'
-                      f'        if [[ \$? == 1 ]]; then'
+                      f'        if [[ \$? != 0 ]]; then'
                       f'            echo FAIL > \${{TEST_TXT}};'
                       f'            echo FAIL > {flag};'
                       f'        else'
