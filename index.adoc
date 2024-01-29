@@ -223,6 +223,40 @@ The argument's help text generator.
 
 '''
 
+[#v-arg-type]
+==== `Arg.type`
+
+[source,python]
+----
+class Arg:
+    @property
+    def type(self) -> type:
+        ...
+
+    @type.setter
+    def type(self, v: type | None) -> None:
+        ...
+----
+
+The type of an individual value.
+
+===== Defaults
+
+. `bool` if <<v-arg-flag,`self.flag`>> is `True`.
+. The type of the first item of <<v-arg-choices,`self.choices`>>, if it is not empty.
+. The type of the first item of <<v-arg-default,`self.default`>>, if its type is `list` and it is not empty.
+. The type of <<v-arg-default,`self.default`>>, if its type is not `list` and it is not `None`.
+. `str`.
+
+===== Exceptions
+
+. `TypeError` if the type is not `type` or `None`.
+. `ValueError` if the value is not `bool` and <<v-arg-flag,`self.flag`>> is `True`.
+. `ValueError` if the value does not match <<v-arg-default,`self.default`>>.
+. `ValueError` if the value does not match <<v-arg-choices,`self.choices`>>.
+
+'''
+
 [#c-argapp-app]
 === `argapp.App`
 

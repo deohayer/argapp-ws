@@ -634,6 +634,7 @@ a > code {
 <li><a href="#v-arg-sopt"><code>Arg.sopt</code></a></li>
 <li><a href="#v-arg-help"><code>Arg.help</code></a></li>
 <li><a href="#v-arg-helper"><code>Arg.helper</code></a></li>
+<li><a href="#v-arg-type"><code>Arg.type</code></a></li>
 </ul>
 </li>
 <li><a href="#c-argapp-app"><code>argapp.App</code></a></li>
@@ -1012,6 +1013,66 @@ The usage text and the error message are printed in this case.</p>
 <ol class="arabic">
 <li>
 <p><code>TypeError</code> if the type is not <a href="#c-argapp-arghelper"><code>ArgHelper</code></a> or <code>None</code>.</p>
+</li>
+</ol>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect3">
+<h4 id="v-arg-type"><code>Arg.type</code></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">class</span> <span class="tok-nc">Arg</span><span class="tok-p">:</span>
+    <span class="tok-nd">@property</span>
+    <span class="tok-k">def</span> <span class="tok-nf">type</span><span class="tok-p">(</span><span class="tok-bp">self</span><span class="tok-p">)</span> <span class="tok-o">-&gt;</span> <span class="tok-nb">type</span><span class="tok-p">:</span>
+        <span class="tok-o">...</span>
+
+    <span class="tok-nd">@type</span><span class="tok-o">.</span><span class="tok-n">setter</span>
+    <span class="tok-k">def</span> <span class="tok-nf">type</span><span class="tok-p">(</span><span class="tok-bp">self</span><span class="tok-p">,</span> <span class="tok-n">v</span><span class="tok-p">:</span> <span class="tok-nb">type</span> <span class="tok-o">|</span> <span class="tok-kc">None</span><span class="tok-p">)</span> <span class="tok-o">-&gt;</span> <span class="tok-kc">None</span><span class="tok-p">:</span>
+        <span class="tok-o">...</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The type of an individual value.</p>
+</div>
+<div class="sect4">
+<h5 id="_defaults_6">Defaults</h5>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>bool</code> if <a href="#v-arg-flag"><code>self.flag</code></a> is <code>True</code>.</p>
+</li>
+<li>
+<p>The type of the first item of <a href="#v-arg-choices"><code>self.choices</code></a>, if it is not empty.</p>
+</li>
+<li>
+<p>The type of the first item of <a href="#v-arg-default"><code>self.default</code></a>, if its type is <code>list</code> and it is not empty.</p>
+</li>
+<li>
+<p>The type of <a href="#v-arg-default"><code>self.default</code></a>, if its type is not <code>list</code> and it is not <code>None</code>.</p>
+</li>
+<li>
+<p><code>str</code>.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_exceptions_7">Exceptions</h5>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>TypeError</code> if the type is not <code>type</code> or <code>None</code>.</p>
+</li>
+<li>
+<p><code>ValueError</code> if the value is not <code>bool</code> and <a href="#v-arg-flag"><code>self.flag</code></a> is <code>True</code>.</p>
+</li>
+<li>
+<p><code>ValueError</code> if the value does not match <a href="#v-arg-default"><code>self.default</code></a>.</p>
+</li>
+<li>
+<p><code>ValueError</code> if the value does not match <a href="#v-arg-choices"><code>self.choices</code></a>.</p>
 </li>
 </ol>
 </div>
