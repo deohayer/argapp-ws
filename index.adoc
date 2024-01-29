@@ -196,6 +196,33 @@ The argument's description.
 
 '''
 
+[#v-arg-helper]
+==== `Arg.helper`
+
+[source,python]
+----
+class Arg:
+    @property
+    def helper(self) -> ArgHelper:
+        ...
+
+    @helper.setter
+    def helper(self, v: ArgHelper | None) -> None:
+        ...
+----
+
+The argument's help text generator.
+
+===== Defaults
+
+. `<<c-argapp-arghelper,ArgHelper>>()`.
+
+===== Exceptions
+
+. `TypeError` if the type is not <<c-argapp-arghelper,`ArgHelper`>> or `None`.
+
+'''
+
 [#c-argapp-app]
 === `argapp.App`
 
