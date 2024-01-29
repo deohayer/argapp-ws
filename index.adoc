@@ -169,6 +169,33 @@ The short option name.
 
 '''
 
+[#v-arg-help]
+==== `Arg.help`
+
+[source,python]
+----
+class Arg:
+    @property
+    def help(self) -> str:
+        ...
+
+    @help.setter
+    def help(self, v: str | None) -> None:
+        ...
+----
+
+The argument's description.
+
+===== Defaults
+
+. `''`.
+
+===== Exceptions
+
+. `TypeError` if the type is not `str` or `None`.
+
+'''
+
 [#c-argapp-app]
 === `argapp.App`
 
