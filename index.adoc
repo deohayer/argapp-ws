@@ -114,6 +114,33 @@ The name of the argument's value.
 
 '''
 
+[#v-arg-lopt]
+==== `Arg.lopt`
+
+[source,python]
+----
+class Arg:
+    @property
+    def lopt(self) -> str:
+        ...
+
+    @lopt.setter
+    def lopt(self, v: str | None) -> None:
+        ...
+----
+
+The long option name.
+
+===== Defaults
+
+. `""`.
+
+===== Exceptions
+
+. `TypeError` if the type is not `str` or `None`.
+
+'''
+
 [#c-argapp-app]
 === `argapp.App`
 

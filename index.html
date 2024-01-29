@@ -630,6 +630,7 @@ a > code {
 <li><a href="#c-argapp-arg"><code>argapp.Arg</code></a>
 <ul class="sectlevel3">
 <li><a href="#v-arg-name"><code>Arg.name</code></a></li>
+<li><a href="#v-arg-lopt"><code>Arg.lopt</code></a></li>
 </ul>
 </li>
 <li><a href="#c-argapp-app"><code>argapp.App</code></a></li>
@@ -845,6 +846,45 @@ The usage text and the error message are printed in this case.</p>
 </div>
 <div class="sect4">
 <h5 id="_exceptions_2">Exceptions</h5>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>TypeError</code> if the type is not <code>str</code> or <code>None</code>.</p>
+</li>
+</ol>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect3">
+<h4 id="v-arg-lopt"><code>Arg.lopt</code></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">class</span> <span class="tok-nc">Arg</span><span class="tok-p">:</span>
+    <span class="tok-nd">@property</span>
+    <span class="tok-k">def</span> <span class="tok-nf">lopt</span><span class="tok-p">(</span><span class="tok-bp">self</span><span class="tok-p">)</span> <span class="tok-o">-&gt;</span> <span class="tok-nb">str</span><span class="tok-p">:</span>
+        <span class="tok-o">...</span>
+
+    <span class="tok-nd">@lopt</span><span class="tok-o">.</span><span class="tok-n">setter</span>
+    <span class="tok-k">def</span> <span class="tok-nf">lopt</span><span class="tok-p">(</span><span class="tok-bp">self</span><span class="tok-p">,</span> <span class="tok-n">v</span><span class="tok-p">:</span> <span class="tok-nb">str</span> <span class="tok-o">|</span> <span class="tok-kc">None</span><span class="tok-p">)</span> <span class="tok-o">-&gt;</span> <span class="tok-kc">None</span><span class="tok-p">:</span>
+        <span class="tok-o">...</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The long option name.</p>
+</div>
+<div class="sect4">
+<h5 id="_defaults_2">Defaults</h5>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>""</code>.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_exceptions_3">Exceptions</h5>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
