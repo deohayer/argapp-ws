@@ -141,6 +141,34 @@ The long option name.
 
 '''
 
+[#v-arg-sopt]
+==== `Arg.sopt`
+
+[source,python]
+----
+class Arg:
+    @property
+    def sopt(self) -> str:
+        ...
+
+    @sopt.setter
+    def sopt(self, v: str | None) -> None:
+        ...
+----
+
+The short option name.
+
+===== Defaults
+
+. `""`.
+
+===== Exceptions
+
+. `TypeError` if the type is not `str` or `None`.
+. `ValueError` if the value exceeds one character.
+
+'''
+
 [#c-argapp-app]
 === `argapp.App`
 
