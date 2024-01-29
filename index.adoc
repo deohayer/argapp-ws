@@ -45,9 +45,36 @@ The package is a module. It exports the following identifiers:
 '''
 
 [#f-argapp-main]
-==== `argapp.main()`
+==== `+argapp.main(...)+`
+
+[source,python]
+----
+def main(
+    app: App,
+    argv: list[str] = sys.argv,
+) -> None:
+    ...
+----
 
 Parses the command line and runs the commands.
+
+===== Parameters
+
+* `app` - The main command. If <<v-app-name,`app.name`>> is not set, `argv[0]` will be used as the command name.
+* `argv` - The command line. In fact, it is treated as `Iterable[Any]` - each element is converted to `str`. Defaults to `sys.argv`.
+Note that the first element is the command name (unused if <<v-app-name,`app.name`>> is set).
+
+===== Returns
+
+. Never returns, always calls `sys.exit()`.
+
+===== Exceptions
+
+. `SystemExit` with code 0 if nothing is raised.
+. `SystemExit` with code 1 if an arbitrary error is raised.
+The full stack trace is printed in this case.
+. `SystemExit` with the corresponding code if <<c-argapp-callerror,`CallError`>> is raised.
+The usage text and the error message are printed in this case.
 
 '''
 
