@@ -368,6 +368,33 @@ The set of possible values.
 
 '''
 
+[#v-arg-restrict]
+==== `Arg.restrict`
+
+[source,python]
+----
+class Arg:
+    @property
+    def restrict(self) -> bool:
+        ...
+
+    @restrict.setter
+    def restrict(self, v: bool | None) -> None:
+        ...
+----
+
+Whether <<v-arg-choices,`self.choices`>> are restrictive.
+
+===== Defaults
+
+. `True`.
+
+===== Exceptions
+
+. `TypeError` if the type is not `bool` or `None`.
+
+'''
+
 [#c-argapp-app]
 === `argapp.App`
 
