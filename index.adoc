@@ -479,6 +479,35 @@ Whether the optional argument is appended on repeat.
 
 '''
 
+[#v-arg-completer]
+==== `Arg.completer`
+
+[source,python]
+----
+class Arg:
+    @property
+    def completer(self) -> Completer:
+        ...
+
+    @completer.setter
+    def completer(self, v: Completer | None) -> None:
+        ...
+----
+
+The command line completer for the argument.
+
+===== Defaults
+
+. `<<c-argapp-completerlist,CompleterList>>(<<v-arg-choices,self.choices>>)`, if <<v-arg-choices,`self.choices`>> is not empty.
+. `<<c-argapp-completerpath,CompleterPath>>()`, if <<v-arg-type,`self.type`>> is `str`.
+. `<<c-argapp-completernone,CompleterNone>>()`.
+
+===== Exceptions
+
+. `TypeError` if the type is not <<c-argapp-completer,`Completer`>> or `None`.
+
+'''
+
 [#v-arg-optional]
 ==== `Arg.optional`
 
