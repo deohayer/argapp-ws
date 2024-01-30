@@ -652,6 +652,7 @@ a > code {
 <li><a href="#v-arg---call--bool"><code>Arg.__call__(bool)</code></a></li>
 <li><a href="#v-arg---call--int"><code>Arg.__call__(int)</code></a></li>
 <li><a href="#v-arg---call--str"><code>Arg.__call__(str)</code></a></li>
+<li><a href="#v-arg---call--list"><code>Arg.__call__(list)</code></a></li>
 </ul>
 </li>
 <li><a href="#c-argapp-app"><code>argapp.App</code></a></li>
@@ -1889,6 +1890,73 @@ The usage text and the error message are printed in this case.</p>
 <ol class="arabic">
 <li>
 <p><code>CallError</code>, if <a href="#v-arg-restrict"><code>self.restrict</code></a> is <code>True</code> and the value is not in <a href="#v-arg-choices"><code>self.choices</code></a>.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="v-arg---call--list"><code>Arg.__call__(list)</code></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">class</span> <span class="tok-nc">Arg</span><span class="tok-p">:</span>
+    <span class="tok-nd">@overload</span>
+    <span class="tok-k">def</span> <span class="tok-fm">__call__</span><span class="tok-p">(</span>
+        <span class="tok-bp">self</span><span class="tok-p">,</span>
+        <span class="tok-n">v</span><span class="tok-p">:</span> <span class="tok-nb">list</span><span class="tok-p">[</span><span class="tok-nb">str</span> <span class="tok-o">|</span> <span class="tok-kc">None</span><span class="tok-p">],</span>
+    <span class="tok-p">)</span> <span class="tok-o">-&gt;</span> <span class="tok-nb">list</span><span class="tok-p">[</span><span class="tok-nb">object</span> <span class="tok-o">|</span> <span class="tok-kc">None</span><span class="tok-p">]:</span>
+        <span class="tok-o">...</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Parse the command line value. This overload is called if:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#v-arg-single"><code>self.single</code></a> is <code>True</code>.</p>
+</li>
+<li>
+<p><a href="#v-arg-append"><code>self.append</code></a> is <code>True</code>.</p>
+</li>
+</ul>
+</div>
+<div class="sect4">
+<h5 id="_parameters_6">Parameters</h5>
+<div class="ulist">
+<ul>
+<li>
+<p><code>v</code> - a list of values from the command line associated with the argument.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_returns_5">Returns</h5>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>A <code>list</code> where each item <code>x</code> from <code>v</code> is set to:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><a href="#v-arg-default"><code>self.default</code></a>, if <code>x</code> is <code>None</code>.</p>
+</li>
+<li>
+<p><code><a href="#v-arg-type">self.type</a>(x)</code>.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_exceptions_17">Exceptions</h5>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>CallError</code>, if <a href="#v-arg-restrict"><code>self.restrict</code></a> is <code>True</code> and any item is not in <a href="#v-arg-choices"><code>self.choices</code></a>.</p>
 </li>
 </ol>
 </div>
