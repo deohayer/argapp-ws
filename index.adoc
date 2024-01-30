@@ -685,6 +685,35 @@ Parse the command line value. This overload is called if:
 
 '''
 
+[#v-arg---call--int]
+==== `+Arg.__call__(int)+`
+
+[source,python]
+----
+class Arg:
+    @overload
+    def __call__(
+        self,
+        v: int,
+    ) -> int:
+        ...
+----
+
+Parse the command line value. This overload is called if:
+
+* <<v-arg-flag,`self.flag`>> is `True`.
+* <<v-arg-append,`self.append`>> is `True`.
+
+===== Parameters
+
+* `v` - a number of times the argument is mentioned in the command line.
+
+===== Returns
+
+. `v`.
+
+'''
+
 [#c-argapp-app]
 === `argapp.App`
 
