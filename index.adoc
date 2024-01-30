@@ -608,6 +608,53 @@ Whether the argument can consume more than one value.
 
 '''
 
+[#f-arg---init--]
+==== `+Arg.__init__(...)+`
+
+[source,python]
+----
+class Arg:
+    def __init__(
+        self,
+        name: str | None = None,
+        lopt: str | None = None,
+        sopt: str | None = None,
+        help: str | None = None,
+        helper: ArgHelper | None = None,
+        type: type | None = None,
+        count: int | str | None = None,
+        default: object | list | None = None,
+        choices: dict | None = None,
+        restrict: bool | None = None,
+        suppress: bool | None = None,
+        required: bool | None = None,
+        append: bool | None = None,
+        completer: Completer | None = None,
+    ) -> None:
+        ...
+----
+
+The constructor. Sets each field in the declaration order.
+
+===== Parameters
+
+* `name` - corresponds to <<v-arg-name,`Arg.name`>>.
+* `lopt` - corresponds to <<v-arg-lopt,`Arg.lopt`>>.
+* `sopt` - corresponds to <<v-arg-sopt,`Arg.sopt`>>.
+* `help` - corresponds to <<v-arg-help,`Arg.help`>>.
+* `helper` - corresponds to <<v-arg-helper,`Arg.helper`>>.
+* `type` - corresponds to <<v-arg-type,`Arg.type`>>.
+* `count` - corresponds to <<v-arg-count,`Arg.count`>>.
+* `default` - corresponds to <<v-arg-default,`Arg.default`>>.
+* `choices` - corresponds to <<v-arg-choices,`Arg.choices`>>.
+* `restrict` - corresponds to <<v-arg-restrict,`Arg.restrict`>>.
+* `suppress` - corresponds to <<v-arg-suppress,`Arg.suppress`>>.
+* `required` - corresponds to <<v-arg-required,`Arg.required`>>.
+* `append` - corresponds to <<v-arg-append,`Arg.append`>>.
+* `completer` - corresponds to <<v-arg-completer,`Arg.completer`>>.
+
+'''
+
 [#c-argapp-app]
 === `argapp.App`
 

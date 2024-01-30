@@ -648,6 +648,7 @@ a > code {
 <li><a href="#v-arg-flag"><code>Arg.flag</code></a></li>
 <li><a href="#v-arg-single"><code>Arg.single</code></a></li>
 <li><a href="#v-arg-multiple"><code>Arg.multiple</code></a></li>
+<li><a href="#f-arg---init--"><code>Arg.__init__(...)</code></a></li>
 </ul>
 </li>
 <li><a href="#c-argapp-app"><code>argapp.App</code></a></li>
@@ -1648,6 +1649,85 @@ The usage text and the error message are printed in this case.</p>
 <p><code>False</code>.</p>
 </li>
 </ol>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect3">
+<h4 id="f-arg---init--"><code>Arg.__init__(...)</code></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">class</span> <span class="tok-nc">Arg</span><span class="tok-p">:</span>
+    <span class="tok-k">def</span> <span class="tok-fm">__init__</span><span class="tok-p">(</span>
+        <span class="tok-bp">self</span><span class="tok-p">,</span>
+        <span class="tok-n">name</span><span class="tok-p">:</span> <span class="tok-nb">str</span> <span class="tok-o">|</span> <span class="tok-kc">None</span> <span class="tok-o">=</span> <span class="tok-kc">None</span><span class="tok-p">,</span>
+        <span class="tok-n">lopt</span><span class="tok-p">:</span> <span class="tok-nb">str</span> <span class="tok-o">|</span> <span class="tok-kc">None</span> <span class="tok-o">=</span> <span class="tok-kc">None</span><span class="tok-p">,</span>
+        <span class="tok-n">sopt</span><span class="tok-p">:</span> <span class="tok-nb">str</span> <span class="tok-o">|</span> <span class="tok-kc">None</span> <span class="tok-o">=</span> <span class="tok-kc">None</span><span class="tok-p">,</span>
+        <span class="tok-n">help</span><span class="tok-p">:</span> <span class="tok-nb">str</span> <span class="tok-o">|</span> <span class="tok-kc">None</span> <span class="tok-o">=</span> <span class="tok-kc">None</span><span class="tok-p">,</span>
+        <span class="tok-n">helper</span><span class="tok-p">:</span> <span class="tok-n">ArgHelper</span> <span class="tok-o">|</span> <span class="tok-kc">None</span> <span class="tok-o">=</span> <span class="tok-kc">None</span><span class="tok-p">,</span>
+        <span class="tok-nb">type</span><span class="tok-p">:</span> <span class="tok-nb">type</span> <span class="tok-o">|</span> <span class="tok-kc">None</span> <span class="tok-o">=</span> <span class="tok-kc">None</span><span class="tok-p">,</span>
+        <span class="tok-n">count</span><span class="tok-p">:</span> <span class="tok-nb">int</span> <span class="tok-o">|</span> <span class="tok-nb">str</span> <span class="tok-o">|</span> <span class="tok-kc">None</span> <span class="tok-o">=</span> <span class="tok-kc">None</span><span class="tok-p">,</span>
+        <span class="tok-n">default</span><span class="tok-p">:</span> <span class="tok-nb">object</span> <span class="tok-o">|</span> <span class="tok-nb">list</span> <span class="tok-o">|</span> <span class="tok-kc">None</span> <span class="tok-o">=</span> <span class="tok-kc">None</span><span class="tok-p">,</span>
+        <span class="tok-n">choices</span><span class="tok-p">:</span> <span class="tok-nb">dict</span> <span class="tok-o">|</span> <span class="tok-kc">None</span> <span class="tok-o">=</span> <span class="tok-kc">None</span><span class="tok-p">,</span>
+        <span class="tok-n">restrict</span><span class="tok-p">:</span> <span class="tok-nb">bool</span> <span class="tok-o">|</span> <span class="tok-kc">None</span> <span class="tok-o">=</span> <span class="tok-kc">None</span><span class="tok-p">,</span>
+        <span class="tok-n">suppress</span><span class="tok-p">:</span> <span class="tok-nb">bool</span> <span class="tok-o">|</span> <span class="tok-kc">None</span> <span class="tok-o">=</span> <span class="tok-kc">None</span><span class="tok-p">,</span>
+        <span class="tok-n">required</span><span class="tok-p">:</span> <span class="tok-nb">bool</span> <span class="tok-o">|</span> <span class="tok-kc">None</span> <span class="tok-o">=</span> <span class="tok-kc">None</span><span class="tok-p">,</span>
+        <span class="tok-n">append</span><span class="tok-p">:</span> <span class="tok-nb">bool</span> <span class="tok-o">|</span> <span class="tok-kc">None</span> <span class="tok-o">=</span> <span class="tok-kc">None</span><span class="tok-p">,</span>
+        <span class="tok-n">completer</span><span class="tok-p">:</span> <span class="tok-n">Completer</span> <span class="tok-o">|</span> <span class="tok-kc">None</span> <span class="tok-o">=</span> <span class="tok-kc">None</span><span class="tok-p">,</span>
+    <span class="tok-p">)</span> <span class="tok-o">-&gt;</span> <span class="tok-kc">None</span><span class="tok-p">:</span>
+        <span class="tok-o">...</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The constructor. Sets each field in the declaration order.</p>
+</div>
+<div class="sect4">
+<h5 id="_parameters_2">Parameters</h5>
+<div class="ulist">
+<ul>
+<li>
+<p><code>name</code> - corresponds to <a href="#v-arg-name"><code>Arg.name</code></a>.</p>
+</li>
+<li>
+<p><code>lopt</code> - corresponds to <a href="#v-arg-lopt"><code>Arg.lopt</code></a>.</p>
+</li>
+<li>
+<p><code>sopt</code> - corresponds to <a href="#v-arg-sopt"><code>Arg.sopt</code></a>.</p>
+</li>
+<li>
+<p><code>help</code> - corresponds to <a href="#v-arg-help"><code>Arg.help</code></a>.</p>
+</li>
+<li>
+<p><code>helper</code> - corresponds to <a href="#v-arg-helper"><code>Arg.helper</code></a>.</p>
+</li>
+<li>
+<p><code>type</code> - corresponds to <a href="#v-arg-type"><code>Arg.type</code></a>.</p>
+</li>
+<li>
+<p><code>count</code> - corresponds to <a href="#v-arg-count"><code>Arg.count</code></a>.</p>
+</li>
+<li>
+<p><code>default</code> - corresponds to <a href="#v-arg-default"><code>Arg.default</code></a>.</p>
+</li>
+<li>
+<p><code>choices</code> - corresponds to <a href="#v-arg-choices"><code>Arg.choices</code></a>.</p>
+</li>
+<li>
+<p><code>restrict</code> - corresponds to <a href="#v-arg-restrict"><code>Arg.restrict</code></a>.</p>
+</li>
+<li>
+<p><code>suppress</code> - corresponds to <a href="#v-arg-suppress"><code>Arg.suppress</code></a>.</p>
+</li>
+<li>
+<p><code>required</code> - corresponds to <a href="#v-arg-required"><code>Arg.required</code></a>.</p>
+</li>
+<li>
+<p><code>append</code> - corresponds to <a href="#v-arg-append"><code>Arg.append</code></a>.</p>
+</li>
+<li>
+<p><code>completer</code> - corresponds to <a href="#v-arg-completer"><code>Arg.completer</code></a>.</p>
+</li>
+</ul>
 </div>
 <hr>
 </div>
