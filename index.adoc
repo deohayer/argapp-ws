@@ -655,6 +655,36 @@ The constructor. Sets each field in the declaration order.
 
 '''
 
+[#v-arg---call--bool]
+==== `+Arg.__call__(bool)+`
+
+[source,python]
+----
+class Arg:
+    @overload
+    def __call__(
+        self,
+        v: bool,
+    ) -> bool:
+        ...
+----
+
+Parse the command line value. This overload is called if:
+
+* <<v-arg-flag,`self.flag`>> is `True`.
+* <<v-arg-append,`self.append`>> is `False`.
+
+===== Parameters
+
+* `v` - `True` if the argrument is mentioned in the command line. `False` otherwise.
+
+===== Returns
+
+. <<v-arg-default,`self.default`>>, if v is `True`.
+. `not <<v-arg-default,self.default>>`, if v is `False`.
+
+'''
+
 [#c-argapp-app]
 === `argapp.App`
 

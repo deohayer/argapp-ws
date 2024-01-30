@@ -649,6 +649,7 @@ a > code {
 <li><a href="#v-arg-single"><code>Arg.single</code></a></li>
 <li><a href="#v-arg-multiple"><code>Arg.multiple</code></a></li>
 <li><a href="#f-arg---init--"><code>Arg.__init__(...)</code></a></li>
+<li><a href="#v-arg---call--bool"><code>Arg.__call__(bool)</code></a></li>
 </ul>
 </li>
 <li><a href="#c-argapp-app"><code>argapp.App</code></a></li>
@@ -1728,6 +1729,57 @@ The usage text and the error message are printed in this case.</p>
 <p><code>completer</code> - corresponds to <a href="#v-arg-completer"><code>Arg.completer</code></a>.</p>
 </li>
 </ul>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect3">
+<h4 id="v-arg---call--bool"><code>Arg.__call__(bool)</code></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">class</span> <span class="tok-nc">Arg</span><span class="tok-p">:</span>
+    <span class="tok-nd">@overload</span>
+    <span class="tok-k">def</span> <span class="tok-fm">__call__</span><span class="tok-p">(</span>
+        <span class="tok-bp">self</span><span class="tok-p">,</span>
+        <span class="tok-n">v</span><span class="tok-p">:</span> <span class="tok-nb">bool</span><span class="tok-p">,</span>
+    <span class="tok-p">)</span> <span class="tok-o">-&gt;</span> <span class="tok-nb">bool</span><span class="tok-p">:</span>
+        <span class="tok-o">...</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Parse the command line value. This overload is called if:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#v-arg-flag"><code>self.flag</code></a> is <code>True</code>.</p>
+</li>
+<li>
+<p><a href="#v-arg-append"><code>self.append</code></a> is <code>False</code>.</p>
+</li>
+</ul>
+</div>
+<div class="sect4">
+<h5 id="_parameters_3">Parameters</h5>
+<div class="ulist">
+<ul>
+<li>
+<p><code>v</code> - <code>True</code> if the argrument is mentioned in the command line. <code>False</code> otherwise.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_returns_2">Returns</h5>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#v-arg-default"><code>self.default</code></a>, if v is <code>True</code>.</p>
+</li>
+<li>
+<p><code>not <a href="#v-arg-default">self.default</a></code>, if v is <code>False</code>.</p>
+</li>
+</ol>
 </div>
 <hr>
 </div>
