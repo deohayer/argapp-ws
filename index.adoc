@@ -815,6 +815,41 @@ Parse the command line value. This overload is called if:
 
 '''
 
+[#v-arg---call--list-list]
+==== `+Arg.__call__(list[list])+`
+
+[source,python]
+----
+class Arg:
+    @overload
+    def __call__(
+        self,
+        v: list[list[str] | None],
+    ) -> list[list[object] | None]:
+        ...
+----
+
+Parse the command line value. This overload is called if:
+
+* <<v-arg-multiple,`self.multiple`>> is `True`.
+* <<v-arg-append,`self.append`>> is `True`.
+
+===== Parameters
+
+* `v` - a list of lists of values from the command line associated with the argument.
+
+===== Returns
+
+. A `list[list]` where each list `l` from `v` is converted to:
+.. <<v-arg-default,`self.default`>>, if `l` is `None`.
+.. A `list` where each item `x` from `l` is converted to `<<v-arg-type,self.type>>(x)`.
+
+===== Exceptions
+
+. `CallError`, if <<v-arg-restrict,`self.restrict`>> is `True` and any item is not in <<v-arg-choices,`self.choices`>>.
+
+'''
+
 [#c-argapp-app]
 === `argapp.App`
 
