@@ -714,6 +714,40 @@ Parse the command line value. This overload is called if:
 
 '''
 
+[#v-arg---call--str]
+==== `+Arg.__call__(str)+`
+
+[source,python]
+----
+class Arg:
+    @overload
+    def __call__(
+        self,
+        v: str | None,
+    ) -> object | None:
+        ...
+----
+
+Parse the command line value. This overload is called if:
+
+* <<v-arg-single,`self.single`>> is `True`.
+* <<v-arg-append,`self.append`>> is `False`.
+
+===== Parameters
+
+* `v` - a value from the command line. `None` if not provided.
+
+===== Returns
+
+. <<v-arg-default,`self.default`>>, if `v` is `None`.
+. `<<v-arg-type,self.type>>(v)`.
+
+===== Exceptions
+
+. `CallError`, if <<v-arg-restrict,`self.restrict`>> is `True` and the value is not in <<v-arg-choices,`self.choices`>>.
+
+'''
+
 [#c-argapp-app]
 === `argapp.App`
 
