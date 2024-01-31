@@ -1375,6 +1375,36 @@ Generate the command's full usage text.
 
 '''
 
+[#f-apphelper-section-prolog]
+==== `+AppHelper.section_prolog(...)+`
+
+[source,python]
+----
+class AppHelper:
+    def section_prolog(
+        self,
+        title: str,
+        app: App,
+    ) -> str:
+        ...
+----
+
+Generate the command's text before arguments.
+
+===== Parameters
+
+* `title` - a title for the section.
+* `app` - <<c-argapp-app,`App`>> to generate the text for.
+
+===== Returns
+
+. `""` if <<v-app-prolog,`app.prolog`>> is not set.
+. A `str` that combines:
+** `title`.
+** <<v-app-prolog,`app.prolog`>>.
+
+'''
+
 [#c-argapp-completer]
 === `argapp.Completer`
 
