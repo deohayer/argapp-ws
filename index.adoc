@@ -1231,6 +1231,33 @@ A command description generation.
 
 '''
 
+[#v-apphelper-lopt]
+==== `AppHelper.lopt`
+
+[source,python]
+----
+class AppHelper:
+    @property
+    def lopt(self) -> str:
+        ...
+
+    @lopt.setter
+    def lopt(self, v: str | None) -> None:
+        ...
+----
+
+The long option name for the help argument. Similar to <<v-arg-lopt,`Arg.lopt`>>.
+
+===== Defaults
+
+. `""`.
+
+===== Exceptions
+
+. `TypeError` if the type is not `str` or `None`.
+
+'''
+
 [#c-argapp-completer]
 === `argapp.Completer`
 
