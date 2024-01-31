@@ -1147,6 +1147,30 @@ Whether to append the <<v-arg-default,`Arg.default`>> to the help text.
 
 '''
 
+[#f-arghelper-text-help]
+==== `+ArgHelper.text_help(...)+`
+
+[source,python]
+----
+class ArgHelper:
+    def text_help(self, arg: Arg) -> str:
+        ...
+----
+
+Generate the argument's description.
+
+===== Parameters
+
+* `arg` - the argument to use for the generation.
+
+===== Returns
+
+. <<v-arg-help,`arg.help`>> with the following information appended:
+* <<v-arg-choices,`arg.choices`>>, if <<v-arghelper-choices,`self.choices`>> is `True`.
+* <<v-arg-default,`arg.default`>>, if <<v-arghelper-default,`self.default`>> is `True`.
+
+'''
+
 [#c-argapp-apphelper]
 === `argapp.AppHelper`
 
