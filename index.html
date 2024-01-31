@@ -685,6 +685,7 @@ a > code {
 <li><a href="#v-apphelper-sopt"><code>AppHelper.sopt</code></a></li>
 <li><a href="#v-apphelper-help"><code>AppHelper.help</code></a></li>
 <li><a href="#f-apphelper-text-help"><code>AppHelper.text_help(...)</code></a></li>
+<li><a href="#f-apphelper-text-usage"><code>AppHelper.text_usage(...)</code></a></li>
 </ul>
 </li>
 <li><a href="#c-argapp-completer"><code>argapp.Completer</code></a></li>
@@ -2864,6 +2865,60 @@ The usage text and the error message are printed in this case.</p>
 </li>
 <li>
 <p><code><a href="#f-apphelper-section-epilog">section_epilog</a>("Notes", apps[-1])</code>.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect3">
+<h4 id="f-apphelper-text-usage"><code>AppHelper.text_usage(...)</code></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">class</span> <span class="tok-nc">AppHelper</span><span class="tok-p">:</span>
+    <span class="tok-k">def</span> <span class="tok-nf">text_usage</span><span class="tok-p">(</span>
+        <span class="tok-bp">self</span><span class="tok-p">,</span>
+        <span class="tok-n">apps</span><span class="tok-p">:</span> <span class="tok-nb">list</span><span class="tok-p">[</span><span class="tok-n">App</span><span class="tok-p">],</span>
+        <span class="tok-n">name</span><span class="tok-p">:</span> <span class="tok-nb">str</span><span class="tok-p">,</span>
+    <span class="tok-p">)</span> <span class="tok-o">-&gt;</span> <span class="tok-nb">str</span><span class="tok-p">:</span>
+        <span class="tok-o">...</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Generate the command&#8217;s full usage text.</p>
+</div>
+<div class="sect4">
+<h5 id="_parameters_15">Parameters</h5>
+<div class="ulist">
+<ul>
+<li>
+<p><code>apps</code> - a list of commands mentioned in the command line. The usage text should be generated for the last one.</p>
+</li>
+<li>
+<p><code>name</code> - name to use for the first command in <code>apps</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_returns_11">Returns</h5>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>A <code>str</code> that combines:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>All the commands from the command line (the arguments omitted).</p>
+</li>
+<li>
+<p>The last command&#8217;s optional arguments with <a href="#v-arg-required"><code>required</code></a> set to <code>True</code>.</p>
+</li>
+<li>
+<p>The last command&#8217;s positional arguments.</p>
 </li>
 </ul>
 </div>
