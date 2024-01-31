@@ -992,6 +992,25 @@ The command's help text generator.
 
 '''
 
+[#v-app-args]
+==== `App.args`
+
+[source,python]
+----
+class App:
+    @property
+    def args(self) -> list[Arg]:
+        ...
+----
+
+The command's arguments.
+
+===== Defaults
+
+. `[]`.
+
+'''
+
 [#c-argapp-arghelper]
 === `argapp.ArgHelper`
 
