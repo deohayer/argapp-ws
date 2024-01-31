@@ -884,6 +884,33 @@ The command's name.
 
 '''
 
+[#v-app-help]
+==== `App.help`
+
+[source,python]
+----
+class App:
+    @property
+    def help(self) -> str:
+        ...
+
+    @help.setter
+    def help(self, v: str | None) -> None:
+        ...
+----
+
+The command's short description.
+
+===== Defaults
+
+. `''`.
+
+===== Exceptions
+
+. `TypeError` if the type is not `str` or `None`.
+
+'''
+
 [#c-argapp-arghelper]
 === `argapp.ArgHelper`
 
