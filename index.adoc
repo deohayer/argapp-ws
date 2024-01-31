@@ -1285,6 +1285,33 @@ The short option name for the help argument. Similar to <<v-arg-sopt,`Arg.sopt`>
 
 '''
 
+[#v-apphelper-help]
+==== `AppHelper.help`
+
+[source,python]
+----
+class AppHelper:
+    @property
+    def help(self) -> str:
+        ...
+
+    @help.setter
+    def help(self, v: str | None) -> None:
+        ...
+----
+
+The help text for the help argument. Similar to <<v-arg-help,`Arg.help`>>.
+
+===== Defaults
+
+. `""`.
+
+===== Exceptions
+
+. `TypeError` if the type is not `str` or `None`.
+
+'''
+
 [#c-argapp-completer]
 === `argapp.Completer`
 
