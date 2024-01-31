@@ -1201,6 +1201,29 @@ Generate the argument's usage (stylized name).
 
 '''
 
+[#f-arghelper---init--]
+==== `+ArgHelper.__init__(...)+`
+
+[source,python]
+----
+class ArgHelper:
+    def __init__(
+        self,
+        choices: bool | None = None,
+        default: bool | None = None,
+    ) -> None:
+        ...
+----
+
+The constructor. Sets each field in the declaration order.
+
+===== Parameters
+
+* `choices` - corresponds to <<v-arghelper-choices,`self.choices`>>.
+* `default` - corresponds to <<v-arghelper-default,`self.default`>>.
+
+'''
+
 [#c-argapp-apphelper]
 === `argapp.AppHelper`
 
