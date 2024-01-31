@@ -965,6 +965,33 @@ The command's detailed description after arguments.
 
 '''
 
+[#v-app-helper]
+==== `App.helper`
+
+[source,python]
+----
+class App:
+    @property
+    def helper(self) -> AppHelper:
+        ...
+
+    @helper.setter
+    def helper(self, v: AppHelper | None) -> None:
+        ...
+----
+
+The command's help text generator.
+
+===== Defaults
+
+. `<<c-argapp-apphelper,AppHelper>>()`.
+
+===== Exceptions
+
+. `TypeError` if the type is not <<c-argapp-apphelper,`AppHelper`>> or `None`.
+
+'''
+
 [#c-argapp-arghelper]
 === `argapp.ArgHelper`
 
