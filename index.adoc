@@ -1030,6 +1030,35 @@ The command's subcommands.
 
 '''
 
+[#f-app---init--]
+==== `+App.__init__(...)+`
+
+[source,python]
+----
+class App:
+    def __init__(
+        self,
+        name: str | None = None,
+        help: str | None = None,
+        prolog: str | None = None,
+        epilog: str | None = None,
+        helper: AppHelper | None = None,
+    ) -> None:
+        ...
+----
+
+The constructor. Sets each field in the declaration order.
+
+===== Parameters
+
+* `name` - corresponds to <<v-app-name,`App.name`>>.
+* `help` - corresponds to <<v-app-help,`App.help`>>.
+* `prolog` - corresponds to <<v-app-prolog,`App.prolog`>>.
+* `epilog` - corresponds to <<v-app-epilog,`App.epilog`>>.
+* `helper` - corresponds to <<v-app-helper,`App.helper`>>.
+
+'''
+
 [#c-argapp-arghelper]
 === `argapp.ArgHelper`
 
