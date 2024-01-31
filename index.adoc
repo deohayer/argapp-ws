@@ -938,6 +938,33 @@ The command's detailed description before arguments.
 
 '''
 
+[#v-app-epilog]
+==== `App.epilog`
+
+[source,python]
+----
+class App:
+    @property
+    def epilog(self) -> str:
+        ...
+
+    @epilog.setter
+    def epilog(self, v: str | None) -> None:
+        ...
+----
+
+The command's detailed description after arguments.
+
+===== Defaults
+
+. `''`.
+
+===== Exceptions
+
+. `TypeError` if the type is not `str` or `None`.
+
+'''
+
 [#c-argapp-arghelper]
 === `argapp.ArgHelper`
 
