@@ -1435,6 +1435,34 @@ Generate the command's text after arguments.
 
 '''
 
+[#f-apphelper-section-apps]
+==== `+AppHelper.section_apps(...)+`
+
+[source,python]
+----
+class AppHelper:
+    def section_apps(
+        self,
+        title: str,
+        apps: list[App],
+    ) -> str:
+        ...
+----
+
+Generate the command's text for subcommands.
+
+===== Parameters
+
+* `title` - a title for the section.
+* `apps` - a list of <<c-argapp-app,`App`>> to generate the text for.
+
+===== Returns
+
+. `""` if `apps` is empty.
+. A `str` that is a bullet list from `app` in `apps`: <<v-app-name,`app.name`>> and its <<v-app-name,`app.help`>>.
+
+'''
+
 [#c-argapp-completer]
 === `argapp.Completer`
 
