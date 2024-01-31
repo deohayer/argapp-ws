@@ -684,6 +684,7 @@ a > code {
 <li><a href="#v-apphelper-lopt"><code>AppHelper.lopt</code></a></li>
 <li><a href="#v-apphelper-sopt"><code>AppHelper.sopt</code></a></li>
 <li><a href="#v-apphelper-help"><code>AppHelper.help</code></a></li>
+<li><a href="#f-apphelper-text-help"><code>AppHelper.text_help(...)</code></a></li>
 </ul>
 </li>
 <li><a href="#c-argapp-completer"><code>argapp.Completer</code></a></li>
@@ -2803,6 +2804,69 @@ The usage text and the error message are printed in this case.</p>
 <ol class="arabic">
 <li>
 <p><code>TypeError</code> if the type is not <code>str</code> or <code>None</code>.</p>
+</li>
+</ol>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect3">
+<h4 id="f-apphelper-text-help"><code>AppHelper.text_help(...)</code></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">class</span> <span class="tok-nc">AppHelper</span><span class="tok-p">:</span>
+    <span class="tok-k">def</span> <span class="tok-nf">text_help</span><span class="tok-p">(</span>
+        <span class="tok-bp">self</span><span class="tok-p">,</span>
+        <span class="tok-n">apps</span><span class="tok-p">:</span> <span class="tok-nb">list</span><span class="tok-p">[</span><span class="tok-n">App</span><span class="tok-p">],</span>
+        <span class="tok-n">name</span><span class="tok-p">:</span> <span class="tok-nb">str</span><span class="tok-p">,</span>
+    <span class="tok-p">)</span> <span class="tok-o">-&gt;</span> <span class="tok-nb">str</span><span class="tok-p">:</span>
+        <span class="tok-o">...</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Generate the command&#8217;s full help text.</p>
+</div>
+<div class="sect4">
+<h5 id="_parameters_14">Parameters</h5>
+<div class="ulist">
+<ul>
+<li>
+<p><code>apps</code> - a list of commands mentioned in the command line. The help text should be generated for the last one.</p>
+</li>
+<li>
+<p><code>name</code> - name to use for the first command in <code>apps</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_returns_10">Returns</h5>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>A <code>str</code>, combination of the following:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code><a href="#f-apphelper-text-usage">text_usage</a>(apps, name)</code>.</p>
+</li>
+<li>
+<p><code><a href="#f-apphelper-section-prolog">section_prolog</a>("Description", apps[-1])</code>.</p>
+</li>
+<li>
+<p><code><a href="#f-apphelper-section-apps">section_apps</a>("Commands", apps[-1].apps)</code>.</p>
+</li>
+<li>
+<p><code><a href="#f-apphelper-section-apps">section_args</a>("Positional arguments", args)</code>, where <code>args</code> - positional arguments from <code>apps[-1].args</code>.</p>
+</li>
+<li>
+<p><code><a href="#f-apphelper-section-apps">section_args</a>("Optional arguments", args)</code>, where <code>args</code> - optional arguments from <code>apps[-1].args</code>.</p>
+</li>
+<li>
+<p><code><a href="#f-apphelper-section-epilog">section_epilog</a>("Notes", apps[-1])</code>.</p>
+</li>
+</ul>
+</div>
 </li>
 </ol>
 </div>
