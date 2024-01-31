@@ -1491,6 +1491,29 @@ Generate the command's text for arguments.
 
 '''
 
+[#f-apphelper---init--]
+==== `+AppHelper.__init__(...)+`
+
+[source,python]
+----
+class AppHelper:
+    def __init__(
+        self,
+        lopt: str | None = 'help',
+        sopt: str | None = 'h',
+        help: str | None = 'Show the help text and exit.',
+    ) -> None:
+        ...
+----
+
+The constructor. Sets each field in the declaration order.
+
+===== Parameters
+
+* `lopt` - corresponds to <<v-apphelper-lopt,`self.lopt`>>.
+* `sopt` - corresponds to <<v-apphelper-sopt,`self.sopt`>>.
+* `help` - corresponds to <<v-apphelper-help,`self.help`>>.
+
 [#c-argapp-completer]
 === `argapp.Completer`
 
