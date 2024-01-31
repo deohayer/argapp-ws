@@ -1603,3 +1603,26 @@ The error exit code.
 . `ValueError` if the value is not in range `[0; 255]`.
 
 '''
+
+[#f-callerror---init--]
+==== `+CallError.__init__(...)+`
+
+[source,python]
+----
+class CallError:
+    def __init__(
+        self,
+        text: str | None = None,
+        code: int | None = None,
+    ) -> None:
+        ...
+----
+
+The constructor. Sets each field in the declaration order.
+
+===== Parameters
+
+* `text` - corresponds to <<v-callerror-text,`self.text`>>.
+* `code` - corresponds to <<v-callerror-code,`self.code`>>.
+
+'''
