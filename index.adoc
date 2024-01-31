@@ -911,6 +911,33 @@ The command's short description.
 
 '''
 
+[#v-app-prolog]
+==== `App.prolog`
+
+[source,python]
+----
+class App:
+    @property
+    def prolog(self) -> str:
+        ...
+
+    @prolog.setter
+    def prolog(self, v: str | None) -> None:
+        ...
+----
+
+The command's detailed description before arguments.
+
+===== Defaults
+
+. `''`.
+
+===== Exceptions
+
+. `TypeError` if the type is not `str` or `None`.
+
+'''
+
 [#c-argapp-arghelper]
 === `argapp.ArgHelper`
 
