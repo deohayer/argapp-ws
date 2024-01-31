@@ -1011,6 +1011,25 @@ The command's arguments.
 
 '''
 
+[#v-app-apps]
+==== `App.apps`
+
+[source,python]
+----
+class App:
+    @property
+    def apps(self) -> list[App]:
+        ...
+----
+
+The command's subcommands.
+
+===== Defaults
+
+. `[]`.
+
+'''
+
 [#c-argapp-arghelper]
 === `argapp.ArgHelper`
 
