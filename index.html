@@ -689,6 +689,7 @@ a > code {
 <li><a href="#f-apphelper-section-prolog"><code>AppHelper.section_prolog(...)</code></a></li>
 <li><a href="#f-apphelper-section-epilog"><code>AppHelper.section_epilog(...)</code></a></li>
 <li><a href="#f-apphelper-section-apps"><code>AppHelper.section_apps(...)</code></a></li>
+<li><a href="#f-apphelper-section-args"><code>AppHelper.section_args(...)</code></a></li>
 </ul>
 </li>
 <li><a href="#c-argapp-completer"><code>argapp.Completer</code></a></li>
@@ -3077,6 +3078,50 @@ The usage text and the error message are printed in this case.</p>
 </li>
 <li>
 <p>A <code>str</code> that is a bullet list from <code>app</code> in <code>apps</code>: <a href="#v-app-name"><code>app.name</code></a> and its <a href="#v-app-name"><code>app.help</code></a>.</p>
+</li>
+</ol>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect3">
+<h4 id="f-apphelper-section-args"><code>AppHelper.section_args(...)</code></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">class</span> <span class="tok-nc">AppHelper</span><span class="tok-p">:</span>
+    <span class="tok-k">def</span> <span class="tok-nf">section_args</span><span class="tok-p">(</span>
+        <span class="tok-bp">self</span><span class="tok-p">,</span>
+        <span class="tok-n">title</span><span class="tok-p">:</span> <span class="tok-nb">str</span><span class="tok-p">,</span>
+        <span class="tok-n">args</span><span class="tok-p">:</span> <span class="tok-nb">list</span><span class="tok-p">[</span><span class="tok-n">Arg</span><span class="tok-p">],</span>
+    <span class="tok-p">)</span> <span class="tok-o">-&gt;</span> <span class="tok-nb">str</span><span class="tok-p">:</span>
+        <span class="tok-o">...</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Generate the command&#8217;s text for arguments.</p>
+</div>
+<div class="sect4">
+<h5 id="_parameters_19">Parameters</h5>
+<div class="ulist">
+<ul>
+<li>
+<p><code>title</code> - a title for the section.</p>
+</li>
+<li>
+<p><code>apps</code> - a list of <a href="#c-argapp-arg"><code>Arg</code></a> to generate the text for.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_returns_15">Returns</h5>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>""</code> if <code>apps</code> is empty.</p>
+</li>
+<li>
+<p>A <code>str</code> that is a bullet list from <code>arg</code> in <code>args</code>: <a href="#f-arghelper-text-usage"><code>arg.helper.text_usage(arg)</code></a> and <a href="#f-arghelper-text-help"><code>arg.helper.text_help(arg)</code></a>.</p>
 </li>
 </ol>
 </div>
