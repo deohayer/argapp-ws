@@ -1548,3 +1548,30 @@ A <<c-argapp-completer, `Completer`>> for gradual path-based completion. A subcl
 An exception to raise when there is an error during parsing or execution.
 
 '''
+
+[#v-callerror-text]
+==== `CallError.text`
+
+[source,python]
+----
+class CallError:
+    @property
+    def text(self) -> str:
+        ...
+
+    @text.setter
+    def text(self, v: str | None) -> None:
+        ...
+----
+
+The error text.
+
+===== Defaults
+
+. `""`.
+
+===== Exceptions
+
+. `TypeError` if the type is not `str` or `None`.
+
+'''
