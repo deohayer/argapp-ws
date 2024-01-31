@@ -1405,6 +1405,36 @@ Generate the command's text before arguments.
 
 '''
 
+[#f-apphelper-section-epilog]
+==== `+AppHelper.section_epilog(...)+`
+
+[source,python]
+----
+class AppHelper:
+    def section_epilog(
+        self,
+        title: str,
+        app: App,
+    ) -> str:
+        ...
+----
+
+Generate the command's text after arguments.
+
+===== Parameters
+
+* `title` - a title for the section.
+* `app` - <<c-argapp-app,`App`>> to generate the text for.
+
+===== Returns
+
+. `""` if <<v-app-epilog,`app.epilog`>> is not set.
+. A `str` that combines:
+** `title`.
+** <<v-app-epilog,`app.epilog`>>.
+
+'''
+
 [#c-argapp-completer]
 === `argapp.Completer`
 
