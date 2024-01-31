@@ -1093,6 +1093,33 @@ An argument description generation.
 
 '''
 
+[#v-arghelper-choices]
+==== `ArgHelper.choices`
+
+[source,python]
+----
+class ArgHelper:
+    @property
+    def choices(self) -> bool:
+        ...
+
+    @choices.setter
+    def choices(self, v: bool | None) -> None:
+        ...
+----
+
+Whether to append the <<v-arg-choices,`Arg.choices`>> to the help text.
+
+===== Defaults
+
+. `True`.
+
+===== Exceptions
+
+. `TypeError` if the type is not `bool` or `None`.
+
+'''
+
 [#c-argapp-apphelper]
 === `argapp.AppHelper`
 
