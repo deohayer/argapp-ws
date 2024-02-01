@@ -523,7 +523,7 @@ Whether the argument is optional.
 
 ===== Defaults
 
-. `True`, if <<v-arg-sopt,`self.sopt`>> or <<v-arg-lopt,`self.lopt`>> is set.
+. `True`, if either <<v-arg-sopt,`self.sopt`>> or <<v-arg-lopt,`self.lopt`>> is set.
 . `False`.
 
 '''
