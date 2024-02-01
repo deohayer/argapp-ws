@@ -543,7 +543,7 @@ Whether the argument is positional.
 
 ===== Defaults
 
-. `True`, if <<v-arg-sopt,`self.sopt`>> and <<v-arg-lopt,`self.lopt`>> are not set.
+. `True`, if both <<v-arg-sopt,`self.sopt`>> and <<v-arg-lopt,`self.lopt`>> are not set.
 . `False`.
 
 '''
