@@ -164,8 +164,8 @@ The short option name.
 
 ===== Exceptions
 
-. `TypeError` if the type is not `str` or `None`.
-. `ValueError` if the value exceeds one character.
+. `TypeError`, if the type is not `str` or `None`.
+. `ValueError`, if the value exceeds one character.
 
 '''
 
