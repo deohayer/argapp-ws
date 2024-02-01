@@ -137,7 +137,7 @@ The long option name.
 
 ===== Exceptions
 
-. `TypeError` if the type is not `str` or `None`.
+. `TypeError`, if the type is not `str` or `None`.
 
 '''
 
