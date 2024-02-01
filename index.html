@@ -1164,19 +1164,19 @@ The usage text and the error message are printed in this case.</p>
 <p><code>1</code>: a single value.</p>
 </li>
 <li>
-<p><code>2</code> or greater: Multiple values, an exact number.</p>
+<p><code>2</code> or greater: multiple values, an exact number.</p>
 </li>
 <li>
-<p><code>"?"</code>: a single value, zero or one.</p>
+<p><code>'?'</code>: a single value, zero or one.</p>
 </li>
 <li>
-<p><code>"*"</code>: multiple values, zero or more.</p>
+<p><code>'*'</code>: multiple values, zero or more.</p>
 </li>
 <li>
-<p><code>"+"</code>: multiple values, one or more.</p>
+<p><code>'+'</code>: multiple values, one or more.</p>
 </li>
 <li>
-<p><code>"~"</code>: multiple values, zero or more. Consume the rest of the command line without parsing. Can be set if <a href="#v-arg-positional"><code>self.positional</code></a> is <code>True</code>.</p>
+<p><code>'~'</code>: multiple values, zero or more. Consume the rest of the command line without parsing. Can be set if <a href="#v-arg-positional"><code>self.positional</code></a> is <code>True</code>.</p>
 </li>
 </ol>
 </div>
@@ -1185,7 +1185,7 @@ The usage text and the error message are printed in this case.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><code>"*"</code> if the type of <a href="#v-arg-default"><code>self.default</code></a> is <code>list</code>.</p>
+<p><code>'*'</code>, if the type of <a href="#v-arg-default"><code>self.default</code></a> is <code>list</code>.</p>
 </li>
 <li>
 <p><code>1</code>.</p>
@@ -1198,25 +1198,25 @@ The usage text and the error message are printed in this case.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><code>TypeError</code> if the type is not <code>int</code>, <code>str</code> or <code>None</code>.</p>
+<p><code>TypeError</code>, if the type is not <code>int</code>, <code>str</code> or <code>None</code>.</p>
 </li>
 <li>
-<p><code>ValueError</code> if the type is <code>int</code> and the value is negative.</p>
+<p><code>ValueError</code>, if the type is <code>int</code> and the value is negative.</p>
 </li>
 <li>
-<p><code>ValueError</code> if the type is <code>str</code> and the value is not one of: <code>"?"</code>, <code>"*"</code>, <code>"+"</code>, <code>"~"</code>.</p>
+<p><code>ValueError</code>, if the type is <code>str</code> and the value is not one of: <code>'?'</code>, <code>'*'</code>, <code>'+'</code>, <code>'~'</code>.</p>
 </li>
 <li>
-<p><code>ValueError</code> if the value is <code>0</code> and <a href="#v-arg-optional"><code>self.optional</code></a> is <code>False</code>.</p>
+<p><code>ValueError</code>, if the value is <code>0</code> and <a href="#v-arg-optional"><code>self.optional</code></a> is <code>False</code>.</p>
 </li>
 <li>
-<p><code>ValueError</code> if the value is <code>"~"</code> and <a href="#v-arg-positional"><code>self.positional</code></a> is <code>False</code>.</p>
+<p><code>ValueError</code>, if the value is <code>'~'</code> and <a href="#v-arg-positional"><code>self.positional</code></a> is <code>False</code>.</p>
 </li>
 <li>
-<p><code>ValueError</code> if the value is <code>"+"</code> and <a href="#v-arg-default"><code>self.default</code></a> is an empty <code>list</code>.</p>
+<p><code>ValueError</code>, if the value is <code>'+'</code> and <a href="#v-arg-default"><code>self.default</code></a> is an empty <code>list</code>.</p>
 </li>
 <li>
-<p><code>ValueError</code> if the type is <code>int</code> and the value does not match the number of items in <a href="#v-arg-default"><code>self.default</code></a>.</p>
+<p><code>ValueError</code>, if the type is <code>int</code> and the value does not match the number of items in <a href="#v-arg-default"><code>self.default</code></a>.</p>
 </li>
 </ol>
 </div>
