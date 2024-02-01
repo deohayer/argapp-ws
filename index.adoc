@@ -106,11 +106,11 @@ The name of the argument's value.
 
 . Uppercase <<v-arg-lopt,`self.lopt`>>, if set.
 . Uppercase <<v-arg-sopt,`self.sopt`>>, if set.
-. `""`.
+. `''`.
 
 ===== Exceptions
 
-. `TypeError` if the type is not `str` or `None`.
+. `TypeError`, if the type is not `str` or `None`.
 
 '''
 
