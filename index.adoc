@@ -219,7 +219,7 @@ The argument's help text generator.
 
 ===== Exceptions
 
-. `TypeError` if the type is not <<c-argapp-arghelper,`ArgHelper`>> or `None`.
+. `TypeError`, if the type is not <<c-argapp-arghelper,`ArgHelper`>> or `None`.
 
 '''
 
