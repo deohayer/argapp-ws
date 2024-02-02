@@ -311,24 +311,25 @@ class Arg:
         ...
 ----
 
-The default value, applied if:
+The default value. It is used by the base implementations of <<v-arg---call--bool,`++Arg.__call__(...)++`>> in the following cases:
 
-. <<v-arg-count,`self.count`>> is `'?'`, `'*'` or `'~'` and no values provided.
-. <<v-arg-optional,`self.optional`>> is `True`, <<v-arg-suppress,`self.suppress`>> is `False`, and the argument is not mentioned.
+* <<v-arg-count,`self.count`>> is `'?'`, `'*'` or `'~'` and no values provided.
+* <<v-arg-optional,`self.optional`>> is `True`, <<v-arg-suppress,`self.suppress`>> is `False`, and the argument is not mentioned.
 
 ===== Defaults
 
-. `[]` if type of <<v-arg-count,`self.count`>> is `"*"` or `"~"`.
+. `False`, if <<v-arg-flag,`self.flag`>> is `True`.
+. `[]`, if <<v-arg-count,`self.count`>> is `'*'` or `'~'`.
 . `None`.
 
 ===== Exceptions
 
-. `TypeError` if the type is not `list` and it is not <<v-arg-type,`self.type`>> or `None`.
-. `TypeError` if the type is `list` and one of the items is not <<v-arg-type,`self.type`>>.
-. `ValueError` if the type is not `list` and the value is not in <<v-arg-choices,`self.choices`>>.
-. `ValueError` if the type is `list` and one of the items is not in <<v-arg-choices,`self.choices`>>.
-. `ValueError` if the type is `list`, and the number of items does not match <<v-arg-count,`self.count`>>.
-. `ValueError` if the value is an empty `list`, and <<v-arg-count,`self.count`>> is `"+"`.
+. `TypeError`, if the type is not `list` or `None` and <<v-arg-multiple,`self.multiple`>> is `True`.
+. `TypeError`, if the type is `list`, and <<v-arg-single,`self.single`>> is `True`.
+. `TypeError`, if the type is not `list` and it is not <<v-arg-type,`self.type`>> or `None`.
+. `TypeError`, if the type is `list` and one of the items is not <<v-arg-type,`self.type`>>.
+. `ValueError`, if the type is `list`, and the number of items does not match <<v-arg-count,`self.count`>>.
+. `ValueError`, if the value is an empty `list`, and <<v-arg-count,`self.count`>> is `'+'`.
 
 '''
 

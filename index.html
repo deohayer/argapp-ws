@@ -1229,24 +1229,27 @@ The usage text and the error message are printed in this case.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>The default value, applied if:</p>
+<p>The default value. It is used by the base implementations of <a href="v-arg---call&.html#8212;&#8203;bool"><code>Arg.__call__(...)</code></a> in the following cases:</p>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><a href="#v-arg-count"><code>self.count</code></a> is <code>'?'</code>, <code>'*'</code> or <code>'~'</code> and no values provided.</p>
 </li>
 <li>
 <p><a href="#v-arg-optional"><code>self.optional</code></a> is <code>True</code>, <a href="#v-arg-suppress"><code>self.suppress</code></a> is <code>False</code>, and the argument is not mentioned.</p>
 </li>
-</ol>
+</ul>
 </div>
 <div class="sect4">
 <h5 id="_defaults_8">Defaults</h5>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><code>[]</code> if type of <a href="#v-arg-count"><code>self.count</code></a> is <code>"*"</code> or <code>"~"</code>.</p>
+<p><code>False</code>, if <a href="#v-arg-flag"><code>self.flag</code></a> is <code>True</code>.</p>
+</li>
+<li>
+<p><code>[]</code>, if <a href="#v-arg-count"><code>self.count</code></a> is <code>'*'</code> or <code>'~'</code>.</p>
 </li>
 <li>
 <p><code>None</code>.</p>
@@ -1259,22 +1262,22 @@ The usage text and the error message are printed in this case.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><code>TypeError</code> if the type is not <code>list</code> and it is not <a href="#v-arg-type"><code>self.type</code></a> or <code>None</code>.</p>
+<p><code>TypeError</code>, if the type is not <code>list</code> or <code>None</code> and <a href="#v-arg-multiple"><code>self.multiple</code></a> is <code>True</code>.</p>
 </li>
 <li>
-<p><code>TypeError</code> if the type is <code>list</code> and one of the items is not <a href="#v-arg-type"><code>self.type</code></a>.</p>
+<p><code>TypeError</code>, if the type is <code>list</code>, and <a href="#v-arg-single"><code>self.single</code></a> is <code>True</code>.</p>
 </li>
 <li>
-<p><code>ValueError</code> if the type is not <code>list</code> and the value is not in <a href="#v-arg-choices"><code>self.choices</code></a>.</p>
+<p><code>TypeError</code>, if the type is not <code>list</code> and it is not <a href="#v-arg-type"><code>self.type</code></a> or <code>None</code>.</p>
 </li>
 <li>
-<p><code>ValueError</code> if the type is <code>list</code> and one of the items is not in <a href="#v-arg-choices"><code>self.choices</code></a>.</p>
+<p><code>TypeError</code>, if the type is <code>list</code> and one of the items is not <a href="#v-arg-type"><code>self.type</code></a>.</p>
 </li>
 <li>
-<p><code>ValueError</code> if the type is <code>list</code>, and the number of items does not match <a href="#v-arg-count"><code>self.count</code></a>.</p>
+<p><code>ValueError</code>, if the type is <code>list</code>, and the number of items does not match <a href="#v-arg-count"><code>self.count</code></a>.</p>
 </li>
 <li>
-<p><code>ValueError</code> if the value is an empty <code>list</code>, and <a href="#v-arg-count"><code>self.count</code></a> is <code>"+"</code>.</p>
+<p><code>ValueError</code>, if the value is an empty <code>list</code>, and <a href="#v-arg-count"><code>self.count</code></a> is <code>'+'</code>.</p>
 </li>
 </ol>
 </div>
