@@ -339,18 +339,19 @@ The default value, applied if:
 ----
 class Arg:
     @property
-    def choices(self) -> dict:
+    def choices(self) -> dict[str, str]:
         ...
 
     @choices.setter
-    def choices(self, v: dict | None) -> None:
+    def choices(self, v: list | dict | None) -> None:
         ...
 ----
 
-The set of possible values.
+A `dict` of the possible values.
 
-* Converted to dictionary from any `Iterable` despite the signature.
-* The dictionary values are used as the descriptions, if provided.
+* Converted to a `dict[str, str]` from any `Iterable`.
+* The dictionary values are used as the descriptions, if not empty.
+* <<v-arg-default,`self.default`>> is never checked against <<v-arg-choices,`self.choices`>>.
 
 ===== Defaults
 
@@ -358,10 +359,7 @@ The set of possible values.
 
 ===== Exceptions
 
-. `TypeError` if the type is not `Iterable` or `None`.
-. `TypeError` if the type of items is not <<v-arg-type,`self.type`>>.
-. `ValueError` if the value does not contain <<v-arg-default,`self.default`>> if it is not `list`.
-. `ValueError` if the value does not contain any item from <<v-arg-default,`self.default`>> if it is `list`.
+. `TypeError`, if the type is not `Iterable` or `None`.
 
 '''
 

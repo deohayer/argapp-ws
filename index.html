@@ -1287,24 +1287,27 @@ The usage text and the error message are printed in this case.</p>
 <div class="content">
 <pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">class</span> <span class="tok-nc">Arg</span><span class="tok-p">:</span>
     <span class="tok-nd">@property</span>
-    <span class="tok-k">def</span> <span class="tok-nf">choices</span><span class="tok-p">(</span><span class="tok-bp">self</span><span class="tok-p">)</span> <span class="tok-o">-&gt;</span> <span class="tok-nb">dict</span><span class="tok-p">:</span>
+    <span class="tok-k">def</span> <span class="tok-nf">choices</span><span class="tok-p">(</span><span class="tok-bp">self</span><span class="tok-p">)</span> <span class="tok-o">-&gt;</span> <span class="tok-nb">dict</span><span class="tok-p">[</span><span class="tok-nb">str</span><span class="tok-p">,</span> <span class="tok-nb">str</span><span class="tok-p">]:</span>
         <span class="tok-o">...</span>
 
     <span class="tok-nd">@choices</span><span class="tok-o">.</span><span class="tok-n">setter</span>
-    <span class="tok-k">def</span> <span class="tok-nf">choices</span><span class="tok-p">(</span><span class="tok-bp">self</span><span class="tok-p">,</span> <span class="tok-n">v</span><span class="tok-p">:</span> <span class="tok-nb">dict</span> <span class="tok-o">|</span> <span class="tok-kc">None</span><span class="tok-p">)</span> <span class="tok-o">-&gt;</span> <span class="tok-kc">None</span><span class="tok-p">:</span>
+    <span class="tok-k">def</span> <span class="tok-nf">choices</span><span class="tok-p">(</span><span class="tok-bp">self</span><span class="tok-p">,</span> <span class="tok-n">v</span><span class="tok-p">:</span> <span class="tok-nb">list</span> <span class="tok-o">|</span> <span class="tok-nb">dict</span> <span class="tok-o">|</span> <span class="tok-kc">None</span><span class="tok-p">)</span> <span class="tok-o">-&gt;</span> <span class="tok-kc">None</span><span class="tok-p">:</span>
         <span class="tok-o">...</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The set of possible values.</p>
+<p>A <code>dict</code> of the possible values.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Converted to dictionary from any <code>Iterable</code> despite the signature.</p>
+<p>Converted to a <code>dict[str, str]</code> from any <code>Iterable</code>.</p>
 </li>
 <li>
-<p>The dictionary values are used as the descriptions, if provided.</p>
+<p>The dictionary values are used as the descriptions, if not empty.</p>
+</li>
+<li>
+<p><a href="#v-arg-default"><code>self.default</code></a> is never checked against <a href="#v-arg-choices"><code>self.choices</code></a>.</p>
 </li>
 </ul>
 </div>
@@ -1323,16 +1326,7 @@ The usage text and the error message are printed in this case.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><code>TypeError</code> if the type is not <code>Iterable</code> or <code>None</code>.</p>
-</li>
-<li>
-<p><code>TypeError</code> if the type of items is not <a href="#v-arg-type"><code>self.type</code></a>.</p>
-</li>
-<li>
-<p><code>ValueError</code> if the value does not contain <a href="#v-arg-default"><code>self.default</code></a> if it is not <code>list</code>.</p>
-</li>
-<li>
-<p><code>ValueError</code> if the value does not contain any item from <a href="#v-arg-default"><code>self.default</code></a> if it is <code>list</code>.</p>
+<p><code>TypeError</code>, if the type is not <code>Iterable</code> or <code>None</code>.</p>
 </li>
 </ol>
 </div>

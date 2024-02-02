@@ -1,3 +1,5 @@
+from typing import Iterable
+
 from .core import *
 from argapp import _str
 
@@ -35,3 +37,8 @@ def test_4():
 def test_5():
     # Other objects.
     assert _str(RuntimeError('Error')) == 'Error'
+
+
+def test_6():
+    # Iterable.
+    assert _str(Iterable) == 'Iterable'
