@@ -603,7 +603,7 @@ Whether the argument can consume more than one value.
 
 ===== Defaults
 
-. `True`, if <<v-arg-count,`self.count`>> is `"*"`, `"+"`, `"~"` or greater than one.
+. `True`, if <<v-arg-count,`self.count`>> is `'*'`, `'+'`, `'~'` or greater than one.
 . `False`.
 
 '''
