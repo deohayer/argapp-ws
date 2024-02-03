@@ -65,3 +65,21 @@ def test_parameters_1_2():
     assert str(e.value) == str(
         'App.help: Invalid type: float. '
         'Must be: str, None.')
+
+
+def test_parameters_3_0():
+    o = App(prolog='app')
+    assert o.prolog == 'app'
+
+
+def test_parameters_3_1():
+    o = App()
+    assert o.prolog == ''
+
+
+def test_parameters_3_2():
+    with pytest.raises(TypeError) as e:
+        App(prolog=1.)
+    assert str(e.value) == str(
+        'App.prolog: Invalid type: float. '
+        'Must be: str, None.')

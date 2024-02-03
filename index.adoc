@@ -926,11 +926,11 @@ The command's detailed description before arguments.
 
 ===== Defaults
 
-. `''`.
+* <<v-app-help,`self.help`>>.
 
 ===== Exceptions
 
-. `TypeError` if the type is not `str` or `None`.
+* `TypeError`, if the type is not `str` or `None`.
 
 '''
 
