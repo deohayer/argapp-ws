@@ -13,8 +13,8 @@ def test_returns_2_0():
         [arg, opt])
     exp = str(
         'Title:\n'
-        ' * ARGUMENT  - help\n'
-        ' * --opt OPT - h\n'
+        '  ARGUMENT     help\n'
+        '  --opt OPT    h\n'
         '               e\n'
         '               l\n'
         '               p')
@@ -28,8 +28,8 @@ def test_returns_2_1():
         '',
         [arg, opt])
     exp = str(
-        ' * ARGUMENT  - help\n'
-        ' * --opt OPT - h\n'
+        '  ARGUMENT     help\n'
+        '  --opt OPT    h\n'
         '               e\n'
         '               l\n'
         '               p')

@@ -14,9 +14,9 @@ def test_returns_2_0():
         [a1, a2, a3])
     exp = str(
         'Title:\n'
-        ' * a\n'
-        ' * application - help\n'
-        ' * app         - h\n'
+        '  a\n'
+        '  application    help\n'
+        '  app            h\n'
         '                 e\n'
         '                 l\n'
         '                 p')
@@ -31,9 +31,9 @@ def test_returns_2_1():
         '',
         [a1, a2, a3])
     exp = str(
-        ' * a\n'
-        ' * application - help\n'
-        ' * app         - h\n'
+        '  a\n'
+        '  application    help\n'
+        '  app            h\n'
         '                 e\n'
         '                 l\n'
         '                 p')
