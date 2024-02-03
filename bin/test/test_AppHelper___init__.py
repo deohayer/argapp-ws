@@ -34,3 +34,29 @@ def test_parameters_1_2():
     assert str(e.value) == str(
         'AppHelper.lopt: Invalid type: float. '
         'Must be: str, None.')
+
+
+def test_parameters_2_0():
+    o = AppHelper(sopt='s')
+    assert o.sopt == 's'
+
+
+def test_parameters_2_1():
+    o = AppHelper(sopt=None)
+    assert o.sopt == ''
+
+
+def test_parameters_2_2():
+    with pytest.raises(TypeError) as e:
+        AppHelper(sopt=1.)
+    assert str(e.value) == str(
+        'AppHelper.sopt: Invalid type: float. '
+        'Must be: str, None.')
+
+
+def test_parameters_2_3():
+    with pytest.raises(ValueError) as e:
+        AppHelper(sopt='long')
+    assert str(e.value) == str(
+        'AppHelper.sopt: Invalid value: "long". '
+        'Must not exceed one character.')

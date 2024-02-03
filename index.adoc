@@ -1273,11 +1273,11 @@ The short option name for the help argument. Similar to <<v-arg-sopt,`Arg.sopt`>
 
 ===== Defaults
 
-. `""`.
+* `''`.
 
 ===== Exceptions
 
-. `TypeError` if the type is not `str` or `None`.
+* `TypeError`, if the type is not `str` or `None`.
 
 '''
 
