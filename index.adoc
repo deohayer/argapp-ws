@@ -1022,7 +1022,7 @@ The command's subcommands.
 
 ===== Defaults
 
-. `[]`.
+* `[]`.
 
 '''
 
