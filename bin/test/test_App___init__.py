@@ -47,3 +47,21 @@ def test_parameters_0_2():
     assert str(e.value) == str(
         'App.name: Invalid type: float. '
         'Must be: str, None.')
+
+
+def test_parameters_1_0():
+    o = App(help='app')
+    assert o.help == 'app'
+
+
+def test_parameters_1_1():
+    o = App()
+    assert o.help == ''
+
+
+def test_parameters_1_2():
+    with pytest.raises(TypeError) as e:
+        App(help=1.)
+    assert str(e.value) == str(
+        'App.help: Invalid type: float. '
+        'Must be: str, None.')
