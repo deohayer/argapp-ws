@@ -1161,9 +1161,9 @@ Generate the argument's description.
 
 ===== Returns
 
-. <<v-arg-help,`arg.help`>> with the following information appended:
-* <<v-arg-choices,`arg.choices`>>, if <<v-arghelper-choices,`self.choices`>> is `True`.
-* <<v-arg-default,`arg.default`>>, if <<v-arghelper-default,`self.default`>> is `True`.
+. <<v-arg-help,`arg.help`>> with the following appended if <<v-arg-flag,`arg.flag`>> is `False`:
+** <<v-arg-default,`arg.default`>>, if <<v-arghelper-default,`self.default`>> is `True`.
+** <<v-arg-choices,`arg.choices`>>, if <<v-arghelper-choices,`self.choices`>> is `True`.
 
 '''
 
