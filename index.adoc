@@ -1520,21 +1520,21 @@ A base class for completers. An alias for `argcomplete.completers.BaseCompleter`
 [#c-argapp-completernone]
 === `argapp.CompleterNone`
 
-A <<c-argapp-completer, `Completer`>> for completion suppression. A subclass of `argcomplete.completers.SuppressCompleter`.
+A <<c-argapp-completer, `Completer`>> for completion suppression. An alias for `argcomplete.completers.SuppressCompleter`.
 
 '''
 
 [#c-argapp-completerlist]
 === `argapp.CompleterList`
 
-A <<c-argapp-completer, `Completer`>> for immediate list-based completion. A subclass of `argcomplete.completers.ChoicesCompleter`.
+A <<c-argapp-completer, `Completer`>> for immediate list-based completion. An alias for `argcomplete.completers.ChoicesCompleter`.
 
 '''
 
 [#c-argapp-completerpath]
 === `argapp.CompleterPath`
 
-A <<c-argapp-completer, `Completer`>> for gradual path-based completion. A subclass of `argcomplete.completers.FilesCompleter`.
+A <<c-argapp-completer, `Completer`>> for gradual path-based completion. An alias for `argcomplete.completers.FilesCompleter`.
 
 '''
 
