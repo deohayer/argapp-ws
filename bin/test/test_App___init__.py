@@ -83,3 +83,21 @@ def test_parameters_3_2():
     assert str(e.value) == str(
         'App.prolog: Invalid type: float. '
         'Must be: str, None.')
+
+
+def test_parameters_4_0():
+    o = App(epilog='app')
+    assert o.epilog == 'app'
+
+
+def test_parameters_4_1():
+    o = App()
+    assert o.epilog == ''
+
+
+def test_parameters_4_2():
+    with pytest.raises(TypeError) as e:
+        App(epilog=1.)
+    assert str(e.value) == str(
+        'App.epilog: Invalid type: float. '
+        'Must be: str, None.')

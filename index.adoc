@@ -953,11 +953,11 @@ The command's detailed description after arguments.
 
 ===== Defaults
 
-. `''`.
+* `''`.
 
 ===== Exceptions
 
-. `TypeError` if the type is not `str` or `None`.
+* `TypeError`, if the type is not `str` or `None`.
 
 '''
 
