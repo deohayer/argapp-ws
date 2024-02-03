@@ -2617,37 +2617,37 @@ The usage text and the error message are printed in this case.</p>
 <ol class="arabic">
 <li>
 <p>A <code>str</code> with the following text combined:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><code>-sopt</code>, if <a href="#v-arg-sopt"><code>arg.sopt</code></a> is set.</p>
+</li>
+<li>
+<p><code>--lopt</code>, if <a href="#v-arg-lopt"><code>arg.lopt</code></a> is set.</p>
+</li>
+<li>
+<p>A stylized <a href="#v-arg-name"><code>arg.name</code></a>:</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>"-sopt"</code>, if <a href="#v-arg-sopt"><code>arg.sopt</code></a> is set.</p>
+<p><code>name</code> repeated <a href="#v-arg-count"><code>arg.count</code></a> times, if its type is <code>int</code>.</p>
 </li>
 <li>
-<p><code>"--lopt"</code>, if <a href="#v-arg-lopt"><code>arg.lopt</code></a> is set.</p>
+<p><code>[name]</code>, if <a href="#v-arg-count"><code>arg.count</code></a> is <code>'?'</code>.</p>
 </li>
 <li>
-<p>A stylized <a href="#v-arg-name"><code>arg.name</code></a>, if <a href="#v-arg-flag"><code>arg.flag</code></a> if <code>False</code>:</p>
-<div class="ulist">
-<ul>
-<li>
-<p><code>"name"</code> repeated <a href="#v-arg-count"><code>arg.count</code></a> times, if its type is <code>int</code>.</p>
+<p><code>[name...]</code>, if <a href="#v-arg-count"><code>arg.count</code></a> is <code>'*'</code>.</p>
 </li>
 <li>
-<p><code>"[name]"</code>, if <a href="#v-arg-count"><code>arg.count</code></a> is <code>"?"</code>.</p>
+<p><code>name [name...]</code>, if <a href="#v-arg-count"><code>arg.count</code></a> is <code>'+'</code>.</p>
 </li>
 <li>
-<p><code>"[name...]"</code>, if <a href="#v-arg-count"><code>arg.count</code></a> is <code>"*"</code>.</p>
-</li>
-<li>
-<p><code>"name [name...]"</code>, if <a href="#v-arg-count"><code>arg.count</code></a> is <code>"+"</code>.</p>
-</li>
-<li>
-<p><code>"[name]..."</code>, if <a href="#v-arg-count"><code>arg.count</code></a> is <code>"~"</code>.</p>
+<p><code>[name]...</code>, if <a href="#v-arg-count"><code>arg.count</code></a> is <code>'~'</code>.</p>
 </li>
 </ul>
 </div>
 </li>
-</ul>
+</ol>
 </div>
 </li>
 </ol>

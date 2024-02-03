@@ -1186,14 +1186,14 @@ Generate the argument's usage (stylized name).
 ===== Returns
 
 . A `str` with the following text combined:
-* `"-sopt"`, if <<v-arg-sopt,`arg.sopt`>> is set.
-* `"--lopt"`, if <<v-arg-lopt,`arg.lopt`>> is set.
-* A stylized <<v-arg-name,`arg.name`>>, if <<v-arg-flag,`arg.flag`>> if `False`:
-** `"name"` repeated <<v-arg-count,`arg.count`>> times, if its type is `int`.
-** `"[name]"`, if <<v-arg-count,`arg.count`>> is `"?"`.
-** `++"[name...]"++`, if <<v-arg-count,`arg.count`>> is `"*"`.
-** `++"name [name...]"++`, if <<v-arg-count,`arg.count`>> is `"+"`.
-** `++"[name]..."++`, if <<v-arg-count,`arg.count`>> is `"~"`.
+.. `-sopt`, if <<v-arg-sopt,`arg.sopt`>> is set.
+.. `--lopt`, if <<v-arg-lopt,`arg.lopt`>> is set.
+.. A stylized <<v-arg-name,`arg.name`>>:
+*** `name` repeated <<v-arg-count,`arg.count`>> times, if its type is `int`.
+*** `[name]`, if <<v-arg-count,`arg.count`>> is `'?'`.
+*** `++[name...]++`, if <<v-arg-count,`arg.count`>> is `'*'`.
+*** `++name [name...]++`, if <<v-arg-count,`arg.count`>> is `'+'`.
+*** `++[name]...++`, if <<v-arg-count,`arg.count`>> is `'~'`.
 
 '''
 
