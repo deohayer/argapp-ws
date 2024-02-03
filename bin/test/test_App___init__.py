@@ -101,3 +101,22 @@ def test_parameters_4_2():
     assert str(e.value) == str(
         'App.epilog: Invalid type: float. '
         'Must be: str, None.')
+
+
+def test_parameters_5_0():
+    a = AppHelper()
+    o = App(helper=a)
+    assert o.helper is a
+
+
+def test_parameters_5_1():
+    o = App()
+    assert isinstance(o.helper, AppHelper)
+
+
+def test_parameters_5_2():
+    with pytest.raises(TypeError) as e:
+        App(helper=1.)
+    assert str(e.value) == str(
+        'App.helper: Invalid type: float. '
+        'Must be: AppHelper, None.')

@@ -980,11 +980,11 @@ The command's help text generator.
 
 ===== Defaults
 
-. `<<c-argapp-apphelper,AppHelper>>()`.
+* `<<c-argapp-apphelper,AppHelper>>()`.
 
 ===== Exceptions
 
-. `TypeError` if the type is not <<c-argapp-apphelper,`AppHelper`>> or `None`.
+* `TypeError`, if the type is not <<c-argapp-apphelper,`AppHelper`>> or `None`.
 
 '''
 
