@@ -1394,8 +1394,8 @@ Generate the command's text before arguments.
 
 ===== Returns
 
-. `""` if <<v-app-prolog,`app.prolog`>> is not set.
-. A `str` that combines:
+* `''` if <<v-app-prolog,`app.prolog`>> is not set.
+* A `str` that combines:
 ** `title`.
 ** <<v-app-prolog,`app.prolog`>>.
 
