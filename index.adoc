@@ -1139,7 +1139,7 @@ Whether to append the <<v-arg-default,`Arg.default`>> to the help text.
 
 ===== Exceptions
 
-. `TypeError` if the type is not `bool` or `None`.
+. `TypeError`, if the type is not `bool` or `None`.
 
 '''
 
