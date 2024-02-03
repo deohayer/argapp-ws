@@ -29,3 +29,21 @@ def test_description_1():
     assert o.helper is a
     assert o.args == []
     assert o.apps == []
+
+
+def test_parameters_0_0():
+    o = App(name='app')
+    assert o.name == 'app'
+
+
+def test_parameters_0_1():
+    o = App()
+    assert o.name == ''
+
+
+def test_parameters_0_2():
+    with pytest.raises(TypeError) as e:
+        App(name=1.)
+    assert str(e.value) == str(
+        'App.name: Invalid type: float. '
+        'Must be: str, None.')
