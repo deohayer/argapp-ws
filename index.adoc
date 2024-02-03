@@ -1449,13 +1449,13 @@ Generate the command's text for subcommands.
 
 ===== Parameters
 
-* `title` - a title for the section.
-* `apps` - a list of <<c-argapp-app,`App`>> to generate the text for.
+* `title` - A title for the section.
+* `apps` - A list of <<c-argapp-app,`App`>> to generate the text for.
 
 ===== Returns
 
-. `""` if `apps` is empty.
-. A `str` that is a bullet list from `app` in `apps`: <<v-app-name,`app.name`>> and its <<v-app-name,`app.help`>>.
+* `''` if `apps` is empty.
+* A `str` that is a bullet list from `app` in `apps`: <<v-app-name,`app.name`>> and <<v-app-name,`app.help`>>.
 
 '''
 
