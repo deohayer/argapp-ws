@@ -672,7 +672,7 @@ Parse the command line value. This overload is called if:
 
 ===== Parameters
 
-* `v` - `True` if the argrument is mentioned in the command line. `False` otherwise.
+* `v` - `True` if the argument is mentioned in the command line. `False` otherwise.
 
 ===== Returns
 
