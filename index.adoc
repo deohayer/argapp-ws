@@ -1300,11 +1300,11 @@ The help text for the help argument. Similar to <<v-arg-help,`Arg.help`>>.
 
 ===== Defaults
 
-. `""`.
+* `''`.
 
 ===== Exceptions
 
-. `TypeError` if the type is not `str` or `None`.
+* `TypeError` if the type is not `str` or `None`.
 
 '''
 
