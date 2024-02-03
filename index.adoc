@@ -443,7 +443,7 @@ Whether the optional argument must be mentioned.
 
 ===== Exceptions
 
-. `TypeError` if the type is not `bool` or `None`.
+. `TypeError`, if the type is not `bool` or `None`.
 
 '''
 
