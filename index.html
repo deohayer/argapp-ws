@@ -2831,44 +2831,44 @@ The usage text and the error message are printed in this case.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>apps</code> - a list of commands mentioned in the command line. The help text should be generated for the last one.</p>
+<p><code>apps</code> - A list of commands mentioned in the command line. The text is generated for the last one.</p>
 </li>
 <li>
-<p><code>name</code> - name to use for the first command in <code>apps</code>.</p>
+<p><code>name</code> - A name to use for the first command in <code>apps</code>.</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_returns_10">Returns</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p>A <code>str</code>, combination of the following:</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code><a href="#f-apphelper-text-usage">text_usage</a>(apps, name)</code>.</p>
+<p><code><a href="#f-apphelper-text-usage">self.text_usage</a>(apps, name)</code>.</p>
 </li>
 <li>
-<p><code><a href="#f-apphelper-section-prolog">section_prolog</a>("Description", apps[-1])</code>.</p>
+<p><code><a href="#f-apphelper-section-prolog">self.section_prolog</a>("Description", apps[-1])</code>.</p>
 </li>
 <li>
-<p><code><a href="#f-apphelper-section-apps">section_apps</a>("Commands", apps[-1].apps)</code>.</p>
+<p><code><a href="#f-apphelper-section-apps">self.section_apps</a>("Commands", apps[-1].apps)</code>.</p>
 </li>
 <li>
-<p><code><a href="#f-apphelper-section-apps">section_args</a>("Positional arguments", args)</code>, where <code>args</code> - positional arguments from <code>apps[-1].args</code>.</p>
+<p><code><a href="#f-apphelper-section-apps">self.section_args</a>("Positional arguments", args)</code>, where <code>args</code> - positional arguments from <code>apps[-1].args</code>.</p>
 </li>
 <li>
-<p><code><a href="#f-apphelper-section-apps">section_args</a>("Optional arguments", args)</code>, where <code>args</code> - optional arguments from <code>apps[-1].args</code>.</p>
+<p><code><a href="#f-apphelper-section-apps">self.section_args</a>("Optional arguments", args)</code>, where <code>args</code> - optional arguments from <code>apps[-1].args</code> and the help option, if set.</p>
 </li>
 <li>
-<p><code><a href="#f-apphelper-section-epilog">section_epilog</a>("Notes", apps[-1])</code>.</p>
+<p><code><a href="#f-apphelper-section-epilog">self.section_epilog</a>("Notes", apps[-1])</code>.</p>
 </li>
 </ul>
 </div>
 </li>
-</ol>
+</ul>
 </div>
 <hr>
 </div>

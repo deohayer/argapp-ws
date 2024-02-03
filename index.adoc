@@ -1326,18 +1326,18 @@ Generate the command's full help text.
 
 ===== Parameters
 
-* `apps` - a list of commands mentioned in the command line. The help text should be generated for the last one.
-* `name` - name to use for the first command in `apps`.
+* `apps` - A list of commands mentioned in the command line. The text is generated for the last one.
+* `name` - A name to use for the first command in `apps`.
 
 ===== Returns
 
-. A `str`, combination of the following:
-** `<<f-apphelper-text-usage,text_usage>>(apps, name)`.
-** `<<f-apphelper-section-prolog,section_prolog>>("Description", apps[-1])`.
-** `<<f-apphelper-section-apps,section_apps>>("Commands", apps[-1].apps)`.
-** `<<f-apphelper-section-apps,section_args>>("Positional arguments", args)`, where `args` - positional arguments from `apps[-1].args`.
-** `<<f-apphelper-section-apps,section_args>>("Optional arguments", args)`, where `args` - optional arguments from `apps[-1].args`.
-** `<<f-apphelper-section-epilog,section_epilog>>("Notes", apps[-1])`.
+* A `str`, combination of the following:
+** `<<f-apphelper-text-usage,self.text_usage>>(apps, name)`.
+** `<<f-apphelper-section-prolog,self.section_prolog>>("Description", apps[-1])`.
+** `<<f-apphelper-section-apps,self.section_apps>>("Commands", apps[-1].apps)`.
+** `<<f-apphelper-section-apps,self.section_args>>("Positional arguments", args)`, where `args` - positional arguments from `apps[-1].args`.
+** `<<f-apphelper-section-apps,self.section_args>>("Optional arguments", args)`, where `args` - optional arguments from `apps[-1].args` and the help option, if set.
+** `<<f-apphelper-section-epilog,self.section_epilog>>("Notes", apps[-1])`.
 
 '''
 
