@@ -1246,11 +1246,11 @@ The long option name for the help argument. Similar to <<v-arg-lopt,`Arg.lopt`>>
 
 ===== Defaults
 
-. `""`.
+* `''`.
 
 ===== Exceptions
 
-. `TypeError` if the type is not `str` or `None`.
+* `TypeError`, if the type is not `str` or `None`.
 
 '''
 
