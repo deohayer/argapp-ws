@@ -1112,7 +1112,7 @@ Whether to append the <<v-arg-choices,`Arg.choices`>> to the help text.
 
 ===== Exceptions
 
-. `TypeError` if the type is not `bool` or `None`.
+. `TypeError`, if the type is not `bool` or `None`.
 
 '''
 
