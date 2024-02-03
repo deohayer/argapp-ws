@@ -1419,13 +1419,13 @@ Generate the command's text after arguments.
 
 ===== Parameters
 
-* `title` - a title for the section.
-* `app` - <<c-argapp-app,`App`>> to generate the text for.
+* `title` - A title for the section.
+* `app` - An <<c-argapp-app,`App`>> to generate the text for.
 
 ===== Returns
 
-. `""` if <<v-app-epilog,`app.epilog`>> is not set.
-. A `str` that combines:
+* `''`, if <<v-app-epilog,`app.epilog`>> is not set.
+* A `str` that combines:
 ** `title`.
 ** <<v-app-epilog,`app.epilog`>>.
 
