@@ -500,7 +500,7 @@ The command line completer for the argument.
 
 ===== Exceptions
 
-. `TypeError` if the type is not <<c-argapp-completer,`Completer`>> or `None`.
+. `TypeError`, if the type is not <<c-argapp-completer,`Completer`>> or `None`.
 
 '''
 
