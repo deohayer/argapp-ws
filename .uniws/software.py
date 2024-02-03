@@ -77,6 +77,11 @@ class Test(App):
                                 choices=[x for x in DOCKERS],
                                 default=[x for x in DOCKERS])
         self.args.append(self.arg_versions)
+        self.arg_filter = Arg(name='PATTERN',
+                              sopt='f',
+                              lopt='filter',
+                              default='test_*.py')
+        self.args.append(self.arg_filter)
 
     def __call__(
         self,
@@ -87,6 +92,7 @@ class Test(App):
         # Build the wheel.
         sh(f'rm -rf {DIR_DIST} && python3 -m build -wn {DIR_TMP}')
         versions: list[str] = args[self.arg_versions]
+        filter: str = args[self.arg_filter]
         result = True
         results = {x: True for x in versions}
         for x in versions:
@@ -107,7 +113,7 @@ class Test(App):
                       f' && export PIP_CACHE_DIR={out}/.cache'
                       f' && rm -rf ${{PIP_CACHE_DIR}}'
                       f' && python3 -m pip install {DIR_DIST}/* > /dev/null'
-                      f' && for TEST in {DIR_TEST}/test_*.py; do'
+                      f' && for TEST in {DIR_TEST}/{filter}; do'
                       f'        [[ ! -f \${{TEST}} ]] && break;'
                       f'        export TEST_NAME=\$(basename \${{TEST}});'
                       f'        export TEST_LOG={out}/\${{TEST_NAME}}.log;'
