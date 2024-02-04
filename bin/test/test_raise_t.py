@@ -1,28 +1,28 @@
 from .core import *
-from argapp import _raise_t
+from argapp import raise_t
 
 
-def test_0():
+def test_exceptions_0_0000():
     # Single type, success.
-    _raise_t(1, int, '')
+    raise_t(1, int, '')
 
 
-def test_1():
+def test_exceptions_0_0001():
     # Multiple types, success.
-    _raise_t(1, (str, int), '')
+    raise_t(1, (str, int), '')
 
 
-def test_2():
+def test_exceptions_0_0002():
     # Single type, failure.
     with pytest.raises(TypeError) as e:
-        _raise_t(1, float, 'test_2')
+        raise_t(1, float, 'test_2')
     assert str(e.value) == str(
         'test_2: Invalid type: int. Must be: float.')
 
 
-def test_3():
+def test_exceptions_0_0003():
     # Multiple types, failure.
     with pytest.raises(TypeError) as e:
-        _raise_t(1, (float, type(None)), 'test_3')
+        raise_t(1, (float, type(None)), 'test_3')
     assert str(e.value) == str(
         'test_3: Invalid type: int. Must be: float, None.')
