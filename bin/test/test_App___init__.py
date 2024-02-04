@@ -1,47 +1,51 @@
 from .core import *
 
 
-def test_description_0():
+def test_0_0000():
     # Default.
     o = App()
     assert o.name == ''
     assert o.help == ''
     assert o.prolog == ''
     assert o.epilog == ''
-    assert isinstance(o.helper, AppHelper)
+    assert o.helper.lopt == 'help'
+    assert o.helper.sopt == 'h'
+    assert o.helper.help == 'Show the help text and exit.'
     assert o.args == []
     assert o.apps == []
 
 
-def test_description_1():
+def test_0_0001():
     # All.
-    a = AppHelper()
+    helper = AppHelper()
     o = App(
         name='name',
         help='help',
         prolog='prolog',
         epilog='epilog',
-        helper=a)
+        helper=helper,
+    )
     assert o.name == 'name'
     assert o.help == 'help'
     assert o.prolog == 'prolog'
     assert o.epilog == 'epilog'
-    assert o.helper is a
+    assert o.helper is helper
     assert o.args == []
     assert o.apps == []
 
 
-def test_parameters_0_0():
-    o = App(name='app')
-    assert o.name == 'app'
+def test_parameters_1_0000():
+    # test_0_0000.
+    assert App(name='app').name == 'app'
 
 
-def test_parameters_0_1():
-    o = App()
-    assert o.name == ''
+def test_parameters_1_0001():
+    # test_defaults_1_0000.
+    assert App(name=None).name == ''
 
 
-def test_parameters_0_2():
+def test_parameters_1_0002():
+    # test_exceptions_1_0000.
     with pytest.raises(TypeError) as e:
         App(name=1.)
     assert str(e.value) == str(
@@ -49,17 +53,18 @@ def test_parameters_0_2():
         'Must be: str, None.')
 
 
-def test_parameters_1_0():
-    o = App(help='app')
-    assert o.help == 'app'
+def test_parameters_2_0000():
+    # test_0_0000.
+    assert App(help='help').help == 'help'
 
 
-def test_parameters_1_1():
-    o = App()
-    assert o.help == ''
+def test_parameters_2_0001():
+    # test_defaults_1_0000.
+    assert App(help=None).help == ''
 
 
-def test_parameters_1_2():
+def test_parameters_2_0002():
+    # test_exceptions_1_0000.
     with pytest.raises(TypeError) as e:
         App(help=1.)
     assert str(e.value) == str(
@@ -67,17 +72,23 @@ def test_parameters_1_2():
         'Must be: str, None.')
 
 
-def test_parameters_3_0():
-    o = App(prolog='app')
-    assert o.prolog == 'app'
+def test_parameters_3_0000():
+    # test_0_0000.
+    assert App(prolog='prolog').prolog == 'prolog'
 
 
-def test_parameters_3_1():
-    o = App()
-    assert o.prolog == ''
+def test_parameters_3_0001():
+    # test_defaults_1_0000.
+    assert App(prolog=None).prolog == ''
 
 
-def test_parameters_3_2():
+def test_parameters_3_0002():
+    # test_defaults_1_0001.
+    assert App(help='help').prolog == 'help'
+
+
+def test_parameters_3_0003():
+    # test_exceptions_1_0000.
     with pytest.raises(TypeError) as e:
         App(prolog=1.)
     assert str(e.value) == str(
@@ -85,17 +96,18 @@ def test_parameters_3_2():
         'Must be: str, None.')
 
 
-def test_parameters_4_0():
-    o = App(epilog='app')
-    assert o.epilog == 'app'
+def test_parameters_4_0000():
+    # test_0_0000.
+    assert App(epilog='epilog').epilog == 'epilog'
 
 
-def test_parameters_4_1():
-    o = App()
-    assert o.epilog == ''
+def test_parameters_4_0001():
+    # test_defaults_1_0000.
+    assert App(epilog=None).epilog == ''
 
 
-def test_parameters_4_2():
+def test_parameters_4_0002():
+    # test_exceptions_1_0000.
     with pytest.raises(TypeError) as e:
         App(epilog=1.)
     assert str(e.value) == str(
@@ -103,18 +115,22 @@ def test_parameters_4_2():
         'Must be: str, None.')
 
 
-def test_parameters_5_0():
-    a = AppHelper()
-    o = App(helper=a)
-    assert o.helper is a
+def test_parameters_5_0000():
+    # test_0_0000.
+    helper = AppHelper()
+    assert App(helper=helper).helper is helper
 
 
-def test_parameters_5_1():
-    o = App()
-    assert isinstance(o.helper, AppHelper)
+def test_parameters_5_0001():
+    # test_defaults_1_0000.
+    o = App(helper=None)
+    assert o.helper.lopt == 'help'
+    assert o.helper.sopt == 'h'
+    assert o.helper.help == 'Show the help text and exit.'
 
 
-def test_parameters_5_2():
+def test_parameters_5_0002():
+    # test_exceptions_1_0000.
     with pytest.raises(TypeError) as e:
         App(helper=1.)
     assert str(e.value) == str(

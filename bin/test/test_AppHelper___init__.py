@@ -1,34 +1,38 @@
 from .core import *
 
 
-def test_description_0_0():
+def test_0_0000():
+    # Default.
     o = AppHelper()
-    assert o.sopt == 'h'
     assert o.lopt == 'help'
+    assert o.sopt == 'h'
     assert o.help == 'Show the help text and exit.'
 
 
-def test_description_0_1():
+def test_0_0001():
+    # All.
     o = AppHelper(
-        sopt='s',
         lopt='lopt',
-        help='Help.')
-    assert o.sopt == 's'
+        sopt='s',
+        help='Help.',
+    )
     assert o.lopt == 'lopt'
+    assert o.sopt == 's'
     assert o.help == 'Help.'
 
 
-def test_parameters_1_0():
-    o = AppHelper(lopt='lopt')
-    assert o.lopt == 'lopt'
+def test_parameters_1_0000():
+    # test_0_0000
+    assert AppHelper(lopt='lopt').lopt == 'lopt'
 
 
-def test_parameters_1_1():
-    o = AppHelper(lopt=None)
-    assert o.lopt == ''
+def test_parameters_1_0001():
+    # test_defaults_1_0000
+    assert AppHelper(lopt=None).lopt == ''
 
 
-def test_parameters_1_2():
+def test_parameters_1_0002():
+    # test_exceptions_1_0000
     with pytest.raises(TypeError) as e:
         AppHelper(lopt=1.)
     assert str(e.value) == str(
@@ -36,17 +40,18 @@ def test_parameters_1_2():
         'Must be: str, None.')
 
 
-def test_parameters_2_0():
-    o = AppHelper(sopt='s')
-    assert o.sopt == 's'
+def test_parameters_2_0000():
+    # test_0_0000
+    assert AppHelper(sopt='s').sopt == 's'
 
 
-def test_parameters_2_1():
-    o = AppHelper(sopt=None)
-    assert o.sopt == ''
+def test_parameters_2_0001():
+    # test_defaults_1_0000
+    assert AppHelper(sopt=None).sopt == ''
 
 
-def test_parameters_2_2():
+def test_parameters_2_0002():
+    # test_exceptions_1_0000
     with pytest.raises(TypeError) as e:
         AppHelper(sopt=1.)
     assert str(e.value) == str(
@@ -54,7 +59,8 @@ def test_parameters_2_2():
         'Must be: str, None.')
 
 
-def test_parameters_2_3():
+def test_parameters_2_0003():
+    # test_exceptions_2_0000
     with pytest.raises(ValueError) as e:
         AppHelper(sopt='long')
     assert str(e.value) == str(
@@ -62,17 +68,18 @@ def test_parameters_2_3():
         'Must not exceed one character.')
 
 
-def test_parameters_3_0():
-    o = AppHelper(help='Help.')
-    assert o.help == 'Help.'
+def test_parameters_1_0000():
+    # test_0_0000
+    assert AppHelper(help='help').help == 'help'
 
 
-def test_parameters_3_1():
-    o = AppHelper(help=None)
-    assert o.help == ''
+def test_parameters_1_0001():
+    # test_defaults_1_0000
+    assert AppHelper(help=None).help == ''
 
 
-def test_parameters_3_2():
+def test_parameters_1_0002():
+    # test_exceptions_1_0000
     with pytest.raises(TypeError) as e:
         AppHelper(help=1.)
     assert str(e.value) == str(

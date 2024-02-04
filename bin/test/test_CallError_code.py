@@ -1,16 +1,25 @@
 from .core import *
 
 
-def test_description_0_0000():
+def test_0_0000():
+    # Normal value.
     o = CallError()
     o.code = 2
     assert o.code == 2
 
 
-def test_description_0_0001():
+def test_0_0001():
+    # Min.
     o = CallError()
     o.code = 0
     assert o.code == 0
+
+
+def test_0_0002():
+    # Max.
+    o = CallError()
+    o.code = 255
+    assert o.code == 255
 
 
 def test_defaults_1_0000():
@@ -25,7 +34,8 @@ def test_exceptions_1_0000():
         o.code = 1.
     assert str(e.value) == str(
         'CallError.code: Invalid type: float. '
-        'Must be: int, None.')
+        'Must be: int, None.'
+    )
 
 
 def test_exceptions_2_0000():
@@ -34,4 +44,5 @@ def test_exceptions_2_0000():
         o.code = 256
     assert str(e.value) == str(
         'CallError.code: Invalid value: 256. '
-        'Must be from 0 to 255.')
+        'Must be from 0 to 255.'
+    )

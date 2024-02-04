@@ -1,19 +1,20 @@
 from .core import *
 
 
-def test_description_0_0():
+def test_0_0000():
+    # Normal value.
     o = AppHelper()
     o.sopt = 's'
     assert o.sopt == 's'
 
 
-def test_defaults_1_0():
+def test_defaults_1_0000():
     o = AppHelper()
     o.sopt = None
     assert o.sopt == ''
 
 
-def test_exceptions_1_0():
+def test_exceptions_1_0000():
     o = AppHelper()
     with pytest.raises(TypeError) as e:
         o.sopt = 1.
@@ -22,7 +23,7 @@ def test_exceptions_1_0():
         'Must be: str, None.')
 
 
-def test_exceptions_2_0():
+def test_exceptions_2_0000():
     o = AppHelper()
     with pytest.raises(ValueError) as e:
         o.sopt = 'long'

@@ -12,4 +12,6 @@ def test_exceptions_0_0001():
     with pytest.raises(ValueError) as e:
         raise_v(0, True, 'test_1', 'Must be 1.')
     assert str(e.value) == str(
-        'test_1: Invalid value: 0. Must be 1.')
+        'test_1: Invalid value: 0. '
+        'Must be 1.'
+    )

@@ -17,7 +17,9 @@ def test_exceptions_0_0002():
     with pytest.raises(TypeError) as e:
         raise_t(1, float, 'test_2')
     assert str(e.value) == str(
-        'test_2: Invalid type: int. Must be: float.')
+        'test_2: Invalid type: int. '
+        'Must be: float.'
+    )
 
 
 def test_exceptions_0_0003():
@@ -25,4 +27,6 @@ def test_exceptions_0_0003():
     with pytest.raises(TypeError) as e:
         raise_t(1, (float, type(None)), 'test_3')
     assert str(e.value) == str(
-        'test_3: Invalid type: int. Must be: float, None.')
+        'test_3: Invalid type: int. '
+        'Must be: float, None.'
+    )

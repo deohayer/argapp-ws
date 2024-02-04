@@ -1,7 +1,8 @@
 from .core import *
 
 
-def test_description_0_0000():
+def test_0_0000():
+    # Normal value.
     o = CallError()
     o.text = 'Error.'
     assert o.text == 'Error.'
@@ -19,4 +20,5 @@ def test_exceptions_1_0000():
         o.text = 1.
     assert str(e.value) == str(
         'CallError.text: Invalid type: float. '
-        'Must be: str, None.')
+        'Must be: str, None.'
+    )

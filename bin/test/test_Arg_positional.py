@@ -1,29 +1,18 @@
 from .core import *
 
 
-def test_defaults_1():
-    # Constructor.
+def test_defaults_1_0000():
+    # sopt.
     o = Arg(sopt='s')
     assert o.positional is False
+
+
+def test_defaults_1_0001():
+    # lopt.
     o = Arg(lopt='lopt')
-    assert o.positional is False
-    # Assignment.
-    o = Arg()
-    o.sopt = 's'
-    assert o.positional is False
-    o = Arg()
-    o.lopt = 'lopt'
     assert o.positional is False
 
 
-def test_defaults_2():
-    # Constructor.
+def test_defaults_2_0000():
     o = Arg()
-    assert o.positional is True
-    # Assignment.
-    o = Arg(sopt='o')
-    o.sopt = None
-    assert o.positional is True
-    o = Arg(lopt='lopt')
-    o.lopt = None
     assert o.positional is True

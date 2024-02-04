@@ -1,23 +1,24 @@
 from .core import *
 
 
-def test_returns_1_0():
+def test_returns_1_0000():
     assert AppHelper().section_epilog('Title', App()) == ''
 
 
-def test_returns_2_0():
-    act = AppHelper().section_epilog(
-        'Title',
-        App(epilog='This is epilog.'))
-    exp = str(
+def test_returns_2_0000():
+    # Title.
+    title = 'Title'
+    app = App(epilog='This is epilog.')
+    assert AppHelper().section_epilog(title, app) == str(
         'Title:\n'
-        'This is epilog.')
-    assert act == exp
+        'This is epilog.'
+    )
 
 
-def test_returns_2_1():
-    act = AppHelper().section_epilog(
-        '',
-        App(epilog='This is epilog.'))
-    exp = 'This is epilog.'
-    assert act == exp
+def test_returns_2_0001():
+    # No title.
+    title = ''
+    app = App(epilog='This is epilog.')
+    assert AppHelper().section_epilog(title, app) == str(
+        'This is epilog.'
+    )

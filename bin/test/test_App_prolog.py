@@ -1,27 +1,31 @@
 from .core import *
 
 
-def test_description_0_0():
+def test_0_0000():
+    # Normal value.
     o = App()
     o.prolog = 'prolog'
     assert o.prolog == 'prolog'
 
 
-def test_defaults_1_0():
+def test_defaults_1_0000():
+    # Default without help.
     o = App(prolog='prolog')
     o.prolog = None
     assert o.prolog == ''
 
 
-def test_defaults_1_1():
+def test_defaults_1_0001():
+    # Default with help.
     o = App(
         help='help',
-        prolog='prolog')
+        prolog='prolog',
+    )
     o.prolog = None
     assert o.prolog == 'help'
 
 
-def test_exceptions_1_0():
+def test_exceptions_1_0000():
     o = App()
     with pytest.raises(TypeError) as e:
         o.prolog = 1.

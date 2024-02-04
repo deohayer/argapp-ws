@@ -1,19 +1,20 @@
 from .core import *
 
 
-def test_description_0():
+def test_0_0000():
+    # Normal value.
     o = App()
     o.help = 'help'
     assert o.help == 'help'
 
 
-def test_defaults_0_0():
+def test_defaults_1_0000():
     o = App(help='app')
     o.help = None
     assert o.help == ''
 
 
-def test_exceptions_0_0():
+def test_exceptions_1_0000():
     o = App()
     with pytest.raises(TypeError) as e:
         o.help = 1.

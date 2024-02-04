@@ -1,19 +1,20 @@
 from .core import *
 
 
-def test_description_0_0():
+def test_0_0000():
+    # Normal value.
     o = App()
     o.epilog = 'epilog'
     assert o.epilog == 'epilog'
 
 
-def test_defaults_1_0():
+def test_defaults_1_0000():
     o = App(epilog='epilog')
     o.epilog = None
     assert o.epilog == ''
 
 
-def test_exceptions_1_0():
+def test_exceptions_1_0000():
     o = App()
     with pytest.raises(TypeError) as e:
         o.epilog = 1.

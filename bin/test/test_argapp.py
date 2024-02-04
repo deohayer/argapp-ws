@@ -1,6 +1,7 @@
 from .core import *
 
-def test_0():
+def test_0_0000():
+    # Test exports.
     assert Arg
     assert App
     assert ArgHelper
