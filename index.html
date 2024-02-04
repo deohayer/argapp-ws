@@ -828,10 +828,10 @@ It has a declaration, a description, and the following optional subsections:</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>app</code> - The main command. If <a href="#v-app-name"><code>app.name</code></a> is not set, <code>argv[0]</code> will be used as the command name.</p>
+<p><code>app</code> - the main command. If <a href="#v-app-name"><code>app.name</code></a> is not set, <code>argv[0]</code> will be used as the command name.</p>
 </li>
 <li>
-<p><code>argv</code> - The command line. In fact, it is treated as <code>Iterable[Any]</code> - each element is converted to <code>str</code>. Defaults to <code>sys.argv</code>.
+<p><code>argv</code> - the command line. In fact, it is treated as <code>Iterable[Any]</code> - each element is converted to <code>str</code>. Defaults to <code>sys.argv</code>.
 Note that the first element is the command name (unused if <a href="#v-app-name"><code>app.name</code></a> is set).</p>
 </li>
 </ul>
@@ -839,30 +839,30 @@ Note that the first element is the command name (unused if <a href="#v-app-name"
 </div>
 <div class="sect4">
 <h5 id="_returns">Returns</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p>Never returns, always calls <code>sys.exit()</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_exceptions">Exceptions</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
-<p><code>SystemExit</code> with code 0 if nothing is raised.</p>
+<p><code>SystemExit</code> with code 0, if nothing is raised.</p>
 </li>
 <li>
-<p><code>SystemExit</code> with code 1 if an arbitrary error is raised.
+<p><code>SystemExit</code> with code 1, if an arbitrary error is raised.
 The full stack trace is printed in this case.</p>
 </li>
 <li>
-<p><code>SystemExit</code> with the corresponding code if <a href="#c-argapp-callerror"><code>CallError</code></a> is raised.
+<p><code>SystemExit</code> with the corresponding code, if <a href="#c-argapp-callerror"><code>CallError</code></a> is raised.
 The usage text and the error message are printed in this case.</p>
 </li>
-</ol>
+</ul>
 </div>
 <hr>
 </div>
@@ -893,8 +893,8 @@ The usage text and the error message are printed in this case.</p>
 </div>
 <div class="sect4">
 <h5 id="_defaults">Defaults</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p>Uppercase <a href="#v-arg-lopt"><code>self.lopt</code></a>, if set.</p>
 </li>
@@ -904,17 +904,17 @@ The usage text and the error message are printed in this case.</p>
 <li>
 <p><code>''</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_exceptions_2">Exceptions</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><code>TypeError</code>, if the type is not <code>str</code> or <code>None</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 <hr>
 </div>
@@ -938,22 +938,22 @@ The usage text and the error message are printed in this case.</p>
 </div>
 <div class="sect4">
 <h5 id="_defaults_2">Defaults</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
-<p><code>""</code>.</p>
+<p><code>''</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_exceptions_3">Exceptions</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><code>TypeError</code>, if the type is not <code>str</code> or <code>None</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 <hr>
 </div>
@@ -977,25 +977,25 @@ The usage text and the error message are printed in this case.</p>
 </div>
 <div class="sect4">
 <h5 id="_defaults_3">Defaults</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
-<p><code>""</code>.</p>
+<p><code>''</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_exceptions_4">Exceptions</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><code>TypeError</code>, if the type is not <code>str</code> or <code>None</code>.</p>
 </li>
 <li>
 <p><code>ValueError</code>, if the value exceeds one character.</p>
 </li>
-</ol>
+</ul>
 </div>
 <hr>
 </div>
@@ -1019,22 +1019,22 @@ The usage text and the error message are printed in this case.</p>
 </div>
 <div class="sect4">
 <h5 id="_defaults_4">Defaults</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><code>''</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_exceptions_5">Exceptions</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><code>TypeError</code>, if the type is not <code>str</code> or <code>None</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 <hr>
 </div>
@@ -1058,22 +1058,22 @@ The usage text and the error message are printed in this case.</p>
 </div>
 <div class="sect4">
 <h5 id="_defaults_5">Defaults</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><code><a href="#c-argapp-arghelper">ArgHelper</a>()</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_exceptions_6">Exceptions</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><code>TypeError</code>, if the type is not <a href="#c-argapp-arghelper"><code>ArgHelper</code></a> or <code>None</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 <hr>
 </div>
@@ -1097,8 +1097,8 @@ The usage text and the error message are printed in this case.</p>
 </div>
 <div class="sect4">
 <h5 id="_defaults_6">Defaults</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p>Always <code>bool</code>, if <a href="#v-arg-flag"><code>self.flag</code></a> is <code>True</code>.</p>
 </li>
@@ -1111,20 +1111,20 @@ The usage text and the error message are printed in this case.</p>
 <li>
 <p><code>str</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_exceptions_7">Exceptions</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><code>TypeError</code>, if the type is not <code>type</code> or <code>None</code>.</p>
 </li>
 <li>
 <p><code>ValueError</code>, if the value does not match <a href="#v-arg-default"><code>self.default</code></a>.</p>
 </li>
-</ol>
+</ul>
 </div>
 <hr>
 </div>
@@ -1146,8 +1146,8 @@ The usage text and the error message are printed in this case.</p>
 <div class="paragraph">
 <p>The number of values consumed by the argument:</p>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><code>0</code>: indicates a flag. Can be set if <a href="#v-arg-optional"><code>self.optional</code></a> is <code>True</code>.</p>
 </li>
@@ -1169,25 +1169,25 @@ The usage text and the error message are printed in this case.</p>
 <li>
 <p><code>'~'</code>: multiple values, zero or more. Consume the rest of the command line without parsing. Can be set if <a href="#v-arg-positional"><code>self.positional</code></a> is <code>True</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 <div class="sect4">
 <h5 id="_defaults_7">Defaults</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><code>'*'</code>, if the type of <a href="#v-arg-default"><code>self.default</code></a> is <code>list</code>.</p>
 </li>
 <li>
 <p><code>1</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_exceptions_8">Exceptions</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><code>TypeError</code>, if the type is not <code>int</code>, <code>str</code> or <code>None</code>.</p>
 </li>
@@ -1209,7 +1209,7 @@ The usage text and the error message are printed in this case.</p>
 <li>
 <p><code>ValueError</code>, if the type is <code>int</code> and the value does not match the number of items in <a href="#v-arg-default"><code>self.default</code></a>.</p>
 </li>
-</ol>
+</ul>
 </div>
 <hr>
 </div>
@@ -1243,8 +1243,8 @@ The usage text and the error message are printed in this case.</p>
 </div>
 <div class="sect4">
 <h5 id="_defaults_8">Defaults</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><code>False</code>, if <a href="#v-arg-flag"><code>self.flag</code></a> is <code>True</code>.</p>
 </li>
@@ -1254,13 +1254,13 @@ The usage text and the error message are printed in this case.</p>
 <li>
 <p><code>None</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_exceptions_9">Exceptions</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><code>TypeError</code>, if the type is not <code>list</code> or <code>None</code> and <a href="#v-arg-multiple"><code>self.multiple</code></a> is <code>True</code>.</p>
 </li>
@@ -1279,7 +1279,7 @@ The usage text and the error message are printed in this case.</p>
 <li>
 <p><code>ValueError</code>, if the value is an empty <code>list</code>, and <a href="#v-arg-count"><code>self.count</code></a> is <code>'+'</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 <hr>
 </div>
@@ -1316,22 +1316,22 @@ The usage text and the error message are printed in this case.</p>
 </div>
 <div class="sect4">
 <h5 id="_defaults_9">Defaults</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><code>{}</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_exceptions_10">Exceptions</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><code>TypeError</code>, if the type is not <code>Iterable</code> or <code>None</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 <hr>
 </div>
@@ -1355,22 +1355,22 @@ The usage text and the error message are printed in this case.</p>
 </div>
 <div class="sect4">
 <h5 id="_defaults_10">Defaults</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><code>True</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_exceptions_11">Exceptions</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><code>TypeError</code>, if the type is not <code>bool</code> or <code>None</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 <hr>
 </div>
@@ -1394,25 +1394,25 @@ The usage text and the error message are printed in this case.</p>
 </div>
 <div class="sect4">
 <h5 id="_defaults_11">Defaults</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p>Always <code>False</code>, if <a href="#v-arg-optional"><code>self.optional</code></a> is <code>False</code>.</p>
 </li>
 <li>
 <p><code>False</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_exceptions_12">Exceptions</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><code>TypeError</code>, if the type is not <code>bool</code> or <code>None</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 <hr>
 </div>
@@ -1436,25 +1436,25 @@ The usage text and the error message are printed in this case.</p>
 </div>
 <div class="sect4">
 <h5 id="_defaults_12">Defaults</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p>Always <code>True</code>, if <a href="#v-arg-optional"><code>self.optional</code></a> is <code>False</code>.</p>
 </li>
 <li>
 <p><code>False</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_exceptions_13">Exceptions</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><code>TypeError</code>, if the type is not <code>bool</code> or <code>None</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 <hr>
 </div>
@@ -1478,25 +1478,25 @@ The usage text and the error message are printed in this case.</p>
 </div>
 <div class="sect4">
 <h5 id="_defaults_13">Defaults</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p>Always <code>False</code>, if <a href="#v-arg-optional"><code>self.optional</code></a> is <code>False</code>.</p>
 </li>
 <li>
 <p><code>False</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_exceptions_14">Exceptions</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><code>TypeError</code>, if the type is not <code>bool</code> or <code>None</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 <hr>
 </div>
@@ -1520,8 +1520,8 @@ The usage text and the error message are printed in this case.</p>
 </div>
 <div class="sect4">
 <h5 id="_defaults_14">Defaults</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><code><a href="#c-argapp-completerlist">CompleterList</a>(<a href="#v-arg-choices">self.choices</a>)</code>, if <a href="#v-arg-choices"><code>self.choices</code></a> is not empty.</p>
 </li>
@@ -1531,17 +1531,17 @@ The usage text and the error message are printed in this case.</p>
 <li>
 <p><code><a href="#c-argapp-completernone">CompleterNone</a>()</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_exceptions_15">Exceptions</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><code>TypeError</code>, if the type is not <a href="#c-argapp-completer"><code>Completer</code></a> or <code>None</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 <hr>
 </div>
@@ -1561,15 +1561,15 @@ The usage text and the error message are printed in this case.</p>
 </div>
 <div class="sect4">
 <h5 id="_defaults_15">Defaults</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><code>True</code>, if either <a href="#v-arg-sopt"><code>self.sopt</code></a> or <a href="#v-arg-lopt"><code>self.lopt</code></a> is set.</p>
 </li>
 <li>
 <p><code>False</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 <hr>
 </div>
@@ -1589,15 +1589,15 @@ The usage text and the error message are printed in this case.</p>
 </div>
 <div class="sect4">
 <h5 id="_defaults_16">Defaults</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><code>True</code>, if both <a href="#v-arg-sopt"><code>self.sopt</code></a> and <a href="#v-arg-lopt"><code>self.lopt</code></a> are not set.</p>
 </li>
 <li>
 <p><code>False</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 <hr>
 </div>
@@ -1617,15 +1617,15 @@ The usage text and the error message are printed in this case.</p>
 </div>
 <div class="sect4">
 <h5 id="_defaults_17">Defaults</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><code>True</code>, if <a href="#v-arg-count"><code>self.count</code></a> is <code>0</code>.</p>
 </li>
 <li>
 <p><code>False</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 <hr>
 </div>
@@ -1645,15 +1645,15 @@ The usage text and the error message are printed in this case.</p>
 </div>
 <div class="sect4">
 <h5 id="_defaults_18">Defaults</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><code>True</code>, if <a href="#v-arg-count"><code>self.count</code></a> is <code>'?'</code> or <code>1</code>.</p>
 </li>
 <li>
 <p><code>False</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 <hr>
 </div>
@@ -1673,15 +1673,15 @@ The usage text and the error message are printed in this case.</p>
 </div>
 <div class="sect4">
 <h5 id="_defaults_19">Defaults</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><code>True</code>, if <a href="#v-arg-count"><code>self.count</code></a> is <code>'*'</code>, <code>'+'</code>, <code>'~'</code> or greater than one.</p>
 </li>
 <li>
 <p><code>False</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 <hr>
 </div>
@@ -1803,15 +1803,15 @@ The usage text and the error message are printed in this case.</p>
 </div>
 <div class="sect4">
 <h5 id="_returns_2">Returns</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><a href="#v-arg-default"><code>self.default</code></a>, if v is <code>True</code>.</p>
 </li>
 <li>
 <p><code>not <a href="#v-arg-default">self.default</a></code>, if v is <code>False</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 <hr>
 </div>
@@ -1847,19 +1847,19 @@ The usage text and the error message are printed in this case.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>v</code> - a number of times the argument is mentioned in the command line.</p>
+<p><code>v</code> - A number of times the argument is mentioned in the command line.</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_returns_3">Returns</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><code>v</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 <hr>
 </div>
@@ -1895,32 +1895,32 @@ The usage text and the error message are printed in this case.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>v</code> - a value from the command line. <code>None</code> if not provided.</p>
+<p><code>v</code> - A value from the command line. <code>None</code> if not provided.</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_returns_4">Returns</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><a href="#v-arg-default"><code>self.default</code></a>, if <code>v</code> is <code>None</code>.</p>
 </li>
 <li>
 <p><code><a href="#v-arg-type">self.type</a>(v)</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_exceptions_16">Exceptions</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><code>CallError</code>, if <a href="#v-arg-restrict"><code>self.restrict</code></a> is <code>True</code> and the value is not in <a href="#v-arg-choices"><code>self.choices</code></a>.</p>
 </li>
-</ol>
+</ul>
 </div>
 </div>
 </div>
@@ -1955,39 +1955,39 @@ The usage text and the error message are printed in this case.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>v</code> - a list of values from the command line associated with the argument.</p>
+<p><code>v</code> - A list of values from the command line associated with the argument.</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_returns_5">Returns</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p>A <code>list</code> where each item <code>x</code> from <code>v</code> is set to:</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
+<div class="ulist">
+<ul>
 <li>
 <p><a href="#v-arg-default"><code>self.default</code></a>, if <code>x</code> is <code>None</code>.</p>
 </li>
 <li>
 <p><code><a href="#v-arg-type">self.type</a>(x)</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 </li>
-</ol>
+</ul>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_exceptions_17">Exceptions</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><code>CallError</code>, if <a href="#v-arg-restrict"><code>self.restrict</code></a> is <code>True</code> and any item is not in <a href="#v-arg-choices"><code>self.choices</code></a>.</p>
 </li>
-</ol>
+</ul>
 </div>
 <hr>
 </div>
@@ -2023,32 +2023,32 @@ The usage text and the error message are printed in this case.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>v</code> - a list of values from the command line.</p>
+<p><code>v</code> - A list of values from the command line.</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_returns_6">Returns</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><a href="#v-arg-default"><code>self.default</code></a>, if <code>v</code> is <code>None</code>.</p>
 </li>
 <li>
 <p>A <code>list</code> where each item <code>x</code> from <code>v</code> is set to <code><a href="#v-arg-type">self.type</a>(x)</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_exceptions_18">Exceptions</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><code>CallError</code>, if <a href="#v-arg-restrict"><code>self.restrict</code></a> is <code>True</code> and any item is not in <a href="#v-arg-choices"><code>self.choices</code></a>.</p>
 </li>
-</ol>
+</ul>
 </div>
 <hr>
 </div>
@@ -2084,39 +2084,39 @@ The usage text and the error message are printed in this case.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>v</code> - a list of lists of values from the command line associated with the argument.</p>
+<p><code>v</code> - A list of lists of values from the command line associated with the argument.</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_returns_7">Returns</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p>A <code>list[list]</code> where each list <code>l</code> from <code>v</code> is converted to:</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
+<div class="ulist">
+<ul>
 <li>
 <p><a href="#v-arg-default"><code>self.default</code></a>, if <code>l</code> is <code>None</code>.</p>
 </li>
 <li>
 <p>A <code>list</code> where each item <code>x</code> from <code>l</code> is converted to <code><a href="#v-arg-type">self.type</a>(x)</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 </li>
-</ol>
+</ul>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_exceptions_19">Exceptions</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><code>CallError</code>, if <a href="#v-arg-restrict"><code>self.restrict</code></a> is <code>True</code> and any item is not in <a href="#v-arg-choices"><code>self.choices</code></a>.</p>
 </li>
-</ol>
+</ul>
 </div>
 <hr>
 </div>
@@ -2147,22 +2147,22 @@ The usage text and the error message are printed in this case.</p>
 </div>
 <div class="sect4">
 <h5 id="_defaults_20">Defaults</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><code>''</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_exceptions_20">Exceptions</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><code>TypeError</code>, if the type is not <code>str</code> or <code>None</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 <hr>
 </div>
@@ -2450,10 +2450,10 @@ The usage text and the error message are printed in this case.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>args</code> - A dictionary of <a href="#c-argapp-arg"><code>Arg</code></a> and its parsed command line value.</p>
+<p><code>args</code> - a dictionary of <a href="#c-argapp-arg"><code>Arg</code></a> and its parsed command line value.</p>
 </li>
 <li>
-<p><code>apps</code> - A list of commands that are mentioned in the command line, starting from the leftmost one.</p>
+<p><code>apps</code> - a list of commands that are mentioned in the command line, starting from the leftmost one.</p>
 </li>
 </ul>
 </div>
@@ -2486,22 +2486,22 @@ The usage text and the error message are printed in this case.</p>
 </div>
 <div class="sect4">
 <h5 id="_defaults_27">Defaults</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><code>True</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_exceptions_25">Exceptions</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><code>TypeError</code>, if the type is not <code>bool</code> or <code>None</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 <hr>
 </div>
@@ -2525,22 +2525,22 @@ The usage text and the error message are printed in this case.</p>
 </div>
 <div class="sect4">
 <h5 id="_defaults_28">Defaults</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><code>True</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_exceptions_26">Exceptions</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><code>TypeError</code>, if the type is not <code>bool</code> or <code>None</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 <hr>
 </div>
@@ -2569,8 +2569,8 @@ The usage text and the error message are printed in this case.</p>
 </div>
 <div class="sect4">
 <h5 id="_returns_8">Returns</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p><a href="#v-arg-help"><code>arg.help</code></a> with the following appended if <a href="#v-arg-flag"><code>arg.flag</code></a> is <code>False</code>:</p>
 <div class="ulist">
@@ -2584,7 +2584,7 @@ The usage text and the error message are printed in this case.</p>
 </ul>
 </div>
 </li>
-</ol>
+</ul>
 </div>
 <hr>
 </div>
@@ -2613,12 +2613,12 @@ The usage text and the error message are printed in this case.</p>
 </div>
 <div class="sect4">
 <h5 id="_returns_9">Returns</h5>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p>A <code>str</code> with the following text combined:</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
+<div class="ulist">
+<ul>
 <li>
 <p><code>-sopt</code>, if <a href="#v-arg-sopt"><code>arg.sopt</code></a> is set.</p>
 </li>
@@ -2647,10 +2647,10 @@ The usage text and the error message are printed in this case.</p>
 </ul>
 </div>
 </li>
-</ol>
+</ul>
 </div>
 </li>
-</ol>
+</ul>
 </div>
 <hr>
 </div>
@@ -2831,10 +2831,10 @@ The usage text and the error message are printed in this case.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>apps</code> - A list of commands mentioned in the command line. The text is generated for the last one.</p>
+<p><code>apps</code> - a list of commands mentioned in the command line. The text is generated for the last one.</p>
 </li>
 <li>
-<p><code>name</code> - A name to use for the first command in <code>apps</code>.</p>
+<p><code>name</code> - a name to use for the first command in <code>apps</code>.</p>
 </li>
 </ul>
 </div>
@@ -2894,10 +2894,10 @@ The usage text and the error message are printed in this case.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>apps</code> - A list of commands mentioned in the command line. The usage text is generated for the last one.</p>
+<p><code>apps</code> - a list of commands mentioned in the command line. The usage text is generated for the last one.</p>
 </li>
 <li>
-<p><code>name</code> - A name to use for the first command in <code>apps</code>.</p>
+<p><code>name</code> - a name to use for the first command in <code>apps</code>.</p>
 </li>
 </ul>
 </div>
@@ -3002,10 +3002,10 @@ The usage text and the error message are printed in this case.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>title</code> - A title for the section.</p>
+<p><code>title</code> - a title for the section.</p>
 </li>
 <li>
-<p><code>app</code> - An <a href="#c-argapp-app"><code>App</code></a> to generate the text for.</p>
+<p><code>app</code> - an <a href="#c-argapp-app"><code>App</code></a> to generate the text for.</p>
 </li>
 </ul>
 </div>
@@ -3056,10 +3056,10 @@ The usage text and the error message are printed in this case.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>title</code> - A title for the section.</p>
+<p><code>title</code> - a title for the section.</p>
 </li>
 <li>
-<p><code>apps</code> - A list of <a href="#c-argapp-app"><code>App</code></a> to generate the text for.</p>
+<p><code>apps</code> - a list of <a href="#c-argapp-app"><code>App</code></a> to generate the text for.</p>
 </li>
 </ul>
 </div>

@@ -60,20 +60,20 @@ Parses the command line and runs the commands.
 
 ===== Parameters
 
-* `app` - The main command. If <<v-app-name,`app.name`>> is not set, `argv[0]` will be used as the command name.
-* `argv` - The command line. In fact, it is treated as `Iterable[Any]` - each element is converted to `str`. Defaults to `sys.argv`.
+* `app` - the main command. If <<v-app-name,`app.name`>> is not set, `argv[0]` will be used as the command name.
+* `argv` - the command line. In fact, it is treated as `Iterable[Any]` - each element is converted to `str`. Defaults to `sys.argv`.
 Note that the first element is the command name (unused if <<v-app-name,`app.name`>> is set).
 
 ===== Returns
 
-. Never returns, always calls `sys.exit()`.
+* Never returns, always calls `sys.exit()`.
 
 ===== Exceptions
 
-. `SystemExit` with code 0 if nothing is raised.
-. `SystemExit` with code 1 if an arbitrary error is raised.
+* `SystemExit` with code 0, if nothing is raised.
+* `SystemExit` with code 1, if an arbitrary error is raised.
 The full stack trace is printed in this case.
-. `SystemExit` with the corresponding code if <<c-argapp-callerror,`CallError`>> is raised.
+* `SystemExit` with the corresponding code, if <<c-argapp-callerror,`CallError`>> is raised.
 The usage text and the error message are printed in this case.
 
 '''
@@ -104,13 +104,13 @@ The name of the argument's value.
 
 ===== Defaults
 
-. Uppercase <<v-arg-lopt,`self.lopt`>>, if set.
-. Uppercase <<v-arg-sopt,`self.sopt`>>, if set.
-. `''`.
+* Uppercase <<v-arg-lopt,`self.lopt`>>, if set.
+* Uppercase <<v-arg-sopt,`self.sopt`>>, if set.
+* `''`.
 
 ===== Exceptions
 
-. `TypeError`, if the type is not `str` or `None`.
+* `TypeError`, if the type is not `str` or `None`.
 
 '''
 
@@ -133,11 +133,11 @@ The long option name.
 
 ===== Defaults
 
-. `""`.
+* `''`.
 
 ===== Exceptions
 
-. `TypeError`, if the type is not `str` or `None`.
+* `TypeError`, if the type is not `str` or `None`.
 
 '''
 
@@ -160,12 +160,12 @@ The short option name.
 
 ===== Defaults
 
-. `""`.
+* `''`.
 
 ===== Exceptions
 
-. `TypeError`, if the type is not `str` or `None`.
-. `ValueError`, if the value exceeds one character.
+* `TypeError`, if the type is not `str` or `None`.
+* `ValueError`, if the value exceeds one character.
 
 '''
 
@@ -188,11 +188,11 @@ The argument's description.
 
 ===== Defaults
 
-. `''`.
+* `''`.
 
 ===== Exceptions
 
-. `TypeError`, if the type is not `str` or `None`.
+* `TypeError`, if the type is not `str` or `None`.
 
 '''
 
@@ -215,11 +215,11 @@ The argument's help text generator.
 
 ===== Defaults
 
-. `<<c-argapp-arghelper,ArgHelper>>()`.
+* `<<c-argapp-arghelper,ArgHelper>>()`.
 
 ===== Exceptions
 
-. `TypeError`, if the type is not <<c-argapp-arghelper,`ArgHelper`>> or `None`.
+* `TypeError`, if the type is not <<c-argapp-arghelper,`ArgHelper`>> or `None`.
 
 '''
 
@@ -242,15 +242,15 @@ The type of an individual value.
 
 ===== Defaults
 
-. Always `bool`, if <<v-arg-flag,`self.flag`>> is `True`.
-. The type of the first item of <<v-arg-default,`self.default`>>, if its type is `list` and it is not empty.
-. The type of <<v-arg-default,`self.default`>>, if its type is not `list` and it is not `None`.
-. `str`.
+* Always `bool`, if <<v-arg-flag,`self.flag`>> is `True`.
+* The type of the first item of <<v-arg-default,`self.default`>>, if its type is `list` and it is not empty.
+* The type of <<v-arg-default,`self.default`>>, if its type is not `list` and it is not `None`.
+* `str`.
 
 ===== Exceptions
 
-. `TypeError`, if the type is not `type` or `None`.
-. `ValueError`, if the value does not match <<v-arg-default,`self.default`>>.
+* `TypeError`, if the type is not `type` or `None`.
+* `ValueError`, if the value does not match <<v-arg-default,`self.default`>>.
 
 '''
 
@@ -271,28 +271,28 @@ class Arg:
 
 The number of values consumed by the argument:
 
-. `0`: indicates a flag. Can be set if <<v-arg-optional,`self.optional`>> is `True`.
-. `1`: a single value.
-. `2` or greater: multiple values, an exact number.
-. `'?'`: a single value, zero or one.
-. `'*'`: multiple values, zero or more.
-. `'+'`: multiple values, one or more.
-. `'~'`: multiple values, zero or more. Consume the rest of the command line without parsing. Can be set if <<v-arg-positional,`self.positional`>> is `True`.
+* `0`: indicates a flag. Can be set if <<v-arg-optional,`self.optional`>> is `True`.
+* `1`: a single value.
+* `2` or greater: multiple values, an exact number.
+* `'?'`: a single value, zero or one.
+* `'*'`: multiple values, zero or more.
+* `'+'`: multiple values, one or more.
+* `'~'`: multiple values, zero or more. Consume the rest of the command line without parsing. Can be set if <<v-arg-positional,`self.positional`>> is `True`.
 
 ===== Defaults
 
-. `'*'`, if the type of <<v-arg-default,`self.default`>> is `list`.
-. `1`.
+* `'*'`, if the type of <<v-arg-default,`self.default`>> is `list`.
+* `1`.
 
 ===== Exceptions
 
-. `TypeError`, if the type is not `int`, `str` or `None`.
-. `ValueError`, if the type is `int` and the value is negative.
-. `ValueError`, if the type is `str` and the value is not one of: `'?'`, `'*'`, `'+'`, `'~'`.
-. `ValueError`, if the value is `0` and <<v-arg-optional,`self.optional`>> is `False`.
-. `ValueError`, if the value is `'~'` and <<v-arg-positional,`self.positional`>> is `False`.
-. `ValueError`, if the value is `'+'` and <<v-arg-default,`self.default`>> is an empty `list`.
-. `ValueError`, if the type is `int` and the value does not match the number of items in <<v-arg-default,`self.default`>>.
+* `TypeError`, if the type is not `int`, `str` or `None`.
+* `ValueError`, if the type is `int` and the value is negative.
+* `ValueError`, if the type is `str` and the value is not one of: `'?'`, `'*'`, `'+'`, `'~'`.
+* `ValueError`, if the value is `0` and <<v-arg-optional,`self.optional`>> is `False`.
+* `ValueError`, if the value is `'~'` and <<v-arg-positional,`self.positional`>> is `False`.
+* `ValueError`, if the value is `'+'` and <<v-arg-default,`self.default`>> is an empty `list`.
+* `ValueError`, if the type is `int` and the value does not match the number of items in <<v-arg-default,`self.default`>>.
 
 '''
 
@@ -318,18 +318,18 @@ The default value. It is used by the base implementations of <<v-arg---call--boo
 
 ===== Defaults
 
-. `False`, if <<v-arg-flag,`self.flag`>> is `True`.
-. `[]`, if <<v-arg-count,`self.count`>> is `'*'` or `'~'`.
-. `None`.
+* `False`, if <<v-arg-flag,`self.flag`>> is `True`.
+* `[]`, if <<v-arg-count,`self.count`>> is `'*'` or `'~'`.
+* `None`.
 
 ===== Exceptions
 
-. `TypeError`, if the type is not `list` or `None` and <<v-arg-multiple,`self.multiple`>> is `True`.
-. `TypeError`, if the type is `list`, and <<v-arg-single,`self.single`>> is `True`.
-. `TypeError`, if the type is not `list` and it is not <<v-arg-type,`self.type`>> or `None`.
-. `TypeError`, if the type is `list` and one of the items is not <<v-arg-type,`self.type`>>.
-. `ValueError`, if the type is `list`, and the number of items does not match <<v-arg-count,`self.count`>>.
-. `ValueError`, if the value is an empty `list`, and <<v-arg-count,`self.count`>> is `'+'`.
+* `TypeError`, if the type is not `list` or `None` and <<v-arg-multiple,`self.multiple`>> is `True`.
+* `TypeError`, if the type is `list`, and <<v-arg-single,`self.single`>> is `True`.
+* `TypeError`, if the type is not `list` and it is not <<v-arg-type,`self.type`>> or `None`.
+* `TypeError`, if the type is `list` and one of the items is not <<v-arg-type,`self.type`>>.
+* `ValueError`, if the type is `list`, and the number of items does not match <<v-arg-count,`self.count`>>.
+* `ValueError`, if the value is an empty `list`, and <<v-arg-count,`self.count`>> is `'+'`.
 
 '''
 
@@ -356,11 +356,11 @@ A `dict` of the possible values.
 
 ===== Defaults
 
-. `{}`.
+* `{}`.
 
 ===== Exceptions
 
-. `TypeError`, if the type is not `Iterable` or `None`.
+* `TypeError`, if the type is not `Iterable` or `None`.
 
 '''
 
@@ -383,11 +383,11 @@ Whether <<v-arg-choices,`self.choices`>> are restrictive.
 
 ===== Defaults
 
-. `True`.
+* `True`.
 
 ===== Exceptions
 
-. `TypeError`, if the type is not `bool` or `None`.
+* `TypeError`, if the type is not `bool` or `None`.
 
 '''
 
@@ -410,12 +410,12 @@ Whether to not set the optional argument to <<v-arg-default,`self.default`>> if 
 
 ===== Defaults
 
-. Always `False`, if <<v-arg-optional,`self.optional`>> is `False`.
-. `False`.
+* Always `False`, if <<v-arg-optional,`self.optional`>> is `False`.
+* `False`.
 
 ===== Exceptions
 
-. `TypeError`, if the type is not `bool` or `None`.
+* `TypeError`, if the type is not `bool` or `None`.
 
 '''
 
@@ -438,12 +438,12 @@ Whether the optional argument must be mentioned.
 
 ===== Defaults
 
-. Always `True`, if <<v-arg-optional,`self.optional`>> is `False`.
-. `False`.
+* Always `True`, if <<v-arg-optional,`self.optional`>> is `False`.
+* `False`.
 
 ===== Exceptions
 
-. `TypeError`, if the type is not `bool` or `None`.
+* `TypeError`, if the type is not `bool` or `None`.
 
 '''
 
@@ -466,12 +466,12 @@ Whether the optional argument is appended on repeat.
 
 ===== Defaults
 
-. Always `False`, if <<v-arg-optional,`self.optional`>> is `False`.
-. `False`.
+* Always `False`, if <<v-arg-optional,`self.optional`>> is `False`.
+* `False`.
 
 ===== Exceptions
 
-. `TypeError`, if the type is not `bool` or `None`.
+* `TypeError`, if the type is not `bool` or `None`.
 
 '''
 
@@ -494,13 +494,13 @@ The command line completer for the argument.
 
 ===== Defaults
 
-. `<<c-argapp-completerlist,CompleterList>>(<<v-arg-choices,self.choices>>)`, if <<v-arg-choices,`self.choices`>> is not empty.
-. `<<c-argapp-completerpath,CompleterPath>>()`, if <<v-arg-type,`self.type`>> is `str`.
-. `<<c-argapp-completernone,CompleterNone>>()`.
+* `<<c-argapp-completerlist,CompleterList>>(<<v-arg-choices,self.choices>>)`, if <<v-arg-choices,`self.choices`>> is not empty.
+* `<<c-argapp-completerpath,CompleterPath>>()`, if <<v-arg-type,`self.type`>> is `str`.
+* `<<c-argapp-completernone,CompleterNone>>()`.
 
 ===== Exceptions
 
-. `TypeError`, if the type is not <<c-argapp-completer,`Completer`>> or `None`.
+* `TypeError`, if the type is not <<c-argapp-completer,`Completer`>> or `None`.
 
 '''
 
@@ -519,8 +519,8 @@ Whether the argument is optional.
 
 ===== Defaults
 
-. `True`, if either <<v-arg-sopt,`self.sopt`>> or <<v-arg-lopt,`self.lopt`>> is set.
-. `False`.
+* `True`, if either <<v-arg-sopt,`self.sopt`>> or <<v-arg-lopt,`self.lopt`>> is set.
+* `False`.
 
 '''
 
@@ -539,8 +539,8 @@ Whether the argument is positional.
 
 ===== Defaults
 
-. `True`, if both <<v-arg-sopt,`self.sopt`>> and <<v-arg-lopt,`self.lopt`>> are not set.
-. `False`.
+* `True`, if both <<v-arg-sopt,`self.sopt`>> and <<v-arg-lopt,`self.lopt`>> are not set.
+* `False`.
 
 '''
 
@@ -559,8 +559,8 @@ Whether the argument does not consume a value.
 
 ===== Defaults
 
-. `True`, if <<v-arg-count,`self.count`>> is `0`.
-. `False`.
+* `True`, if <<v-arg-count,`self.count`>> is `0`.
+* `False`.
 
 '''
 
@@ -579,8 +579,8 @@ Whether the argument can consume at most one value.
 
 ===== Defaults
 
-. `True`, if <<v-arg-count,`self.count`>> is `'?'` or `1`.
-. `False`.
+* `True`, if <<v-arg-count,`self.count`>> is `'?'` or `1`.
+* `False`.
 
 '''
 
@@ -599,8 +599,8 @@ Whether the argument can consume more than one value.
 
 ===== Defaults
 
-. `True`, if <<v-arg-count,`self.count`>> is `'*'`, `'+'`, `'~'` or greater than one.
-. `False`.
+* `True`, if <<v-arg-count,`self.count`>> is `'*'`, `'+'`, `'~'` or greater than one.
+* `False`.
 
 '''
 
@@ -676,8 +676,8 @@ Parse the command line value. This overload is called if:
 
 ===== Returns
 
-. <<v-arg-default,`self.default`>>, if v is `True`.
-. `not <<v-arg-default,self.default>>`, if v is `False`.
+* <<v-arg-default,`self.default`>>, if v is `True`.
+* `not <<v-arg-default,self.default>>`, if v is `False`.
 
 '''
 
@@ -702,11 +702,11 @@ Parse the command line value. This overload is called if:
 
 ===== Parameters
 
-* `v` - a number of times the argument is mentioned in the command line.
+* `v` - A number of times the argument is mentioned in the command line.
 
 ===== Returns
 
-. `v`.
+* `v`.
 
 '''
 
@@ -731,16 +731,16 @@ Parse the command line value. This overload is called if:
 
 ===== Parameters
 
-* `v` - a value from the command line. `None` if not provided.
+* `v` - A value from the command line. `None` if not provided.
 
 ===== Returns
 
-. <<v-arg-default,`self.default`>>, if `v` is `None`.
-. `<<v-arg-type,self.type>>(v)`.
+* <<v-arg-default,`self.default`>>, if `v` is `None`.
+* `<<v-arg-type,self.type>>(v)`.
 
 ===== Exceptions
 
-. `CallError`, if <<v-arg-restrict,`self.restrict`>> is `True` and the value is not in <<v-arg-choices,`self.choices`>>.
+* `CallError`, if <<v-arg-restrict,`self.restrict`>> is `True` and the value is not in <<v-arg-choices,`self.choices`>>.
 
 [#v-arg---call--list]
 ==== `+Arg.__call__(list)+`
@@ -763,17 +763,17 @@ Parse the command line value. This overload is called if:
 
 ===== Parameters
 
-* `v` - a list of values from the command line associated with the argument.
+* `v` - A list of values from the command line associated with the argument.
 
 ===== Returns
 
-. A `list` where each item `x` from `v` is set to:
-.. <<v-arg-default,`self.default`>>, if `x` is `None`.
-.. `<<v-arg-type,self.type>>(x)`.
+* A `list` where each item `x` from `v` is set to:
+** <<v-arg-default,`self.default`>>, if `x` is `None`.
+** `<<v-arg-type,self.type>>(x)`.
 
 ===== Exceptions
 
-. `CallError`, if <<v-arg-restrict,`self.restrict`>> is `True` and any item is not in <<v-arg-choices,`self.choices`>>.
+* `CallError`, if <<v-arg-restrict,`self.restrict`>> is `True` and any item is not in <<v-arg-choices,`self.choices`>>.
 
 '''
 
@@ -798,16 +798,16 @@ Parse the command line value. This overload is called if:
 
 ===== Parameters
 
-* `v` - a list of values from the command line.
+* `v` - A list of values from the command line.
 
 ===== Returns
 
-. <<v-arg-default,`self.default`>>, if `v` is `None`.
-. A `list` where each item `x` from `v` is set to `<<v-arg-type,self.type>>(x)`.
+* <<v-arg-default,`self.default`>>, if `v` is `None`.
+* A `list` where each item `x` from `v` is set to `<<v-arg-type,self.type>>(x)`.
 
 ===== Exceptions
 
-. `CallError`, if <<v-arg-restrict,`self.restrict`>> is `True` and any item is not in <<v-arg-choices,`self.choices`>>.
+* `CallError`, if <<v-arg-restrict,`self.restrict`>> is `True` and any item is not in <<v-arg-choices,`self.choices`>>.
 
 '''
 
@@ -832,17 +832,17 @@ Parse the command line value. This overload is called if:
 
 ===== Parameters
 
-* `v` - a list of lists of values from the command line associated with the argument.
+* `v` - A list of lists of values from the command line associated with the argument.
 
 ===== Returns
 
-. A `list[list]` where each list `l` from `v` is converted to:
-.. <<v-arg-default,`self.default`>>, if `l` is `None`.
-.. A `list` where each item `x` from `l` is converted to `<<v-arg-type,self.type>>(x)`.
+* A `list[list]` where each list `l` from `v` is converted to:
+** <<v-arg-default,`self.default`>>, if `l` is `None`.
+** A `list` where each item `x` from `l` is converted to `<<v-arg-type,self.type>>(x)`.
 
 ===== Exceptions
 
-. `CallError`, if <<v-arg-restrict,`self.restrict`>> is `True` and any item is not in <<v-arg-choices,`self.choices`>>.
+* `CallError`, if <<v-arg-restrict,`self.restrict`>> is `True` and any item is not in <<v-arg-choices,`self.choices`>>.
 
 '''
 
@@ -872,11 +872,11 @@ The command's name.
 
 ===== Defaults
 
-. `''`.
+* `''`.
 
 ===== Exceptions
 
-. `TypeError`, if the type is not `str` or `None`.
+* `TypeError`, if the type is not `str` or `None`.
 
 '''
 
@@ -1077,8 +1077,8 @@ Run the command.
 
 ===== Parameters
 
-* `args` - A dictionary of <<c-argapp-arg,`Arg`>> and its parsed command line value.
-* `apps` - A list of commands that are mentioned in the command line, starting from the leftmost one.
+* `args` - a dictionary of <<c-argapp-arg,`Arg`>> and its parsed command line value.
+* `apps` - a list of commands that are mentioned in the command line, starting from the leftmost one.
 
 '''
 
@@ -1108,11 +1108,11 @@ Whether to append the <<v-arg-choices,`Arg.choices`>> to the help text.
 
 ===== Defaults
 
-. `True`.
+* `True`.
 
 ===== Exceptions
 
-. `TypeError`, if the type is not `bool` or `None`.
+* `TypeError`, if the type is not `bool` or `None`.
 
 '''
 
@@ -1135,11 +1135,11 @@ Whether to append the <<v-arg-default,`Arg.default`>> to the help text.
 
 ===== Defaults
 
-. `True`.
+* `True`.
 
 ===== Exceptions
 
-. `TypeError`, if the type is not `bool` or `None`.
+* `TypeError`, if the type is not `bool` or `None`.
 
 '''
 
@@ -1161,7 +1161,7 @@ Generate the argument's description.
 
 ===== Returns
 
-. <<v-arg-help,`arg.help`>> with the following appended if <<v-arg-flag,`arg.flag`>> is `False`:
+* <<v-arg-help,`arg.help`>> with the following appended if <<v-arg-flag,`arg.flag`>> is `False`:
 ** <<v-arg-default,`arg.default`>>, if <<v-arghelper-default,`self.default`>> is `True`.
 ** <<v-arg-choices,`arg.choices`>>, if <<v-arghelper-choices,`self.choices`>> is `True`.
 
@@ -1185,10 +1185,10 @@ Generate the argument's usage (stylized name).
 
 ===== Returns
 
-. A `str` with the following text combined:
-.. `-sopt`, if <<v-arg-sopt,`arg.sopt`>> is set.
-.. `--lopt`, if <<v-arg-lopt,`arg.lopt`>> is set.
-.. A stylized <<v-arg-name,`arg.name`>>:
+* A `str` with the following text combined:
+** `-sopt`, if <<v-arg-sopt,`arg.sopt`>> is set.
+** `--lopt`, if <<v-arg-lopt,`arg.lopt`>> is set.
+** A stylized <<v-arg-name,`arg.name`>>:
 *** `name` repeated <<v-arg-count,`arg.count`>> times, if its type is `int`.
 *** `[name]`, if <<v-arg-count,`arg.count`>> is `'?'`.
 *** `++[name...]++`, if <<v-arg-count,`arg.count`>> is `'*'`.
@@ -1326,8 +1326,8 @@ Generate the command's full help text.
 
 ===== Parameters
 
-* `apps` - A list of commands mentioned in the command line. The text is generated for the last one.
-* `name` - A name to use for the first command in `apps`.
+* `apps` - a list of commands mentioned in the command line. The text is generated for the last one.
+* `name` - a name to use for the first command in `apps`.
 
 ===== Returns
 
@@ -1359,8 +1359,8 @@ Generate the command's full usage text.
 
 ===== Parameters
 
-* `apps` - A list of commands mentioned in the command line. The usage text is generated for the last one.
-* `name` - A name to use for the first command in `apps`.
+* `apps` - a list of commands mentioned in the command line. The usage text is generated for the last one.
+* `name` - a name to use for the first command in `apps`.
 
 ===== Returns
 
@@ -1419,8 +1419,8 @@ Generate the command's text after arguments.
 
 ===== Parameters
 
-* `title` - A title for the section.
-* `app` - An <<c-argapp-app,`App`>> to generate the text for.
+* `title` - a title for the section.
+* `app` - an <<c-argapp-app,`App`>> to generate the text for.
 
 ===== Returns
 
@@ -1449,8 +1449,8 @@ Generate the command's text for subcommands.
 
 ===== Parameters
 
-* `title` - A title for the section.
-* `apps` - A list of <<c-argapp-app,`App`>> to generate the text for.
+* `title` - a title for the section.
+* `apps` - a list of <<c-argapp-app,`App`>> to generate the text for.
 
 ===== Returns
 
