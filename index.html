@@ -821,28 +821,41 @@ It has a declaration, a description, and the following optional subsections:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Parses the command line and runs the commands.</p>
+<p>A complete runtime of the command. It does the following:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Construction. <code>app</code> is translated to <code>argparse.ArgumentParser</code> and sanity checks are performed.
+<a href="#v-app-name"><code>app.name</code></a> is set to <code>os.path.basename(argv[0])</code> if empty.</p>
+</li>
+<li>
+<p>Parsing. <code>argv</code> is translated to <code>args</code> and <code>apps</code> for <a href="#f-app---call--"><code>App.__call__()</code></a>.</p>
+</li>
+<li>
+<p>Execution. <code>sys.exit()</code> is always called, so there is no return. The flow depends on the presence of the help option:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>If mentioned, only the text is printed to stdout.</p>
+</li>
+<li>
+<p>If not mentioned, <code>x(args, apps)</code> is called for each <code>x</code> in <code>apps</code>.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
 </div>
 <div class="sect4">
 <h5 id="_parameters">Parameters</h5>
 <div class="ulist">
 <ul>
 <li>
-<p><code>app</code> - the main command. If <a href="#v-app-name"><code>app.name</code></a> is not set, <code>argv[0]</code> will be used as the command name.</p>
+<p><code>app</code>  - an <a href="#c-argapp-app"><code>App</code></a> to translate to <code>argparse.ArgumentParser</code>.</p>
 </li>
 <li>
-<p><code>argv</code> - the command line. In fact, it is treated as <code>Iterable[Any]</code> - each element is converted to <code>str</code>. Defaults to <code>sys.argv</code>.
-Note that the first element is the command name (unused if <a href="#v-app-name"><code>app.name</code></a> is set).</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_returns">Returns</h5>
-<div class="ulist">
-<ul>
-<li>
-<p>Never returns, always calls <code>sys.exit()</code>.</p>
+<p><code>argv</code> - the command line including the command name, defaults to <code>sys.argv</code>.</p>
 </li>
 </ul>
 </div>
@@ -852,15 +865,67 @@ Note that the first element is the command name (unused if <a href="#v-app-name"
 <div class="ulist">
 <ul>
 <li>
-<p><code>SystemExit</code> with code 0, if nothing is raised.</p>
+<p>Construction. All exceptions are not intercepted.</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>ValueError</code>, if any <a href="#c-argapp-app"><code>App</code></a> has empty <a href="#v-app-name"><code>App.name</code></a>.</p>
 </li>
 <li>
-<p><code>SystemExit</code> with code 1, if an arbitrary error is raised.
-The full stack trace is printed in this case.</p>
+<p><code>ValueError</code>, if any <a href="#c-argapp-app"><code>App</code></a> have the same <a href="#v-app-name"><code>App.name</code></a>.</p>
 </li>
 <li>
-<p><code>SystemExit</code> with the corresponding code, if <a href="#c-argapp-callerror"><code>CallError</code></a> is raised.
-The usage text and the error message are printed in this case.</p>
+<p><code>ValueError</code>, if any positional <a href="#c-argapp-arg"><code>Arg</code></a> has empty <a href="#v-arg-name"><code>Arg.name</code></a>.</p>
+</li>
+<li>
+<p><code>ValueError</code>, if any positional <a href="#c-argapp-arg"><code>Arg</code></a> have the same <a href="#v-arg-name"><code>Arg.name</code></a>.</p>
+</li>
+<li>
+<p><code>ValueError</code>, if any optional <a href="#c-argapp-arg"><code>Arg</code></a> or <a href="#v-app-helper"><code>App.helper</code></a> have the same <a href="#v-arg-lopt"><code>lopt</code></a> or <a href="#v-arg-sopt"><code>sopt</code></a>.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Parsing. <a href="#c-argapp-callerror"><code>CallError</code></a> is intercepted and printed with the usage to stderr, followed by <code>sys.exit()</code>. Other exceptions are not intercepted.</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>SystemExit</code>, on a custom <a href="#c-argapp-callerror"><code>CallError</code></a> from <a href="#f-app---call--"><code>App.__call__()</code></a>, code <a href="#v-callerror-code"><code>CallError.code</code></a>.</p>
+</li>
+<li>
+<p><code>SystemExit</code>, on a missing subcommand, code <code>1</code>.</p>
+</li>
+<li>
+<p><code>SystemExit</code>, on an unknown subcommand, code <code>1</code>.</p>
+</li>
+<li>
+<p><code>SystemExit</code>, on a missing argument, code <code>1</code>.</p>
+</li>
+<li>
+<p><code>SystemExit</code>, on an unknown argument, code <code>1</code>.</p>
+</li>
+<li>
+<p><code>SystemExit</code>, if there are less values, code <code>1</code>.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Execution. <a href="#c-argapp-callerror"><code>CallError</code></a> is intercepted and printed to stderr, followed by <code>sys.exit()</code>. Other exceptions are not intercepted.</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>SystemExit</code>, on a custom <a href="#c-argapp-callerror"><code>CallError</code></a> from <a href="#f-app---call--"><code>App.__call__()</code></a>, code <a href="#v-callerror-code"><code>CallError.code</code></a>.</p>
+</li>
+<li>
+<p><code>SystemExit</code>, on the help command, code <code>0</code>.</p>
+</li>
+<li>
+<p><code>SystemExit</code>, on execution without errors, code <code>0</code>.</p>
+</li>
+</ul>
+</div>
 </li>
 </ul>
 </div>
@@ -1802,7 +1867,7 @@ The usage text and the error message are printed in this case.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_returns_2">Returns</h5>
+<h5 id="_returns">Returns</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -1853,7 +1918,7 @@ The usage text and the error message are printed in this case.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_returns_3">Returns</h5>
+<h5 id="_returns_2">Returns</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -1901,7 +1966,7 @@ The usage text and the error message are printed in this case.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_returns_4">Returns</h5>
+<h5 id="_returns_3">Returns</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -1961,7 +2026,7 @@ The usage text and the error message are printed in this case.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_returns_5">Returns</h5>
+<h5 id="_returns_4">Returns</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -2029,7 +2094,7 @@ The usage text and the error message are printed in this case.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_returns_6">Returns</h5>
+<h5 id="_returns_5">Returns</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -2090,7 +2155,7 @@ The usage text and the error message are printed in this case.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_returns_7">Returns</h5>
+<h5 id="_returns_6">Returns</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -2568,7 +2633,7 @@ The usage text and the error message are printed in this case.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_returns_8">Returns</h5>
+<h5 id="_returns_7">Returns</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -2612,7 +2677,7 @@ The usage text and the error message are printed in this case.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_returns_9">Returns</h5>
+<h5 id="_returns_8">Returns</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -2840,7 +2905,7 @@ The usage text and the error message are printed in this case.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_returns_10">Returns</h5>
+<h5 id="_returns_9">Returns</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -2903,7 +2968,7 @@ The usage text and the error message are printed in this case.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_returns_11">Returns</h5>
+<h5 id="_returns_10">Returns</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -2957,7 +3022,7 @@ The usage text and the error message are printed in this case.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_returns_12">Returns</h5>
+<h5 id="_returns_11">Returns</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -3011,7 +3076,7 @@ The usage text and the error message are printed in this case.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_returns_13">Returns</h5>
+<h5 id="_returns_12">Returns</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -3065,7 +3130,7 @@ The usage text and the error message are printed in this case.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_returns_14">Returns</h5>
+<h5 id="_returns_13">Returns</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -3109,7 +3174,7 @@ The usage text and the error message are printed in this case.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_returns_15">Returns</h5>
+<h5 id="_returns_14">Returns</h5>
 <div class="ulist">
 <ul>
 <li>
