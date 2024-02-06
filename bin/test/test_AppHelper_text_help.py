@@ -59,7 +59,7 @@ def test_returns_1_1_0001():
     apps[-1].args.extend(app_args_opt)
     name = 'main'
     assert helper.text_help(apps, name) == str(
-        'main {-p/--path PATH} SRC DST (...)\n'
+        'main {-p/--path PATH} SRC DST {...}\n'
         '\n'
         'Description:\n'
         'This is prolog.\n'
@@ -109,7 +109,7 @@ def test_returns_1_2_0001():
     apps[-1].args.extend(app_args_opt)
     name = 'main'
     assert helper.text_help(apps, name) == str(
-        'main {-p/--path PATH} SRC DST (...)\n'
+        'main {-p/--path PATH} SRC DST {...}\n'
         '\n'
         'Commands:\n'
         '  app\n'
@@ -136,7 +136,7 @@ def test_returns_1_3_0000():
     apps[-1].apps.extend(app_apps)
     name = 'main'
     assert helper.text_help(apps, name) == str(
-        'main (...)\n'
+        'main {...}\n'
         '\n'
         'Commands:\n'
         '  app\n'
@@ -200,7 +200,7 @@ def test_returns_1_4_0001():
     apps[-1].args.extend(app_args_opt)
     name = 'main'
     assert helper.text_help(apps, name) == str(
-        'main {-p/--path PATH} (...)\n'
+        'main {-p/--path PATH} {...}\n'
         '\n'
         'Description:\n'
         'This is prolog.\n'
@@ -246,7 +246,7 @@ def test_returns_1_5_0001():
     apps[-1].args.extend(app_args_pos)
     name = 'main'
     assert helper.text_help(apps, name) == str(
-        'main SRC DST (...)\n'
+        'main SRC DST {...}\n'
         '\n'
         'Description:\n'
         'This is prolog.\n'
@@ -290,7 +290,7 @@ def test_returns_1_6_0001():
     apps[-1].args.extend(app_args_opt)
     name = 'main'
     assert helper.text_help(apps, name) == str(
-        'main {-p/--path PATH} SRC DST (...)\n'
+        'main {-p/--path PATH} SRC DST {...}\n'
         '\n'
         'Description:\n'
         'This is prolog.\n'

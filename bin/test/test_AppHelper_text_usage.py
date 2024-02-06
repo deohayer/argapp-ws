@@ -50,7 +50,7 @@ def test_returns_1_0005():
     apps = [App()]
     apps[0].apps.append(App('app'))
     name = 'name'
-    assert helper.text_usage(apps, name) == 'name (...)'
+    assert helper.text_usage(apps, name) == 'name {...}'
 
 
 def test_returns_1_0006():
@@ -62,7 +62,7 @@ def test_returns_1_0006():
     apps[0].args.append(Arg(lopt='arg', required=True))
     apps[0].apps.append(App('app'))
     name = 'name'
-    assert helper.text_usage(apps, name) == 'name {--arg ARG} ARG (...)'
+    assert helper.text_usage(apps, name) == 'name {--arg ARG} ARG {...}'
 
 
 def test_returns_1_0007():
@@ -89,7 +89,7 @@ def test_returns_1_0009():
     apps[1].args.append(Arg(lopt='arg', required=True))
     apps[1].apps.append(App('sub'))
     name = 'name'
-    assert helper.text_usage(apps, name) == 'name app {--arg ARG} ARG (...)'
+    assert helper.text_usage(apps, name) == 'name app {--arg ARG} ARG {...}'
 
 
 def test_returns_1_0010():
@@ -103,4 +103,4 @@ def test_returns_1_0010():
     apps[1].args.append(Arg(lopt='arg', required=True))
     apps[1].apps.append(App('sub'))
     name = 'name'
-    assert helper.text_usage(apps, name) == 'name app {--arg ARG} ARG (...)'
+    assert helper.text_usage(apps, name) == 'name app {--arg ARG} ARG {...}'

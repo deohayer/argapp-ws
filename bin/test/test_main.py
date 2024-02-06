@@ -709,7 +709,7 @@ def test_3_0003(capsys):
     app.apps.append(App(name='app1'))
     app.apps[0].apps.append(App(name='app2'))
     stdout = str(
-        'app0 (...)\n'
+        'app0 {...}\n'
         '\n'
         'Commands:\n'
         '  app1\n'
@@ -732,7 +732,7 @@ def test_3_0004(capsys):
     app.apps.append(App(name='app1'))
     app.apps[0].apps.append(App(name='app2'))
     stdout = str(
-        'app0 app1 (...)\n'
+        'app0 app1 {...}\n'
         '\n'
         'Commands:\n'
         '  app2\n'
@@ -1143,7 +1143,7 @@ def test_exceptions_2_2_0000(capsys):
     app.apps.append(App('sub1'))
     app.apps.append(App('sub2'))
     stderr = str(
-        'app (...)\n'
+        'app {...}\n'
         '\n'
         'Missing subcommand. Choose from:\n'
         ' * sub0\n'
@@ -1165,7 +1165,7 @@ def test_exceptions_2_3_0000(capsys):
     app.apps.append(App('sub1'))
     app.apps.append(App('sub2'))
     stderr = str(
-        'app (...)\n'
+        'app {...}\n'
         '\n'
         'Invalid subcommand. Choose from:\n'
         ' * sub0\n'
@@ -1257,7 +1257,7 @@ def test_exceptions_2_4_0004(capsys):
     app.apps.append(App(name='sub'))
     app.args.append(Arg(sopt='o', lopt='opt', required=True))
     stderr = str(
-        'app {-o/--opt OPT} (...)\n'
+        'app {-o/--opt OPT} {...}\n'
         '\n'
         'Missing arguments: -o/--opt.\n'
     )
