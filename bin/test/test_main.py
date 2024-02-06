@@ -778,13 +778,11 @@ def test_3_0006(capsys):
     stdout = str(
         'app\n'
         '\n'
-        'Description:\n'
         'This is prolog.\n'
         '\n'
         'Optional arguments:\n'
         '  -h/--help    Show the help text and exit.\n'
         '\n'
-        'Notes:\n'
         'This is epilog.\n'
         '\n'
     )

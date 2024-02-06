@@ -1397,11 +1397,11 @@ Generate the command's full help text.
 
 * A `str`, combination of the following:
 ** `<<f-apphelper-text-usage,self.text_usage>>(apps, name)`.
-** `<<f-apphelper-section-prolog,self.section_prolog>>("Description", apps[-1])`.
+** `apps[-1].prolog`.
 ** `<<f-apphelper-section-apps,self.section_apps>>("Commands", apps[-1].apps)`.
 ** `<<f-apphelper-section-apps,self.section_args>>("Positional arguments", args)`, where `args` - positional arguments from `apps[-1].args`.
 ** `<<f-apphelper-section-apps,self.section_args>>("Optional arguments", args)`, where `args` - optional arguments from `apps[-1].args` and the help option, if set.
-** `<<f-apphelper-section-epilog,self.section_epilog>>("Notes", apps[-1])`.
+** `apps[-1].epilog`.
 
 '''
 
@@ -1432,66 +1432,6 @@ Generate the command's full usage text.
 ** All the commands from the command line (the arguments omitted).
 ** The last command's optional arguments with <<v-arg-required,`required`>> set to `True`.
 ** The last command's positional arguments.
-
-'''
-
-[#f-apphelper-section-prolog]
-==== `+AppHelper.section_prolog(...)+`
-
-[source,python]
-----
-class AppHelper:
-    def section_prolog(
-        self,
-        title: str,
-        app: App,
-    ) -> str:
-        ...
-----
-
-Generate the command's text before arguments.
-
-===== Parameters
-
-* `title` - a title for the section.
-* `app` - <<c-argapp-app,`App`>> to generate the text for.
-
-===== Returns
-
-* `''` if <<v-app-prolog,`app.prolog`>> is not set.
-* A `str` that combines:
-** `title`.
-** <<v-app-prolog,`app.prolog`>>.
-
-'''
-
-[#f-apphelper-section-epilog]
-==== `+AppHelper.section_epilog(...)+`
-
-[source,python]
-----
-class AppHelper:
-    def section_epilog(
-        self,
-        title: str,
-        app: App,
-    ) -> str:
-        ...
-----
-
-Generate the command's text after arguments.
-
-===== Parameters
-
-* `title` - a title for the section.
-* `app` - an <<c-argapp-app,`App`>> to generate the text for.
-
-===== Returns
-
-* `''`, if <<v-app-epilog,`app.epilog`>> is not set.
-* A `str` that combines:
-** `title`.
-** <<v-app-epilog,`app.epilog`>>.
 
 '''
 

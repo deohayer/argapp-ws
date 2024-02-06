@@ -61,7 +61,6 @@ def test_returns_1_1_0001():
     assert helper.text_help(apps, name) == str(
         'main {-p/--path PATH} SRC DST {...}\n'
         '\n'
-        'Description:\n'
         'This is prolog.\n'
         '\n'
         'Commands:\n'
@@ -78,7 +77,6 @@ def test_returns_1_1_0001():
         '  -d/--directories DIR [DIR...]    Directories.\n'
         '  -h/--help                        Show the help text and exit.\n'
         '\n'
-        'Notes:\n'
         'This is epilog.\n'
     )
 
@@ -93,7 +91,6 @@ def test_returns_1_2_0000():
     assert helper.text_help(apps, name) == str(
         'main\n'
         '\n'
-        'Description:\n'
         'This is prolog.\n'
     )
 
@@ -124,7 +121,6 @@ def test_returns_1_2_0001():
         '                                   Default: /\n'
         '  -d/--directories DIR [DIR...]    Directories.\n'
         '\n'
-        'Notes:\n'
         'This is epilog.\n'
     )
 
@@ -157,7 +153,6 @@ def test_returns_1_3_0001():
     assert helper.text_help(apps, name) == str(
         'main {-p/--path PATH} SRC DST\n'
         '\n'
-        'Description:\n'
         'This is prolog.\n'
         '\n'
         'Positional arguments:\n'
@@ -169,7 +164,6 @@ def test_returns_1_3_0001():
         '                                   Default: /\n'
         '  -d/--directories DIR [DIR...]    Directories.\n'
         '\n'
-        'Notes:\n'
         'This is epilog.\n'
     )
 
@@ -202,7 +196,6 @@ def test_returns_1_4_0001():
     assert helper.text_help(apps, name) == str(
         'main {-p/--path PATH} {...}\n'
         '\n'
-        'Description:\n'
         'This is prolog.\n'
         '\n'
         'Commands:\n'
@@ -214,7 +207,6 @@ def test_returns_1_4_0001():
         '                                   Default: /\n'
         '  -d/--directories DIR [DIR...]    Directories.\n'
         '\n'
-        'Notes:\n'
         'This is epilog.\n'
     )
 
@@ -248,7 +240,6 @@ def test_returns_1_5_0001():
     assert helper.text_help(apps, name) == str(
         'main SRC DST {...}\n'
         '\n'
-        'Description:\n'
         'This is prolog.\n'
         '\n'
         'Commands:\n'
@@ -259,7 +250,6 @@ def test_returns_1_5_0001():
         '  SRC    A source path.\n'
         '  DST    A destination path.\n'
         '\n'
-        'Notes:\n'
         'This is epilog.\n'
     )
 
@@ -274,7 +264,6 @@ def test_returns_1_6_0000():
     assert helper.text_help(apps, name) == str(
         'main\n'
         '\n'
-        'Notes:\n'
         'This is epilog.\n'
     )
 
@@ -292,7 +281,6 @@ def test_returns_1_6_0001():
     assert helper.text_help(apps, name) == str(
         'main {-p/--path PATH} SRC DST {...}\n'
         '\n'
-        'Description:\n'
         'This is prolog.\n'
         '\n'
         'Commands:\n'
