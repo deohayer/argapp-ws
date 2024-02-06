@@ -5,6 +5,56 @@
 :nofooter:
 :source-highlighter: pygments
 
+== Overview
+
+argapp is an OOP wrapper for https://docs.python.org/3/library/argparse.html[argparse] and https://pypi.org/project/argcomplete[argcomplete]:
+
+* Allows writing CLI applications using OOP - encapsulates https://docs.python.org/3/library/argparse.html[argparse] API.
+* Provides limited support for the shell completion via https://pypi.org/project/argcomplete[argcomplete].
+
+=== Features
+
+* Offers several classes for CLI parsing via OOP.
+** `Arg` represents optional and positional arguments, with the most essential use cases covered.
+** `App` represents a main command or a subcommand.
+** The fields are validated upon construction or setting, raising an `Exception` in case of any issues.
+** The parsing can be overridden by subclassing `Arg`.
+* Offers shell completion support if argcomplete is installed:
+** The required API calls are already in place. It is only required to install argcomplete and add the `PYTHON_ARGCOMPLETE_OK` comment to the script.
+** Specific completions are added automatically.
+
+=== Dependencies
+
+* Linux
+* Python 3
+** 3.6
+** 3.7
+** 3.8
+** 3.9
+** 3.10
+** 3.11
+
+=== Installation
+
+* The package can be installed globally by running:
++
+[source,shell]
+----
+pip3 install argapp
+----
++
+* The Git https://github.com/deohayer/argapp[repository] can be used directly.
+The repository layout is designed with exactly this use case in mind.
+* For the argcomplete installation, please follow the official https://pypi.org/project/argcomplete[documentation].
+
+=== Limitations
+
+* No abbreviated optional arguments.
+* No argument groups of any kind.
+* No partial parsing.
+* `argcomplete.autocomplete()` call is hidden and cannot be parametrized.
+* The completion has no test coverage.
+
 == API
 
 This chapter describes entities available to the developer. It has a specific structure:
@@ -1099,7 +1149,7 @@ Run the command.
 [#c-argapp-arghelper]
 === `argapp.ArgHelper`
 
-An argument description generation.
+An argument description generator.
 
 '''
 
@@ -1237,7 +1287,7 @@ The constructor. Sets each field in the declaration order.
 [#c-argapp-apphelper]
 === `argapp.AppHelper`
 
-A command description generation.
+A command description generator.
 
 '''
 
