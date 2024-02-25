@@ -21,14 +21,13 @@ DOCKERS = {
 
 class Workspace(Software):
     def __init__(self) -> 'None':
-        super().__init__(name='argapp',
-                         help='Work with argapp.')
-        self.fetch = Fetch()
-        self.build = Build()
-        self.install = Install()
-        self.test = Test()
-        self.release = Release()
-        self.clean = Clean()
+        super().__init__(name='argapp')
+        self.app_download = Fetch()
+        self.app_build = Build()
+        self.app_install = Install()
+        self.app_test = Test()
+        self.app_clean = Clean()
+        self.app_action = Release()
 
 
 class Fetch(App):
@@ -37,7 +36,6 @@ class Fetch(App):
         args: 'dict[Arg]' = None,
         apps: 'list[App]' = None,
     ) -> 'None':
-        super().__call__(args, apps)
         sh(f'true'
            f' && git -C {DIR_UWS} checkout develop'
            f' && git -C {DIR_UWS} submodule update --init'
@@ -51,7 +49,6 @@ class Build(App):
         args: 'dict[Arg]' = None,
         apps: 'list[App]' = None,
     ) -> 'None':
-        super().__call__(args, apps)
         sh(f'asciidoctor -o {DIR_UWS}/index.html {DIR_UWS}/index.adoc')
 
 
@@ -61,7 +58,6 @@ class Install(App):
         args: 'dict[Arg]' = None,
         apps: 'list[App]' = None,
     ) -> 'None':
-        super().__call__(args, apps)
         sh(f'true'
            f' && rm -rf {DIR_DIST}'
            f' && python3 -m build -wn {DIR_TMP}'
@@ -88,7 +84,6 @@ class Test(App):
         args: 'dict[Arg]' = None,
         apps: 'list[App]' = None,
     ) -> 'None':
-        super().__call__(args, apps)
         # Build the wheel.
         sh(f'rm -rf {DIR_DIST} && python3 -m build -wn {DIR_TMP}')
         versions: list[str] = args[self.arg_versions]
@@ -155,7 +150,6 @@ class Release(App):
         args: 'dict[Arg]' = None,
         apps: 'list[App]' = None,
     ) -> 'None':
-        super().__call__(args, apps)
         config = toml.load(f'{DIR_TMP}/pyproject.toml')
         version = config['project']['version']
         root = f'{DIR_TMP}/argapp-ws'
@@ -184,7 +178,6 @@ class Clean(App):
         args: 'dict[Arg]' = None,
         apps: 'list[App]' = None,
     ) -> 'None':
-        super().__call__(args, apps)
         print('Removing Docker images')
         dockers = ' '.join(f'argapp:{x}' for x in DOCKERS)
         sh(f'docker image rm -f {dockers}')
