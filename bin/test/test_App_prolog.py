@@ -24,6 +24,12 @@ def test_defaults_1_0001():
     o.prolog = None
     assert o.prolog == 'help'
 
+def test_defaults_1_0002():
+    # Default with help after assignment.
+    o = App()
+    assert o.prolog == ''
+    o.help = 'help'
+    assert o.prolog == 'help'
 
 def test_exceptions_1_0000():
     o = App()
